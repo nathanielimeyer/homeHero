@@ -1,7 +1,9 @@
 package com.jbnm.homehero.ui.taskwheel;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
@@ -19,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskWheel extends View {
+    private final int MIN_ROTATION_TIME = 500;
+    private final int ROTATION_TIME = 250;
     private Paint circlePaint;
     private Paint taskPaint;
     private int backgroundColor, taskWheelColorOne, taskWheelColorTwo;
@@ -84,7 +89,9 @@ public class TaskWheel extends View {
     private void drawItem(Canvas canvas, Task task) {
         int taskIndex = taskItems.indexOf(task);
         float startAngle = taskIndex * taskAngle;
-        if (taskIndex % 2 == 0) {
+        if (taskIndex == 0) {
+            taskPaint.setColor(Color.BLACK);
+        } else if (taskIndex % 2 == 0) {
             taskPaint.setColor(taskWheelColorOne);
         } else {
             taskPaint.setColor(taskWheelColorTwo);
@@ -98,8 +105,38 @@ public class TaskWheel extends View {
         invalidate();
     }
 
-    private void rotateToTask(int taskSection, int extraRotations) {
-        Log.d("test", "section: " + taskSection + " rotations: " + extraRotations);
+    private void rotateToTask(final int targetTask, int rotations) {
+        resetWheel();
+        float targetItemAngle = taskAngle * targetTask;
+        float targetAngle = 270 - targetItemAngle - (taskAngle / 2);
+
+        if (rotations > 6) rotations = 6;
+
+        animate().setInterpolator(new DecelerateInterpolator())
+                .setDuration(MIN_ROTATION_TIME + ROTATION_TIME * rotations)
+                .rotation((360 * rotations) + targetAngle)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override public void onAnimationStart(Animator animator) {}
+                    @Override public void onAnimationEnd(Animator animator) {
+                        Log.d("test", "Animation finished. Landed on " + taskItems.get(targetTask).getDescription());
+                        clearAnimation();
+                    }
+                    @Override public void onAnimationCancel(Animator animator) {}
+                    @Override public void onAnimationRepeat(Animator animator) {}
+                }).start();
+    }
+
+    private void resetWheel() {
+        animate().setDuration(0)
+                .rotation(0)
+                .setListener(new Animator.AnimatorListener() {
+                    @Override public void onAnimationStart(Animator animator) {}
+                    @Override public void onAnimationEnd(Animator animator) {
+                        clearAnimation();
+                    }
+                    @Override public void onAnimationCancel(Animator animator) {}
+                    @Override public void onAnimationRepeat(Animator animator) {}
+                }).start();
     }
 
     @Override
@@ -107,7 +144,6 @@ public class TaskWheel extends View {
         boolean result = gestureDetector.onTouchEvent(event);
         if (!result) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
-
                 result = true;
             }
         }
@@ -126,6 +162,7 @@ public class TaskWheel extends View {
             float angle = flingStrength % 360;
             int section = (int)Math.floor(Math.abs(angle) / taskAngle);
             int rotations = (int)Math.ceil(Math.abs(flingStrength) / 360);
+            // TODO: Add check to make sure rotation is only clockwise
             rotateToTask(section, rotations);
             return super.onFling(e1, e2, velocityX, velocityY);
         }
