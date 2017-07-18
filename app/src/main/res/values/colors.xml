@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <color name="taskWheelBackground">#3F51B5</color>
+    <color name="taskWheelColorOne">#303F9F</color>
+    <color name="taskWheelColorTwo">#FF4081</color>
 </resources>
