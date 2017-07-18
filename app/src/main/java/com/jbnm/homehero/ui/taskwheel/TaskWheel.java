@@ -105,9 +105,10 @@ public class TaskWheel extends View {
         invalidate();
     }
 
-    private void rotateToTask(final int targetTask, int rotations) {
+    private void rotateToTask(int targetTask, int rotations) {
         resetWheel();
-        float targetItemAngle = taskAngle * targetTask;
+        final int targetTaskIndex = getAvailableTask(targetTask);
+        float targetItemAngle = taskAngle * targetTaskIndex;
         float targetAngle = 270 - targetItemAngle - (taskAngle / 2);
 
         if (rotations > 6) rotations = 6;
@@ -118,7 +119,7 @@ public class TaskWheel extends View {
                 .setListener(new Animator.AnimatorListener() {
                     @Override public void onAnimationStart(Animator animator) {}
                     @Override public void onAnimationEnd(Animator animator) {
-                        Log.d("test", "Animation finished. Landed on " + taskItems.get(targetTask).getDescription());
+                        Log.d("test", "Animation finished. Landed on " + taskItems.get(targetTaskIndex).getDescription());
                         clearAnimation();
                     }
                     @Override public void onAnimationCancel(Animator animator) {}
@@ -137,6 +138,14 @@ public class TaskWheel extends View {
                     @Override public void onAnimationCancel(Animator animator) {}
                     @Override public void onAnimationRepeat(Animator animator) {}
                 }).start();
+    }
+
+    private int getAvailableTask(int taskIndex) {
+        if (taskItems.get(taskIndex).isAvailable()) {
+            return taskIndex;
+        }
+        taskIndex++;
+        return getAvailableTask(taskIndex);
     }
 
     @Override
@@ -160,10 +169,10 @@ public class TaskWheel extends View {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             float flingStrength = vectorToScalarScroll(velocityX, velocityY, e2.getX() - centerX, e2.getY() - centerY);
             float angle = flingStrength % 360;
-            int section = (int)Math.floor(Math.abs(angle) / taskAngle);
+            int taskIndex = (int)Math.floor(Math.abs(angle) / taskAngle);
             int rotations = (int)Math.ceil(Math.abs(flingStrength) / 360);
             // TODO: Add check to make sure rotation is only clockwise
-            rotateToTask(section, rotations);
+            rotateToTask(taskIndex, rotations);
             return super.onFling(e1, e2, velocityX, velocityY);
         }
     }
