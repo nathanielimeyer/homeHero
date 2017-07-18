@@ -60,8 +60,8 @@ public class TaskWheel extends View {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        float padX = (float)(getPaddingLeft() - getPaddingRight());
-        float padY = (float)(getPaddingTop() - getPaddingBottom());
+        float padX = (float)(getPaddingLeft() + getPaddingRight());
+        float padY = (float)(getPaddingTop() + getPaddingBottom());
         centerX = w / 2f;
         centerY = h / 2f;
         radius = Math.min(w - padX, h - padY) / 2f;
@@ -70,7 +70,7 @@ public class TaskWheel extends View {
 
     public void addTasks(List<Task> tasks) {
         taskItems = tasks;
-        taskAngle = 360 / taskItems.size();
+        taskAngle = 360f / taskItems.size();
         invalidate();
     }
 
