@@ -1,6 +1,7 @@
 package com.jbnm.homehero.ui.taskwheel;
 
 import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -23,17 +24,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskWheel extends View {
-    private final int MIN_ROTATION_TIME = 500;
-    private final int ROTATION_TIME = 250;
+    private static final int MIN_ROTATION_TIME = 500;
+    private static final int ROTATION_TIME = 250;
+
     private Paint circlePaint;
     private Paint taskPaint;
     private Paint textPaint;
-    private int backgroundColor, taskWheelColorOne, taskWheelColorTwo;
 
-    private float centerX, centerY, radius, taskAngle;
+    private int backgroundColor;
+    private int taskWheelColorOne;
+    private int taskWheelColorTwo;
+
+    private float centerX;
+    private float centerY;
+    private float radius;
+    private float taskAngle;
+
     private RectF arc = new RectF();
 
     private List<Task> tasks = new ArrayList<>();
+
     private GestureDetector gestureDetector;
     private OnTaskSelectListener onTaskSelectListener;
 
@@ -42,26 +52,31 @@ public class TaskWheel extends View {
     }
 
     public TaskWheel(Context context) {
-        this(context, null);
+        super(context);
+        init();
     }
     public TaskWheel(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init();
     }
     public TaskWheel(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        backgroundColor = ContextCompat.getColor(context, R.color.taskWheelBackground);
-        taskWheelColorOne = ContextCompat.getColor(context, R.color.taskWheelColorOne);
-        taskWheelColorTwo = ContextCompat.getColor(context, R.color.taskWheelColorTwo);
         init();
     }
 
     private void init() {
+        backgroundColor = ContextCompat.getColor(getContext(), R.color.taskWheelBackground);
+        taskWheelColorOne = ContextCompat.getColor(getContext(), R.color.taskWheelColorOne);
+        taskWheelColorTwo = ContextCompat.getColor(getContext(), R.color.taskWheelColorTwo);
+
         circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         circlePaint.setStyle(Paint.Style.FILL);
         circlePaint.setColor(backgroundColor);
+
         taskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         taskPaint.setStyle(Paint.Style.FILL);
         taskPaint.setColor(taskWheelColorOne);
+
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.STROKE);
         textPaint.setColor(Color.BLACK);
@@ -80,6 +95,7 @@ public class TaskWheel extends View {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
         float padX = (float)(getPaddingLeft() + getPaddingRight());
         float padY = (float)(getPaddingTop() + getPaddingBottom());
         centerX = w / 2f;
@@ -131,16 +147,17 @@ public class TaskWheel extends View {
     }
 
     private void rotateToTask(int targetTask, int rotations) {
-        resetWheel();
         final int targetTaskIndex = getAvailableTask(targetTask);
-        float targetItemAngle = taskAngle * targetTaskIndex;
-        float targetAngle = 270 - targetItemAngle - (taskAngle / 2);
+        float currentRotation = getRotation();
+
+        float angleToZero = currentRotation + (360 - currentRotation % 360);
+        float angleToTask = 270 - (taskAngle * targetTaskIndex) - (taskAngle / 2);
 
         if (rotations > 6) rotations = 6;
 
         animate().setInterpolator(new DecelerateInterpolator())
                 .setDuration(MIN_ROTATION_TIME + ROTATION_TIME * rotations)
-                .rotation((360 * rotations) + targetAngle)
+                .rotation(angleToZero + (360 * rotations) + angleToTask)
                 .setListener(new Animator.AnimatorListener() {
                     @Override public void onAnimationStart(Animator animator) {}
                     @Override public void onAnimationEnd(Animator animator) {
@@ -152,17 +169,11 @@ public class TaskWheel extends View {
                 }).start();
     }
 
-    private void resetWheel() {
-        animate().setDuration(0)
-                .rotation(0)
-                .setListener(new Animator.AnimatorListener() {
-                    @Override public void onAnimationStart(Animator animator) {}
-                    @Override public void onAnimationEnd(Animator animator) {
-                        clearAnimation();
-                    }
-                    @Override public void onAnimationCancel(Animator animator) {}
-                    @Override public void onAnimationRepeat(Animator animator) {}
-                }).start();
+    private void wrongDirection() {
+        float currentAngle = getRotation();
+        ObjectAnimator rotate = ObjectAnimator.ofFloat(TaskWheel.this, "rotation", currentAngle, currentAngle - 20f, currentAngle, currentAngle + 10f, currentAngle);
+        rotate.setDuration(500);
+        rotate.start();
     }
 
     private int getAvailableTask(int taskIndex) {
@@ -206,7 +217,7 @@ public class TaskWheel extends View {
                 rotateToTask(taskIndex, rotations);
                 // TODO: prevent additional touch events
             } else {
-                // TODO: add animation for indicate wrong direction
+                wrongDirection();
             }
             return super.onFling(e1, e2, velocityX, velocityY);
         }
