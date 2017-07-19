@@ -28,7 +28,6 @@ public class TaskWheel extends View {
     private static final int ROTATION_TIME = 250;
 
     private Paint circlePaint;
-    private Paint taskPaint;
     private Paint textPaint;
 
     private int backgroundColor;
@@ -42,7 +41,7 @@ public class TaskWheel extends View {
 
     private RectF arc = new RectF();
 
-    private List<Task> tasks = new ArrayList<>();
+    private List<TaskWheelItem> taskWheelItems = new ArrayList<>();
 
     private GestureDetector gestureDetector;
     private OnTaskSelectListener onTaskSelectListener;
@@ -73,10 +72,6 @@ public class TaskWheel extends View {
         circlePaint.setStyle(Paint.Style.FILL);
         circlePaint.setColor(backgroundColor);
 
-        taskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        taskPaint.setStyle(Paint.Style.FILL);
-        taskPaint.setColor(taskWheelColorOne);
-
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.STROKE);
         textPaint.setColor(Color.BLACK);
@@ -102,44 +97,64 @@ public class TaskWheel extends View {
         centerY = h / 2f;
         radius = Math.min(w - padX, h - padY) / 2f;
         arc.set(getPaddingLeft(), getPaddingTop(), w - getPaddingRight(), h - getPaddingBottom());
+        calculateTextPaths();
+    }
+
+    private void calculateTextPaths() {
+        for (TaskWheelItem item : this.taskWheelItems) {
+            item.textPath = getTaskTextPath(item.startAngle);
+        }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawCircle(centerX, centerY, radius, circlePaint);
-        for (Task task : tasks) {
-            drawItem(canvas, task);
+        for (TaskWheelItem taskWheelItem : taskWheelItems) {
+            canvas.drawArc(arc, taskWheelItem.startAngle, taskAngle, true, taskWheelItem.taskPaint);
+            canvas.drawTextOnPath(taskWheelItem.task.getDescription(), taskWheelItem.textPath, radius - 200f, 0f, textPaint);
         }
-    }
-
-    private void drawItem(Canvas canvas, Task task) {
-        int taskIndex = tasks.indexOf(task);
-        float startAngle = taskIndex * taskAngle;
-        // TODO: improve color selection and add icon/text
-        // TODO: draw differently if task is not available
-
-        if (taskIndex % 2 == 0) {
-            taskPaint.setColor(taskWheelColorOne);
-        } else {
-            taskPaint.setColor(taskWheelColorTwo);
-        }
-        canvas.drawArc(arc, startAngle, taskAngle, true, taskPaint);
-
-        // draw task description in middle of section
-        double sectionCenterAngle = ((startAngle + (taskAngle / 2)) * (Math.PI / 180f));
-        float x = (float)((radius * Math.cos(sectionCenterAngle)) + centerX);
-        float y = (float)((radius * Math.sin(sectionCenterAngle)) + centerY);
-        Path testPath = new Path();
-        testPath.moveTo(centerX, centerY);
-        testPath.lineTo(x, y);
-        canvas.drawTextOnPath(task.getDescription(), testPath, radius - 200f, 0f, textPaint);
-
     }
 
     public void addTasks(List<Task> tasks) {
-        this.tasks = tasks;
-        taskAngle = 360f / this.tasks.size();
+        taskAngle = 360f / tasks.size();
+        for (int i = 0; i < tasks.size(); i++) {
+            TaskWheelItem taskWheelItem = new TaskWheelItem();
+            taskWheelItem.task = tasks.get(i);
+            taskWheelItem.startAngle = taskAngle * i;
+            taskWheelItem.taskPaint = getTaskPaint(taskWheelItem.task, i);
+            taskWheelItems.add(taskWheelItem);
+        }
         invalidate();
+    }
+
+    private Path getTaskTextPath(float startAngle) {
+        double sectionCenterAngle = ((startAngle + (taskAngle / 2)) * (Math.PI / 180f));
+        Log.d("test", "x: " + centerX + " y: " + centerY);
+        float x = (float)((radius * Math.cos(sectionCenterAngle)) + centerX);
+        float y = (float)((radius * Math.sin(sectionCenterAngle)) + centerY);
+        Path taskTextPath = new Path();
+        taskTextPath.moveTo(centerX, centerY);
+        taskTextPath.lineTo(x, y);
+        taskTextPath.close();
+        return taskTextPath;
+    }
+
+    private Paint getTaskPaint(Task task, int index) {
+        // TODO: improve color selection and add icon/text
+        // TODO: draw differently if task is not available
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setStyle(Paint.Style.FILL);
+        if (index % 2 == 0) {
+            paint.setColor(taskWheelColorOne);
+        } else {
+            paint.setColor(taskWheelColorTwo);
+        }
+        if (task.isAvailable()) {
+            paint.setAlpha(255);
+        } else {
+            paint.setAlpha(150);
+        }
+        return paint;
     }
 
     public void setOnTaskSelectListener(OnTaskSelectListener onTaskSelectListener) {
@@ -161,7 +176,7 @@ public class TaskWheel extends View {
                 .setListener(new Animator.AnimatorListener() {
                     @Override public void onAnimationStart(Animator animator) {}
                     @Override public void onAnimationEnd(Animator animator) {
-                        onTaskSelectListener.onTaskSelect(tasks.get(targetTaskIndex));
+                        onTaskSelectListener.onTaskSelect(taskWheelItems.get(targetTaskIndex).task);
                         clearAnimation();
                     }
                     @Override public void onAnimationCancel(Animator animator) {}
@@ -177,7 +192,7 @@ public class TaskWheel extends View {
     }
 
     private int getAvailableTask(int taskIndex) {
-        if (tasks.get(taskIndex).isAvailable()) {
+        if (taskWheelItems.get(taskIndex).task.isAvailable()) {
             return taskIndex;
         }
         taskIndex++;
@@ -237,6 +252,13 @@ public class TaskWheel extends View {
         float sign = Math.signum(dot);
 
         return l * sign;
+    }
+
+    private class TaskWheelItem {
+        public Task task;
+        public float startAngle;
+        public Path textPath;
+        public Paint taskPaint;
     }
 
 }
