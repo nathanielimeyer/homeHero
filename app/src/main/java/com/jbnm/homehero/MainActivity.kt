@@ -2,6 +2,8 @@ package com.jbnm.homehero
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import com.jbnm.homehero.data.model.Task
 import com.jbnm.homehero.ui.taskwheel.TaskWheel
 
@@ -14,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         taskWheel = findViewById(R.id.taskWheel)
         taskWheel.addTasks(generateTasks())
+        taskWheel.setOnTaskSelectListener { task -> Toast.makeText(this, task.description, Toast.LENGTH_SHORT).show()}
     }
 
     fun generateTasks(): List<Task> {
