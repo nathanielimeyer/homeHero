@@ -43,6 +43,7 @@ public class TaskWheel extends View {
 
     private List<TaskWheelItem> taskWheelItems = new ArrayList<>();
 
+    private boolean animationRunning = false;
     private GestureDetector gestureDetector;
     private OnTaskSelectListener onTaskSelectListener;
 
@@ -174,9 +175,12 @@ public class TaskWheel extends View {
                 .setDuration(MIN_ROTATION_TIME + ROTATION_TIME * rotations)
                 .rotation(angleToZero + (360 * rotations) + angleToTask)
                 .setListener(new Animator.AnimatorListener() {
-                    @Override public void onAnimationStart(Animator animator) {}
+                    @Override public void onAnimationStart(Animator animator) {
+                        animationRunning = true;
+                    }
                     @Override public void onAnimationEnd(Animator animator) {
                         onTaskSelectListener.onTaskSelect(taskWheelItems.get(targetTaskIndex).task);
+                        animationRunning = false;
                         clearAnimation();
                     }
                     @Override public void onAnimationCancel(Animator animator) {}
@@ -186,8 +190,25 @@ public class TaskWheel extends View {
 
     private void wrongDirection() {
         float currentAngle = getRotation();
-        ObjectAnimator rotate = ObjectAnimator.ofFloat(TaskWheel.this, "rotation", currentAngle, currentAngle - 20f, currentAngle, currentAngle + 10f, currentAngle);
+        ObjectAnimator rotate = ObjectAnimator.ofFloat(TaskWheel.this,
+                "rotation",
+                currentAngle,
+                currentAngle - 20f,
+                currentAngle + 20f,
+                currentAngle - 10f,
+                currentAngle + 10f,
+                currentAngle);
         rotate.setDuration(500);
+        rotate.addListener(new Animator.AnimatorListener() {
+            @Override public void onAnimationStart(Animator animator) {
+                animationRunning = true;
+            }
+            @Override public void onAnimationEnd(Animator animator) {
+                animationRunning = false;
+            }
+            @Override public void onAnimationCancel(Animator animator) {}
+            @Override public void onAnimationRepeat(Animator animator) {}
+        });
         rotate.start();
     }
 
@@ -201,13 +222,7 @@ public class TaskWheel extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean result = gestureDetector.onTouchEvent(event);
-        if (!result) {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                result = true;
-            }
-        }
-        return result;
+        return gestureDetector.onTouchEvent(event) && !animationRunning;
     }
 
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -230,7 +245,6 @@ public class TaskWheel extends View {
                 int taskIndex = (int)Math.floor(Math.abs(angle) / taskAngle);
                 int rotations = (int)Math.ceil(Math.abs(flingStrength) / 360);
                 rotateToTask(taskIndex, rotations);
-                // TODO: prevent additional touch events
             } else {
                 wrongDirection();
             }
