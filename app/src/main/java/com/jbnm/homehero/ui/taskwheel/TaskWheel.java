@@ -47,10 +47,6 @@ public class TaskWheel extends View {
     private GestureDetector gestureDetector;
     private OnTaskSelectListener onTaskSelectListener;
 
-    public interface OnTaskSelectListener {
-        void onTaskSelect(Task task);
-    }
-
     public TaskWheel(Context context) {
         super(context);
         init();
@@ -130,7 +126,6 @@ public class TaskWheel extends View {
 
     private Path getTaskTextPath(float startAngle) {
         double sectionCenterAngle = ((startAngle + (taskAngle / 2)) * (Math.PI / 180f));
-        Log.d("test", "x: " + centerX + " y: " + centerY);
         float x = (float)((radius * Math.cos(sectionCenterAngle)) + centerX);
         float y = (float)((radius * Math.sin(sectionCenterAngle)) + centerY);
         Path taskTextPath = new Path();
@@ -181,7 +176,6 @@ public class TaskWheel extends View {
                     @Override public void onAnimationEnd(Animator animator) {
                         onTaskSelectListener.onTaskSelect(taskWheelItems.get(targetTaskIndex).task);
                         animationRunning = false;
-                        clearAnimation();
                     }
                     @Override public void onAnimationCancel(Animator animator) {}
                     @Override public void onAnimationRepeat(Animator animator) {}
@@ -273,6 +267,10 @@ public class TaskWheel extends View {
         public float startAngle;
         public Path textPath;
         public Paint taskPaint;
+    }
+
+    public interface OnTaskSelectListener {
+        void onTaskSelect(Task task);
     }
 
 }
