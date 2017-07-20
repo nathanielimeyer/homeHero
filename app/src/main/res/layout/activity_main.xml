@@ -3,6 +3,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 tools:context="com.jbnm.homehero.MainActivity">
 
     <com.jbnm.homehero.ui.taskselector.TaskSelector
@@ -11,6 +12,10 @@
         android:layout_height="wrap_content"
         android:padding="30dp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        app:taskTextColor="@color/colorPrimaryDark"
+        app:taskTextSize="18sp"
+        app:colorOne="@color/taskWheelColorOne"
+        app:colorTwo="@color/taskWheelColorTwo"/>
 
 </RelativeLayout>

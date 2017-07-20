@@ -4,12 +4,10 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -17,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
-import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
 
 import java.util.ArrayList;
@@ -27,12 +24,12 @@ public class TaskWheel extends View {
     private static final int MIN_ROTATION_TIME = 500;
     private static final int ROTATION_TIME = 250;
 
-    private Paint circlePaint;
     private Paint textPaint;
 
-    private int backgroundColor;
     private int taskWheelColorOne;
     private int taskWheelColorTwo;
+    private int textColor;
+    private int textSize;
 
     private float centerX;
     private float centerY;
@@ -61,20 +58,32 @@ public class TaskWheel extends View {
     }
 
     private void init() {
-        backgroundColor = ContextCompat.getColor(getContext(), R.color.taskWheelBackground);
-        taskWheelColorOne = ContextCompat.getColor(getContext(), R.color.taskWheelColorOne);
-        taskWheelColorTwo = ContextCompat.getColor(getContext(), R.color.taskWheelColorTwo);
-
-        circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        circlePaint.setStyle(Paint.Style.FILL);
-        circlePaint.setColor(backgroundColor);
-
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.STROKE);
-        textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(42f);
-
+        textPaint.setTextAlign(Paint.Align.CENTER);
         gestureDetector = new GestureDetector(TaskWheel.this.getContext(), new GestureListener());
+    }
+
+    public void setTextColor(int color) {
+        this.textColor = color;
+        textPaint.setColor(textColor);
+    }
+
+    public void setTextSize(int size) {
+        this.textSize = size;
+        textPaint.setTextSize(textSize);
+    }
+
+    public void setTaskWheelColorOne(int color) {
+        this.taskWheelColorOne = color;
+    }
+
+    public void setTaskWheelColorTwo(int color) {
+        this.taskWheelColorTwo = color;
+    }
+
+    public void setOnTaskSelectListener(OnTaskSelectListener onTaskSelectListener) {
+        this.onTaskSelectListener = onTaskSelectListener;
     }
 
     @Override
@@ -106,10 +115,9 @@ public class TaskWheel extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawCircle(centerX, centerY, radius, circlePaint);
         for (TaskWheelItem taskWheelItem : taskWheelItems) {
             canvas.drawArc(arc, taskWheelItem.startAngle, taskAngle, true, taskWheelItem.taskPaint);
-            canvas.drawTextOnPath(taskWheelItem.task.getDescription(), taskWheelItem.textPath, radius - 200f, 0f, textPaint);
+            canvas.drawTextOnPath(taskWheelItem.task.getDescription(), taskWheelItem.textPath, 0f, 0f, textPaint);
         }
     }
 
@@ -151,10 +159,6 @@ public class TaskWheel extends View {
             paint.setAlpha(150);
         }
         return paint;
-    }
-
-    public void setOnTaskSelectListener(OnTaskSelectListener onTaskSelectListener) {
-        this.onTaskSelectListener = onTaskSelectListener;
     }
 
     private void rotateToTask(int targetTask, int rotations) {
