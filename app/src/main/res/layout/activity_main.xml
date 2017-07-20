@@ -5,7 +5,7 @@
                 android:layout_height="match_parent"
                 tools:context="com.jbnm.homehero.MainActivity">
 
-    <com.jbnm.homehero.ui.taskwheel.TaskWheel
+    <com.jbnm.homehero.ui.taskselector.TaskSelector
         android:id="@+id/taskWheel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

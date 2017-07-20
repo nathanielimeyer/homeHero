@@ -2,13 +2,13 @@ package com.jbnm.homehero
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.jbnm.homehero.data.model.Task
-import com.jbnm.homehero.ui.taskwheel.TaskWheel
+import com.jbnm.homehero.ui.taskselector.TaskSelector
 
 class MainActivity : AppCompatActivity() {
-    lateinit var taskWheel: TaskWheel
+//    lateinit var taskWheel: TaskWheel
+    lateinit var taskWheel: TaskSelector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
-package com.jbnm.homehero.ui.taskwheel;
+package com.jbnm.homehero.ui.taskselector;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -11,7 +11,6 @@ import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
