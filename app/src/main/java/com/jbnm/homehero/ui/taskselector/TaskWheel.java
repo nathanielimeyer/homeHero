@@ -11,6 +11,7 @@ import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -92,7 +93,8 @@ public class TaskWheel extends View {
         centerX = w / 2f;
         centerY = h / 2f;
         radius = Math.min(w - padX, h - padY) / 2f;
-        arc.set(getPaddingLeft(), getPaddingTop(), w - getPaddingRight(), h - getPaddingBottom());
+        arc.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
+
         calculateTextPaths();
     }
 
@@ -130,7 +132,6 @@ public class TaskWheel extends View {
         Path taskTextPath = new Path();
         taskTextPath.moveTo(centerX, centerY);
         taskTextPath.lineTo(x, y);
-        taskTextPath.close();
         return taskTextPath;
     }
 
@@ -209,7 +210,11 @@ public class TaskWheel extends View {
         if (taskWheelItems.get(taskIndex).task.isAvailable()) {
             return taskIndex;
         }
-        taskIndex++;
+        if (taskIndex == taskWheelItems.size() - 1) {
+            taskIndex = 0;
+        } else {
+            taskIndex++;
+        }
         return getAvailableTask(taskIndex);
     }
 

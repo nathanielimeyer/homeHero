@@ -7,10 +7,10 @@
 
     <com.jbnm.homehero.ui.taskselector.TaskSelector
         android:id="@+id/taskWheel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
         android:layout_centerVertical="true"
-        android:padding="30dp"/>
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
