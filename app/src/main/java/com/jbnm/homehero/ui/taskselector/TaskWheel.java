@@ -9,11 +9,7 @@ import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -128,8 +124,16 @@ public class TaskWheel extends View {
             pathMeasure.setPath(taskWheelItem.textPath, false);
             float pathLength = pathMeasure.getLength();
             float width = pathLength - (pathLength/6);
-            int length = textPaint.breakText(taskWheelItem.task.getDescription(), true, width, null);
-            canvas.drawTextOnPath(taskWheelItem.task.getDescription().substring(0, length), taskWheelItem.textPath, (pathLength/12), (textSize/2), textPaint);
+            int length = textPaint.breakText(taskWheelItem.task.getDescription(),
+                    true,
+                    width,
+                    null);
+
+            canvas.drawTextOnPath(taskWheelItem.task.getDescription().substring(0, length),
+                    taskWheelItem.textPath,
+                    (pathLength/12),
+                    (textSize/2),
+                    textPaint);
         }
     }
 
