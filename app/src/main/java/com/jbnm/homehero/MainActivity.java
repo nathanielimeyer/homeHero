@@ -43,21 +43,21 @@ class MainActivity extends AppCompatActivity {
                 .setLineWidth(32f)
                 .build());
 
-        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 64, 196, 0))
+        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 196, 64, 0))
                 .setRange(0, reward.getValue(), 0)
                 .setInitialVisibility(false)
                 .setLineWidth(46f)
-                .setSeriesLabel(new SeriesLabel.Builder("Approved").build())
+                .setSeriesLabel(new SeriesLabel.Builder("Pending").build())
                 .setCapRounded(false)
                 .addEdgeDetail(new EdgeDetail(EdgeDetail.EdgeType.EDGE_INNER, Color.parseColor("#22000000"), 0.3f))
                 .setShowPointWhenEmpty(false)
                 .build();
 
-        SeriesItem seriesItem2 = new SeriesItem.Builder(Color.argb(255, 196, 64, 0))
+        SeriesItem seriesItem2 = new SeriesItem.Builder(Color.argb(255, 64, 196, 0))
                 .setRange(0, reward.getValue(), 0)
                 .setInitialVisibility(false)
                 .setLineWidth(46f)
-                .setSeriesLabel(new SeriesLabel.Builder("Pending").build())
+                .setSeriesLabel(new SeriesLabel.Builder("Approved").build())
                 .setCapRounded(false)
                 .addEdgeDetail(new EdgeDetail(EdgeDetail.EdgeType.EDGE_INNER, Color.parseColor("#22000000"), 0.3f))
                 .setShowPointWhenEmpty(false)
@@ -72,13 +72,13 @@ class MainActivity extends AppCompatActivity {
                 .build());
 
         arcView.addEvent(new DecoEvent.Builder(myChild.getTotalPoints())
-                .setIndex(series1Index)
+                .setIndex(series2Index)
                 .setDuration(1250)
 //                .setDelay(30000)
                 .build());
 
-        arcView.addEvent(new DecoEvent.Builder(myChild.calculatePendingPoints())
-                .setIndex(series2Index)
+        arcView.addEvent(new DecoEvent.Builder(myChild.getTotalPoints() + myChild.calculatePendingPoints())
+                .setIndex(series1Index)
                 .setDuration(1500)
 //                .setDelay(30000)
                 .build());
