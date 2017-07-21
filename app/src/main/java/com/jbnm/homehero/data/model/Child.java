@@ -18,11 +18,11 @@ public class Child {
 
   public Child() {}
 
-  public Child(String id, List<Task> tasks, List<Reward> rewards, int totalPoints) {
+  public Child(String id, List<Task> tasks, List<Reward> rewards) {
     this.id = id;
     this.tasks = tasks;
     this.rewards = rewards;
-    this.totalPoints = totalPoints;
+    this.totalPoints = 0;
   }
 
   public String getId() {
