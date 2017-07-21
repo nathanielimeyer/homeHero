@@ -6,8 +6,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -25,6 +29,7 @@ public class TaskWheel extends View {
     private static final int ROTATION_TIME = 250;
 
     private Paint textPaint;
+    private PathMeasure pathMeasure;
 
     private int taskWheelColorOne;
     private int taskWheelColorTwo;
@@ -62,6 +67,7 @@ public class TaskWheel extends View {
         textPaint.setStyle(Paint.Style.STROKE);
         textPaint.setTextAlign(Paint.Align.CENTER);
         gestureDetector = new GestureDetector(TaskWheel.this.getContext(), new GestureListener());
+        pathMeasure = new PathMeasure();
     }
 
     public void setTextColor(int color) {
@@ -104,20 +110,26 @@ public class TaskWheel extends View {
         radius = Math.min(w - padX, h - padY) / 2f;
         arc.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
 
-        calculateTextPaths();
+        calculateTaskPaths();
     }
 
-    private void calculateTextPaths() {
+    private void calculateTaskPaths() {
         for (TaskWheelItem item : this.taskWheelItems) {
             item.textPath = getTaskTextPath(item.startAngle);
+            item.arcPath = getTaskArcPath(item.startAngle);
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         for (TaskWheelItem taskWheelItem : taskWheelItems) {
-            canvas.drawArc(arc, taskWheelItem.startAngle, taskAngle, true, taskWheelItem.taskPaint);
-            canvas.drawTextOnPath(taskWheelItem.task.getDescription(), taskWheelItem.textPath, 0f, 0f, textPaint);
+            canvas.drawPath(taskWheelItem.arcPath, taskWheelItem.taskPaint);
+
+            pathMeasure.setPath(taskWheelItem.textPath, false);
+            float pathLength = pathMeasure.getLength();
+            float width = pathLength - (pathLength/6);
+            int length = textPaint.breakText(taskWheelItem.task.getDescription(), true, width, null);
+            canvas.drawTextOnPath(taskWheelItem.task.getDescription().substring(0, length), taskWheelItem.textPath, (pathLength/12), (textSize/2), textPaint);
         }
     }
 
@@ -131,6 +143,22 @@ public class TaskWheel extends View {
             taskWheelItems.add(taskWheelItem);
         }
         invalidate();
+    }
+
+    private Path getTaskArcPath(float startAngle) {
+        double beginAngle = (startAngle * (Math.PI / 180f));
+        double endAngle = ((startAngle + taskAngle) * (Math.PI / 180f));
+        float startX = (float)((radius * Math.cos(beginAngle)) + centerX);
+        float startY = (float)((radius * Math.sin(beginAngle)) + centerY);
+        float endX = (float)((radius * Math.cos(endAngle)) + centerX);
+        float endY = (float)((radius * Math.sin(endAngle)) + centerY);
+        Path taskArcPath = new Path();
+        taskArcPath.addArc(arc, startAngle, taskAngle);
+        taskArcPath.moveTo(startX, startY);
+        taskArcPath.lineTo(centerX, centerY);
+        taskArcPath.lineTo(endX, endY);
+        taskArcPath.close();
+        return taskArcPath;
     }
 
     private Path getTaskTextPath(float startAngle) {
@@ -274,6 +302,7 @@ public class TaskWheel extends View {
         public Task task;
         public float startAngle;
         public Path textPath;
+        public Path arcPath;
         public Paint taskPaint;
     }
 

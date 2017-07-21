@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                 Task("testId", "Task 3", instructions, true),
                 Task("testId", "Task 4", instructions, true),
                 Task("testId", "Task 5", instructions, true),
-                Task("testId", "Task 6", instructions, true),
+                Task("testId", "Really long chore description", instructions, true),
                 Task("testId", "Task 7", instructions, false)
         )
         return tasks
