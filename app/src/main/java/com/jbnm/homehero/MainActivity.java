@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.jbnm.homehero.ui.goal.GoalActivity;
 
-class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
