@@ -18,10 +18,20 @@ public class GoalPresenter implements GoalContract.Presenter {
     private Context mContext;
     private Child child;
     private Reward reward;
+    private Task task;
 
     public GoalPresenter(GoalContract.MvpView view, Context context) {
         mvpView = view;
         mContext = context;
+
+        //replace this with code for loading these objects from firebase
+        List<String> instructions = Arrays.asList("change bed", "vacuum walls");
+        task = new Task("1", "Wash your room", instructions, true );
+        List<Task> tasks = Arrays.asList(task);
+        reward = new Reward("1", "Disneyland", 20, "castle.jpg");
+        List<Reward> rewards = Arrays.asList(reward);
+        child = new Child("1", tasks, rewards);
+        //replace this with code for loading these objects from firebase
 
     }
 
@@ -33,12 +43,6 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     @Override
     public void loadChildData() {
-        List<String> instructions = Arrays.asList("change bed", "vacuum walls");
-        Task myTask = new Task("1", "Wash your room", instructions, true );
-        List<Task> tasks = Arrays.asList(myTask);
-        Reward reward = new Reward("1", "Disneyland", 20, "castle.jpg");
-        List<Reward> rewards = Arrays.asList(reward);
-        Child myChild = new Child("1", tasks, rewards);
 
     }
 
@@ -47,7 +51,7 @@ public class GoalPresenter implements GoalContract.Presenter {
         if (child.getTotalPoints() >= reward.getValue()) {
 
         } else {
-
+            mvpView.showProgress("Disneyland", 20, "sadfasdf", 10, 5);
         }
     }
 }

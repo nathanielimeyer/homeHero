@@ -24,8 +24,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     @BindView(R.id.dynamicArcView) DecoView arcView;
     @BindView(R.id.imageView)
     ImageView rewardImageView;
-    GoalPresenter presenter;
-
+    public GoalPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,11 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal);
         ButterKnife.bind(this);
-//        presenter = new GoalPresenter(this);
-        showProgress("Disneyland", 20, "sadfasdf", 10, 5);
-    }
 
+        presenter = new GoalPresenter(this, this);
+        presenter.loadChildData();
+        presenter.checkProgress();
+    }
 
     @Override
     public void showProgress(String description, int rewardValue, String rewardImage, int approvedPoints, int pendingPoints) {
@@ -88,7 +88,6 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
                 .build());
     }
 
-
     @Override
     public boolean showLoading() {
         return false;
@@ -103,7 +102,6 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     public boolean showError() {
         return false;
     }
-
 
     @Override
     public void hideError() {
