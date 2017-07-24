@@ -40,7 +40,6 @@ public class GoalPresenter implements GoalContract.Presenter {
     @Override
     public void detach() {
         mvpView = null;
-
     }
 
     @Override
@@ -51,7 +50,7 @@ public class GoalPresenter implements GoalContract.Presenter {
     @Override
     public void checkProgress() {
         if (child.getTotalPoints() >= reward.getValue()) {
-
+            mvpView.showRewardAnimation();
         } else {
             mvpView.showProgress(reward.getDescription(), reward.getValue(), reward.getRewardImage(), child.getTotalPoints(), child.calculatePendingPoints());
         }
