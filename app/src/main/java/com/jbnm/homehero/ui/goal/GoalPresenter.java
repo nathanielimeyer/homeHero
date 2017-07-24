@@ -26,11 +26,11 @@ public class GoalPresenter implements GoalContract.Presenter {
 
         //replace this with code for loading these objects from firebase
         List<String> instructions = Arrays.asList("change bed", "vacuum walls");
-        task = new Task("1", "Wash your room", instructions, true );
+        task = new Task("1", "Wash your room", instructions, true);
         List<Task> tasks = Arrays.asList(task);
         reward = new Reward("1", "Disneyland", 20, "castle.jpg");
         List<Reward> rewards = Arrays.asList(reward);
-        child = new Child("1", tasks, rewards);
+//        child = new Child("1", tasks, rewards);
         //replace this with code for loading these objects from firebase
 
     }

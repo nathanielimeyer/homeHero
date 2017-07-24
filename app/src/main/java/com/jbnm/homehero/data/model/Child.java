@@ -18,10 +18,14 @@ public class Child {
 
   public Child() {}
 
-  public Child(String id, Map<String, Boolean> tasks, Map<String, Boolean> rewards) {
+//  public Child(String id, Map<String, Boolean> tasks, Map<String, Boolean> rewards) {
+//    this.id = id;
+//    this.tasks = tasks;
+//    this.rewards = rewards;
+//    this.totalPoints = 0;
+//  }
+  public Child(String id) {
     this.id = id;
-    this.tasks = tasks;
-    this.rewards = rewards;
     this.totalPoints = 0;
   }
 
