@@ -3,7 +3,5 @@
     <declare-styleable name="TaskSelector">
         <attr name="taskTextSize" format="dimension"/>
         <attr name="taskTextColor" format="color"/>
-        <attr name="colorOne" format="color"/>
-        <attr name="colorTwo" format="color"/>
     </declare-styleable>
 </resources>

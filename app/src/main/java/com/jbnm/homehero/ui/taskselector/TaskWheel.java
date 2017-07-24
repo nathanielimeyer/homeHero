@@ -3,7 +3,9 @@ package com.jbnm.homehero.ui.taskselector;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
@@ -15,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
+import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
 
 import java.util.ArrayList;
@@ -25,10 +28,11 @@ public class TaskWheel extends View {
     private static final int ROTATION_TIME = 250;
 
     private Paint textPaint;
+    private Paint disabledTextPaint;
     private PathMeasure pathMeasure;
 
-    private int taskWheelColorOne;
-    private int taskWheelColorTwo;
+    private int disabledTaskColor = R.color.colorDisabledTask;
+    private int[] taskColors;
     private int textColor;
     private int textSize;
 
@@ -47,23 +51,34 @@ public class TaskWheel extends View {
 
     public TaskWheel(Context context) {
         super(context);
-        init();
+        init(context);
     }
     public TaskWheel(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
     public TaskWheel(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.STROKE);
         textPaint.setTextAlign(Paint.Align.CENTER);
+
+        disabledTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        disabledTextPaint.setStyle(Paint.Style.STROKE);
+        disabledTextPaint.setTextAlign(Paint.Align.CENTER);
+        disabledTextPaint.setColor(Color.BLACK);
         gestureDetector = new GestureDetector(TaskWheel.this.getContext(), new GestureListener());
         pathMeasure = new PathMeasure();
+        TypedArray colorResources = context.getResources().obtainTypedArray(R.array.colorTaskWheel);
+        taskColors = new int[colorResources.length()];
+        for (int i =0; i < taskColors.length; i++) {
+            taskColors[i] = colorResources.getColor(i, 0);
+        }
+        colorResources.recycle();
     }
 
     public void setTextColor(int color) {
@@ -74,14 +89,7 @@ public class TaskWheel extends View {
     public void setTextSize(int size) {
         this.textSize = size;
         textPaint.setTextSize(textSize);
-    }
-
-    public void setTaskWheelColorOne(int color) {
-        this.taskWheelColorOne = color;
-    }
-
-    public void setTaskWheelColorTwo(int color) {
-        this.taskWheelColorTwo = color;
+        disabledTextPaint.setTextSize(textSize);
     }
 
     public void setOnTaskSelectListener(OnTaskSelectListener onTaskSelectListener) {
@@ -129,11 +137,20 @@ public class TaskWheel extends View {
                     width,
                     null);
 
-            canvas.drawTextOnPath(taskWheelItem.task.getDescription().substring(0, length),
-                    taskWheelItem.textPath,
-                    (pathLength/12),
-                    (textSize/2),
-                    textPaint);
+            if (taskWheelItem.task.isAvailable()) {
+                canvas.drawTextOnPath(taskWheelItem.task.getDescription().substring(0, length),
+                        taskWheelItem.textPath,
+                        (pathLength/12),
+                        (textSize/3),
+                        textPaint);
+            } else {
+                canvas.drawTextOnPath(taskWheelItem.task.getDescription().substring(0, length),
+                        taskWheelItem.textPath,
+                        (pathLength/12),
+                        (textSize/3),
+                        disabledTextPaint);
+            }
+
         }
     }
 
@@ -180,15 +197,13 @@ public class TaskWheel extends View {
         // TODO: draw differently if task is not available
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
-        if (index % 2 == 0) {
-            paint.setColor(taskWheelColorOne);
+
+        if (!task.isAvailable()) {
+            paint.setColor(disabledTaskColor);
+        } else if (index >= taskColors.length) {
+            paint.setColor(taskColors[index - taskColors.length]);
         } else {
-            paint.setColor(taskWheelColorTwo);
-        }
-        if (task.isAvailable()) {
-            paint.setAlpha(255);
-        } else {
-            paint.setAlpha(150);
+            paint.setColor(taskColors[index]);
         }
         return paint;
     }

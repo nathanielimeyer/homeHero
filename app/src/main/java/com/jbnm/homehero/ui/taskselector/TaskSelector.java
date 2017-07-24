@@ -16,8 +16,6 @@ public class TaskSelector extends RelativeLayout {
     private View rootView;
     private TaskWheel taskWheel;
 
-    private int taskWheelColorOne = Color.RED;
-    private int getTaskWheelColorTwo = Color.GREEN;
     private int textColor = Color.BLACK;
     private int textSize = getResources().getDimensionPixelSize(R.dimen.default_task_wheel_text_size);
 
@@ -43,15 +41,11 @@ public class TaskSelector extends RelativeLayout {
         taskWheel = rootView.findViewById(R.id.taskSelectorWheel);
         taskWheel.setTextColor(textColor);
         taskWheel.setTextSize(textSize);
-        taskWheel.setTaskWheelColorOne(taskWheelColorOne);
-        taskWheel.setTaskWheelColorTwo(getTaskWheelColorTwo);
     }
 
     private void setAttributes(Context context, AttributeSet attrs) {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TaskSelector, 0, 0);
         try {
-            taskWheelColorOne = a.getColor(R.styleable.TaskSelector_colorOne, Color.RED);
-            getTaskWheelColorTwo = a.getColor(R.styleable.TaskSelector_colorTwo, Color.GREEN);
             textColor = a.getColor(R.styleable.TaskSelector_taskTextColor, Color.BLACK);
             textSize = a.getDimensionPixelSize(R.styleable.TaskSelector_taskTextSize, getResources().getDimensionPixelSize(R.dimen.default_task_wheel_text_size));
         } finally {

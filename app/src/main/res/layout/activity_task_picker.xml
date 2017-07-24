@@ -17,8 +17,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:taskTextColor="@color/colorPrimaryDark"
-        app:taskTextSize="18sp"
-        app:colorOne="@color/taskWheelColorOne"
-        app:colorTwo="@color/taskWheelColorTwo"/>
+        app:taskTextSize="18sp"/>
 
 </android.support.constraint.ConstraintLayout>
