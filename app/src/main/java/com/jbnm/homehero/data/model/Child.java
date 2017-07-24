@@ -1,7 +1,7 @@
 package com.jbnm.homehero.data.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by janek on 7/17/17.
@@ -10,15 +10,15 @@ import java.util.List;
 public class Child {
   private String id;
   private int totalPoints;
-  private Task currentTask;
-  private List<Task> tasks = new ArrayList<>();
-  private Reward currentReward;
-  private List<Reward> rewards = new ArrayList<>();
-  private List<Reward> pendingRewards = new ArrayList<>();
+  private String currentTask;
+  private Map<String, Boolean> tasks = new HashMap<>();
+  private String currentReward;
+  private Map<String, Boolean> rewards = new HashMap<>();
+  private Map<String, Boolean> pendingRewards = new HashMap<>();
 
   public Child() {}
 
-  public Child(String id, List<Task> tasks, List<Reward> rewards) {
+  public Child(String id, Map<String, Boolean> tasks, Map<String, Boolean> rewards) {
     this.id = id;
     this.tasks = tasks;
     this.rewards = rewards;
@@ -41,43 +41,43 @@ public class Child {
     this.totalPoints = totalPoints;
   }
 
-  public Task getCurrentTask() {
+  public String getCurrentTask() {
     return currentTask;
   }
 
-  public void setCurrentTask(Task currentTask) {
+  public void setCurrentTask(String currentTask) {
     this.currentTask = currentTask;
   }
 
-  public List<Task> getTasks() {
+  public Map<String, Boolean> getTasks() {
     return tasks;
   }
 
-  public void setTasks(List<Task> tasks) {
+  public void setTasks(Map<String, Boolean> tasks) {
     this.tasks = tasks;
   }
 
-  public Reward getCurrentReward() {
+  public String getCurrentReward() {
     return currentReward;
   }
 
-  public void setCurrentReward(Reward currentReward) {
+  public void setCurrentReward(String currentReward) {
     this.currentReward = currentReward;
   }
 
-  public List<Reward> getRewards() {
+  public Map<String, Boolean> getRewards() {
     return rewards;
   }
 
-  public void setRewards(List<Reward> rewards) {
+  public void setRewards(Map<String, Boolean> rewards) {
     this.rewards = rewards;
   }
 
-  public List<Reward> getPendingRewards() {
+  public Map<String, Boolean> getPendingRewards() {
     return pendingRewards;
   }
 
-  public void setPendingRewards(List<Reward> pendingRewards) {
+  public void setPendingRewards(Map<String, Boolean> pendingRewards) {
     this.pendingRewards = pendingRewards;
   }
 
@@ -86,11 +86,6 @@ public class Child {
   public int calculatePendingPoints() {
 //    sum up value of all tasks that return true for pendingApproval
     return 5;
-  }
-
-  public List<Task> tasksPendingApproval() {
-//    return list of tasks that return true for pendingApproval
-    return tasks;
   }
 
   public void markTaskApproved(Task task) {

@@ -7,7 +7,7 @@ package com.jbnm.homehero.data.model;
 public class Parent {
   private String id;
   private String email;
-  private Child child;
+  private String child;
 
   public Parent() {}
 
@@ -32,11 +32,11 @@ public class Parent {
     this.email = email;
   }
 
-  public Child getChild() {
+  public String getChild() {
     return child;
   }
 
-  public void setChild(Child child) {
+  public void setChild(String child) {
     this.child = child;
   }
 }
