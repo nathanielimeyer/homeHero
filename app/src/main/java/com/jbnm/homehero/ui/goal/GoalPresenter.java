@@ -1,6 +1,7 @@
 package com.jbnm.homehero.ui.goal;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Reward;
@@ -31,6 +32,7 @@ public class GoalPresenter implements GoalContract.Presenter {
         reward = new Reward("1", "Disneyland", 20, "castle.jpg");
         List<Reward> rewards = Arrays.asList(reward);
         child = new Child("1", tasks, rewards);
+        child.setTotalPoints(10);
         //replace this with code for loading these objects from firebase
 
     }
@@ -51,7 +53,7 @@ public class GoalPresenter implements GoalContract.Presenter {
         if (child.getTotalPoints() >= reward.getValue()) {
 
         } else {
-            mvpView.showProgress("Disneyland", 20, "sadfasdf", 10, 5);
+            mvpView.showProgress(reward.getDescription(), reward.getValue(), reward.getRewardImage(), child.getTotalPoints(), child.calculatePendingPoints());
         }
     }
 }
