@@ -19,6 +19,8 @@ import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,17 +55,36 @@ public class MainActivity extends AppCompatActivity {
 
         Reward reward = new Reward("1", "Disneyland", 20, "castle.jpg");
 
-        dataManager.saveReward(childId, reward).subscribeWith(new DisposableObserver<Boolean>() {
-            @Override public void onNext(Boolean responseBody) {
-                Log.d("test", responseBody.toString());
+//        dataManager.saveTask(childId, task).subscribeWith(new DisposableObserver<Boolean>() {
+//            @Override public void onNext(Boolean responseBody) {
+//                Log.d("test", responseBody.toString());
+//            }
+//
+//            @Override public void onError(Throwable e) {
+//                Log.d("test", "error: " + e.toString());
+//            }
+//
+//            @Override public void onComplete() {
+//                Log.d("test", "complete");
+//            }
+//        });
+
+        dataManager.getAllTasks(childId).subscribe(new SingleObserver<List<Task>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
-            @Override public void onError(Throwable e) {
-                Log.d("test", "error: " + e.toString());
+            @Override
+            public void onSuccess(List<Task> tasks) {
+                for (Task task: tasks) {
+                    Log.d("test", task.getDescription());
+                }
             }
 
-            @Override public void onComplete() {
-                Log.d("test", "complete");
+            @Override
+            public void onError(Throwable e) {
+
             }
         });
 

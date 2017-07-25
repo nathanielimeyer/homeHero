@@ -5,12 +5,16 @@ import com.jbnm.homehero.data.model.Parent;
 import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.data.model.Task;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.Single;
 import io.reactivex.functions.Function;
-import okhttp3.ResponseBody;
 
 /**
  * Created by janek on 7/24/17.
@@ -59,6 +63,20 @@ public class DataManager {
 
     public Observable<Task> getTask(String taskId) {
         return firebaseService.getTaskById(taskId);
+    }
+
+    public Single<List<Task>> getAllTasks(String childId) {
+        return firebaseService.getChildById(childId).switchMap(new Function<Child, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(Child child) throws Exception {
+                return Observable.fromIterable(new ArrayList<String>(child.getTasks().keySet()));
+            }
+        }).flatMap(new Function<String, ObservableSource<Task>>() {
+            @Override
+            public ObservableSource<Task> apply(String s) throws Exception {
+                return firebaseService.getTaskById(s);
+            }
+        }).toList();
     }
 
     public Observable<Boolean> saveReward(final String childId, Reward reward) {
