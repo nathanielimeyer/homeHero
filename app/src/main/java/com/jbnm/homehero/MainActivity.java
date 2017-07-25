@@ -46,45 +46,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testFirebase() {
-        String parentId = "ParentTestId";
         String childId = "-Kpqt2--Ma5rMfjj3z4z";
         DataManager dataManager = new DataManager();
 
         List<String> instructions = Arrays.asList("change bed", "vacuum walls");
         Task task = new Task("1", "Wash your room", instructions, true);
+        Task newTask = Task.newInstance("clean your room", instructions);
 
         Reward reward = new Reward("1", "Disneyland", 20, "castle.jpg");
+        Reward newReward = Reward.newInstance("Disneyland", 20, "castle.jpg");
 
-//        dataManager.saveTask(childId, task).subscribeWith(new DisposableObserver<Boolean>() {
-//            @Override public void onNext(Boolean responseBody) {
-//                Log.d("test", responseBody.toString());
-//            }
-//
-//            @Override public void onError(Throwable e) {
-//                Log.d("test", "error: " + e.toString());
-//            }
-//
-//            @Override public void onComplete() {
-//                Log.d("test", "complete");
-//            }
-//        });
-
-        dataManager.getAllTasks(childId).subscribe(new SingleObserver<List<Task>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
+        dataManager.saveReward(childId, newReward).subscribeWith(new DisposableObserver<Reward>() {
+            @Override public void onNext(Reward responseBody) {
+                Log.d("test", responseBody.getId());
             }
 
-            @Override
-            public void onSuccess(List<Task> tasks) {
-                for (Task task: tasks) {
-                    Log.d("test", task.getDescription());
-                }
+            @Override public void onError(Throwable e) {
+                Log.d("test", "error: " + e.toString());
             }
 
-            @Override
-            public void onError(Throwable e) {
-
+            @Override public void onComplete() {
+                Log.d("test", "complete");
             }
         });
 

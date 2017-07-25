@@ -6,14 +6,12 @@ import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.data.model.Task;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Single;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 
 /**
@@ -39,26 +37,30 @@ public class DataManager {
         return firebaseService.getParentById(parentId);
     }
 
-    public Observable<String> createChild(Child child) {
-        return firebaseService.createChild(child).switchMap(new Function<Map<String, String>, Observable<String>>() {
-            @Override
-            public Observable<String> apply(Map<String, String> stringStringMap) throws Exception {
-                return firebaseService.addChildToParent(parentId, stringStringMap.get("name"));
-            }
-        });
+    public Observable<Child> saveChild(Child child) {
+        return Observable.combineLatest(firebaseService.saveChild(child.getId(), child),
+                firebaseService.addChildToParent(parentId, child.getId()),
+                new BiFunction<Child, String, Child>() {
+                    @Override
+                    public Child apply(Child child, String s) throws Exception {
+                        return child;
+                    }
+                });
     }
 
     public Observable<Child> getChild(String childId) {
         return firebaseService.getChildById(childId);
     }
 
-    public Observable<Boolean> saveTask(final String childId, Task task) {
-        return firebaseService.createTask(task).switchMap(new Function<Map<String, String>, Observable<Boolean>>() {
-            @Override
-            public Observable<Boolean> apply(Map<String, String> stringStringMap) throws Exception {
-                return firebaseService.addTaskToChild(childId, stringStringMap.get("name"), true);
-            }
-        });
+    public Observable<Task> saveTask(String childId, Task task) {
+        return Observable.combineLatest(firebaseService.saveTask(task.getId(), task),
+                firebaseService.addTaskToChild(childId, task.getId(), true),
+                new BiFunction<Task, Boolean, Task>() {
+                    @Override
+                    public Task apply(Task task, Boolean aBoolean) throws Exception {
+                        return task;
+                    }
+                });
     }
 
     public Observable<Task> getTask(String taskId) {
@@ -79,16 +81,32 @@ public class DataManager {
         }).toList();
     }
 
-    public Observable<Boolean> saveReward(final String childId, Reward reward) {
-        return firebaseService.createReward(reward).switchMap(new Function<Map<String, String>, Observable<Boolean>>() {
-            @Override
-            public Observable<Boolean> apply(Map<String, String> stringStringMap) throws Exception {
-                return firebaseService.addRewardsToChild(childId, stringStringMap.get("name"), true);
-            }
-        });
+    public Observable<Reward> saveReward(String childId, Reward reward) {
+        return Observable.combineLatest(firebaseService.saveReward(reward.getId(), reward),
+                firebaseService.addRewardsToChild(childId, reward.getId(), true),
+                new BiFunction<Reward, Boolean, Reward>() {
+                    @Override
+                    public Reward apply(Reward reward, Boolean aBoolean) throws Exception {
+                        return reward;
+                    }
+                });
     }
 
     public Observable<Reward> getReward(String rewardId) {
         return firebaseService.getRewardById(rewardId);
+    }
+
+    public Single<List<Reward>> getAllRewards(String childId) {
+        return firebaseService.getChildById(childId).switchMap(new Function<Child, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(Child child) throws Exception {
+                return Observable.fromIterable(new ArrayList<String>(child.getRewards().keySet()));
+            }
+        }).flatMap(new Function<String, ObservableSource<Reward>>() {
+            @Override
+            public ObservableSource<Reward> apply(String s) throws Exception {
+                return firebaseService.getRewardById(s);
+            }
+        }).toList();
     }
 }
