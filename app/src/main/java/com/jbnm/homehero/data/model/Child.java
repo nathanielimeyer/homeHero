@@ -1,5 +1,7 @@
 package com.jbnm.homehero.data.model;
 
+import com.jbnm.homehero.data.remote.FirebasePushIDGenerator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,15 +10,19 @@ import java.util.Map;
  */
 
 public class Child {
-  private String id;
-  private int totalPoints;
-  private String currentTask;
-  private Map<String, Boolean> tasks = new HashMap<>();
-  private String currentReward;
-  private Map<String, Boolean> rewards = new HashMap<>();
-  private Map<String, Boolean> pendingRewards = new HashMap<>();
+    private String id;
+    private int totalPoints;
+    private String currentTask;
+    private Map<String, Boolean> tasks = new HashMap<>();
+    private String currentReward;
+    private Map<String, Boolean> rewards = new HashMap<>();
+    private Map<String, Boolean> pendingRewards = new HashMap<>();
 
-  public Child() {}
+    public static Child newInstance() {
+        return new Child(FirebasePushIDGenerator.generatePushId());
+    }
+
+    public Child() {}
 
 //  public Child(String id, Map<String, Boolean> tasks, Map<String, Boolean> rewards) {
 //    this.id = id;
@@ -24,88 +30,89 @@ public class Child {
 //    this.rewards = rewards;
 //    this.totalPoints = 0;
 //  }
-  public Child(String id) {
-    this.id = id;
-    this.totalPoints = 0;
-  }
 
-  public String getId() {
-    return id;
-  }
+    public Child(String id) {
+        this.id = id;
+        this.totalPoints = 0;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public int getTotalPoints() {
-    return totalPoints;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public void setTotalPoints(int totalPoints) {
-    this.totalPoints = totalPoints;
-  }
+    public int getTotalPoints() {
+        return totalPoints;
+    }
 
-  public String getCurrentTask() {
-    return currentTask;
-  }
+    public void setTotalPoints(int totalPoints) {
+        this.totalPoints = totalPoints;
+    }
 
-  public void setCurrentTask(String currentTask) {
-    this.currentTask = currentTask;
-  }
+    public String getCurrentTask() {
+        return currentTask;
+    }
 
-  public Map<String, Boolean> getTasks() {
-    return tasks;
-  }
+    public void setCurrentTask(String currentTask) {
+        this.currentTask = currentTask;
+    }
 
-  public void setTasks(Map<String, Boolean> tasks) {
-    this.tasks = tasks;
-  }
+    public Map<String, Boolean> getTasks() {
+        return tasks;
+    }
 
-  public String getCurrentReward() {
-    return currentReward;
-  }
+    public void setTasks(Map<String, Boolean> tasks) {
+        this.tasks = tasks;
+    }
 
-  public void setCurrentReward(String currentReward) {
-    this.currentReward = currentReward;
-  }
+    public String getCurrentReward() {
+        return currentReward;
+    }
 
-  public Map<String, Boolean> getRewards() {
-    return rewards;
-  }
+    public void setCurrentReward(String currentReward) {
+        this.currentReward = currentReward;
+    }
 
-  public void setRewards(Map<String, Boolean> rewards) {
-    this.rewards = rewards;
-  }
+    public Map<String, Boolean> getRewards() {
+        return rewards;
+    }
 
-  public Map<String, Boolean> getPendingRewards() {
-    return pendingRewards;
-  }
+    public void setRewards(Map<String, Boolean> rewards) {
+        this.rewards = rewards;
+    }
 
-  public void setPendingRewards(Map<String, Boolean> pendingRewards) {
-    this.pendingRewards = pendingRewards;
-  }
+    public Map<String, Boolean> getPendingRewards() {
+        return pendingRewards;
+    }
+
+    public void setPendingRewards(Map<String, Boolean> pendingRewards) {
+        this.pendingRewards = pendingRewards;
+    }
 
 
 
-  public int calculatePendingPoints() {
+    public int calculatePendingPoints() {
 //    sum up value of all tasks that return true for pendingApproval
-    return 5;
-  }
+        return 5;
+    }
 
-  public void markTaskApproved(Task task) {
+    public void markTaskApproved(Task task) {
 //    mark task as approved
 //    add points to total points
 //    check if total points is enough to redeem prize
-  }
+    }
 
-  public void redeemReward() {
+    public void redeemReward() {
 //    subtract currentReward value from totalPoints
 //    trigger notification
 //    add currentReward to pendingRewards
-  }
+    }
 
-  public void fulfillReward(Reward reward) {
+    public void fulfillReward(Reward reward) {
 //    remove reward from pendingRewards
 //    increment timesRedeemed from reward in list of all rewards
-  }
+    }
 }

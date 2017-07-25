@@ -1,5 +1,7 @@
 package com.jbnm.homehero.data.model;
 
+import com.jbnm.homehero.data.remote.FirebasePushIDGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,78 +10,82 @@ import java.util.List;
  */
 
 public class Task {
-  private String id;
-  private String description;
-  private List<String> instructions = new ArrayList<>();
-  private boolean available;
-  private long lastCompleted;
+    private String id;
+    private String description;
+    private List<String> instructions = new ArrayList<>();
+    private boolean available;
+    private long lastCompleted;
 
-  public Task() {}
+    public static Task newInstance(String description, List<String> instructions) {
+        return new Task(FirebasePushIDGenerator.generatePushId(), description, instructions, true);
+    }
 
-  public Task(String id, String description, List<String> instructions, boolean available) {
-    this.id = id;
-    this.description = description;
-    this.instructions = instructions;
-    this.available = available;
-  }
+    public Task() {}
 
-  public String getId() {
-    return id;
-  }
+    public Task(String id, String description, List<String> instructions, boolean available) {
+        this.id = id;
+        this.description = description;
+        this.instructions = instructions;
+        this.available = available;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public List<String> getInstructions() {
-    return instructions;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void setInstructions(List<String> instructions) {
-    this.instructions = instructions;
-  }
+    public List<String> getInstructions() {
+        return instructions;
+    }
 
-  public boolean isAvailable() {
-    return available;
-  }
+    public void setInstructions(List<String> instructions) {
+        this.instructions = instructions;
+    }
 
-  public void setAvailable(boolean available) {
-    this.available = available;
-  }
+    public boolean isAvailable() {
+        return available;
+    }
 
-  public long getLastCompleted() {
-    return lastCompleted;
-  }
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 
-  public void setLastCompleted(long lastCompleted) {
-    this.lastCompleted = lastCompleted;
-  }
+    public long getLastCompleted() {
+        return lastCompleted;
+    }
+
+    public void setLastCompleted(long lastCompleted) {
+        this.lastCompleted = lastCompleted;
+    }
 
 
 
-  public void markTaskComplete() {
+    public void markTaskComplete() {
 //    set available to false;
-  }
+    }
 
-  public void markTaskApproved() {
+    public void markTaskApproved() {
 //    set available to true && update lastCompleted;
-  }
+    }
 
-  public boolean hasBeenCompletedToday() {
+    public boolean hasBeenCompletedToday() {
 //    return true if available and lastCompleted is not today.
-    return true;
-  }
+        return true;
+    }
 
-  public boolean pendingApproval() {
+    public boolean pendingApproval() {
 //    return true is available is false and lastCompleted is not today.
-    return true;
-  }
+        return true;
+    }
 }
