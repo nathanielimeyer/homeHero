@@ -3,6 +3,8 @@ package com.jbnm.homehero.data.model;
 import com.jbnm.homehero.data.remote.FirebasePushIDGenerator;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,20 +74,33 @@ public class Task {
 
 
     public void markTaskComplete() {
-//    set available to false;
+        setAvailable(false);
     }
 
     public void markTaskApproved() {
-//    set available to true && update lastCompleted;
+        setAvailable(true);
+        setLastCompleted(truncateDate(new Date()));
     }
 
-    public boolean hasBeenCompletedToday() {
-//    return true if available and lastCompleted is not today.
-        return true;
+    private boolean notCompletedToday() {
+        return lastCompleted < truncateDate(new Date());
+    }
+
+    public boolean availableForSelection() {
+        return available && notCompletedToday();
     }
 
     public boolean pendingApproval() {
-//    return true is available is false and lastCompleted is not today.
-        return true;
+        return !available && notCompletedToday();
+    }
+
+    private static long truncateDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTimeInMillis();
     }
 }

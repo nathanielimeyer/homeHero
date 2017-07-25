@@ -1,13 +1,26 @@
 package com.jbnm.homehero.ui.taskpicker
 
 import com.jbnm.homehero.data.model.Task
+import com.jbnm.homehero.data.remote.DataManager
+import io.reactivex.android.schedulers.AndroidSchedulers
 
-class TaskPickerPresenter(var mvpView: TaskPickerMvpView) {
-
+class TaskPickerPresenter(val mvpView: TaskPickerMvpView) {
+    var dataManager: DataManager? = null
+    init {
+        dataManager = DataManager()
+    }
 
     fun loadTasks() {
-        mvpView.addTasks(generateTasks())
+        val childId = "-Kpulp2slG8NxvjE3l0u"
+        dataManager?.getAllTasks(childId)
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(
+                        {tasks: List<Task> -> mvpView.addTasks(tasks)},
+                        {e: Throwable -> e.printStackTrace()}
+                )
     }
+
+
 
     fun generateTasks(): List<Task> {
         val instructions: List<String> = listOf("step1", "step2")
