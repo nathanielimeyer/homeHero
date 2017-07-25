@@ -1,6 +1,7 @@
 package com.jbnm.homehero.data.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,7 +43,10 @@ public class Child {
   }
 
   public Task getCurrentTask() {
-    return currentTask;
+//      Uncomment to spoof a current task
+//      List<String> instructions = Arrays.asList("change bed", "vacuum walls");
+//      currentTask  = new Task("1", "Wash your room", instructions, true );
+      return currentTask;
   }
 
   public void setCurrentTask(Task currentTask) {
@@ -108,5 +112,14 @@ public class Child {
   public void fulfillReward(Reward reward) {
 //    remove reward from pendingRewards
 //    increment timesRedeemed from reward in list of all rewards
+  }
+
+  public boolean allTasksCompleted() {
+      for (Task task : tasks) {
+          if (task.isAvailable()) {
+              return false;
+          }
+      }
+      return true;
   }
 }

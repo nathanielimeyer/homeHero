@@ -1,7 +1,6 @@
 package com.jbnm.homehero.ui.goal;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Reward;
@@ -53,6 +52,24 @@ public class GoalPresenter implements GoalContract.Presenter {
             mvpView.showRewardAnimation();
         } else {
             mvpView.showProgress(reward.getDescription(), reward.getValue(), reward.getRewardImage(), child.getTotalPoints(), child.calculatePendingPoints());
+        }
+    }
+
+    @Override
+    public void taskButtonClicked() {
+        if (child.getCurrentTask() == null) {
+            mvpView.taskPickerIntent();
+        } else {
+            mvpView.taskProgressIntent();
+        }
+    }
+
+    @Override
+    public void determineTaskButtonStatus() {
+        if (child.allTasksCompleted()) {
+            mvpView.hideTaskButton();
+        } else {
+            mvpView.showTaskButton();
         }
     }
 }

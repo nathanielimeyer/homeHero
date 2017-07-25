@@ -11,9 +11,15 @@ public class GoalContract {
     interface Presenter extends BasePresenter {
         void loadChildData();
         void checkProgress();
+        void taskButtonClicked();
+        void determineTaskButtonStatus();
     }
     interface MvpView extends BaseMvpView {
         void showProgress(String description, int rewardValue, String rewardImage, int approvedPoints, int pendingPoints);
         void showRewardAnimation();
+        void hideTaskButton();
+        void showTaskButton();
+        void taskPickerIntent();
+        void taskProgressIntent();
     }
 }

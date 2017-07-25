@@ -1,8 +1,11 @@
 package com.jbnm.homehero.ui.goal;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hookedonplay.decoviewlib.DecoView;
@@ -11,7 +14,8 @@ import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 import com.jbnm.homehero.R;
-import com.jbnm.homehero.data.model.Child;
+import com.jbnm.homehero.ui.taskpicker.TaskPickerActivity;
+import com.jbnm.homehero.ui.taskprogress.TaskProgressActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,8 +26,8 @@ import butterknife.ButterKnife;
 
 public class GoalActivity extends AppCompatActivity implements GoalContract.MvpView {
     @BindView(R.id.dynamicArcView) DecoView arcView;
-    @BindView(R.id.imageView)
-    ImageView rewardImageView;
+    @BindView(R.id.imageView) ImageView rewardImageView;
+    @BindView(R.id.taskButton) Button taskButton;
     public GoalPresenter presenter;
 
     @Override
@@ -36,6 +40,16 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
         presenter = new GoalPresenter(this, this);
         presenter.loadChildData();
         presenter.checkProgress();
+
+        presenter.determineTaskButtonStatus();
+
+        taskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.taskButtonClicked();
+            }
+        });
+
     }
 
     @Override
@@ -111,5 +125,27 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     @Override
     public void showRewardAnimation() {
 
+    }
+
+    @Override
+    public void hideTaskButton() {
+        taskButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showTaskButton() {
+        taskButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void taskPickerIntent() {
+        Intent intent = new Intent(GoalActivity.this, TaskPickerActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void taskProgressIntent() {
+        Intent intent = new Intent(GoalActivity.this, TaskProgressActivity.class);
+        startActivity(intent);
     }
 }
