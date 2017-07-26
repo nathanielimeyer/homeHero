@@ -33,7 +33,6 @@ public class GoalPresenter implements GoalContract.Presenter {
         child = new Child("1", tasks, rewards);
         child.setTotalPoints(10);
         //replace this with code for loading these objects from firebase
-
     }
 
     @Override

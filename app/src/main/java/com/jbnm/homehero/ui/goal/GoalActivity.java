@@ -1,5 +1,8 @@
 package com.jbnm.homehero.ui.goal;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -130,6 +133,8 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     public void showRewardAnimation() {
         Animation pulse = AnimationUtils.loadAnimation(this, R.anim.heart_pulse);
         rewardImageView.startAnimation(pulse);
+        DialogFragment goalPicker = new GoalPickerDialogFragment();
+        goalPicker.show(getFragmentManager(), "goalPicker");
     }
 
     @Override
