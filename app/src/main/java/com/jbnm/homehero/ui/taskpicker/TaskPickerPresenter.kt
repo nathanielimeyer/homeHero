@@ -13,6 +13,7 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
     init {
         dataManager = DataManager()
         disposable = CompositeDisposable()
+        mvpView.showLoading()
     }
 
     override fun loadTasks() {
@@ -33,6 +34,7 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
     }
 
     fun processTasks(tasks: List<Task>) {
+        mvpView.hideLoading()
         mvpView.addTasks(tasks)
         mvpView.showTasksCompleted(tasks.filter { it.availableForSelection() }.size, tasks.size)
     }

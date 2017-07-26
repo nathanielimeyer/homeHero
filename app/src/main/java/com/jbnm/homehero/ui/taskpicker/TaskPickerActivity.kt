@@ -2,6 +2,7 @@ package com.jbnm.homehero.ui.taskpicker
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.jbnm.homehero.R
 import com.jbnm.homehero.data.model.Task
@@ -35,7 +36,7 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
     }
 
     override fun showTasksCompleted(tasksCompleted: Int, tasksRequired: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        tasksCompletedTextView.text = String.format(getString(R.string.tasks_completed), tasksCompleted, tasksRequired)
     }
 
     override fun goalProgressIntent() {
@@ -47,10 +48,14 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
     }
 
     override fun showLoading(): Boolean {
+        taskSelector.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
         return false
     }
 
     override fun hideLoading() {
+        taskSelector.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
     }
 
     override fun showError(): Boolean {
