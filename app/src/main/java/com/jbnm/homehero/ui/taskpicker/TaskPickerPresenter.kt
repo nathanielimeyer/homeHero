@@ -1,11 +1,9 @@
 package com.jbnm.homehero.ui.taskpicker
 
-import android.util.Log
 import com.jbnm.homehero.data.model.Task
 import com.jbnm.homehero.data.remote.DataManager
 import com.jbnm.homehero.ui.base.BasePresenter
 import io.reactivex.Observer
-import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -36,7 +34,6 @@ class TaskPickerPresenter(val mvpView: TaskPickerMvpView) : BasePresenter {
     }
 
     override fun detach() {
-        Log.d("test", "size: ${disposable?.size()}")
         disposable?.clear()
     }
 
