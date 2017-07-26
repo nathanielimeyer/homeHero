@@ -31,7 +31,7 @@ public class TaskWheel extends View {
     private Paint disabledTextPaint;
     private PathMeasure pathMeasure;
 
-    private int disabledTaskColor = R.color.colorDisabledTask;
+    private int disabledTaskColor = getResources().getColor(R.color.colorDisabledTask);
     private int[] taskColors;
     private int textColor;
     private int textSize;
@@ -137,7 +137,7 @@ public class TaskWheel extends View {
                     width,
                     null);
 
-            if (taskWheelItem.task.isAvailable()) {
+            if (taskWheelItem.task.availableForSelection()) {
                 canvas.drawTextOnPath(taskWheelItem.task.getDescription().substring(0, length),
                         taskWheelItem.textPath,
                         (pathLength/12),
@@ -163,6 +163,7 @@ public class TaskWheel extends View {
             taskWheelItem.taskPaint = getTaskPaint(taskWheelItem.task, i);
             taskWheelItems.add(taskWheelItem);
         }
+        calculateTaskPaths();
         invalidate();
     }
 
@@ -198,7 +199,7 @@ public class TaskWheel extends View {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
 
-        if (!task.isAvailable()) {
+        if (!task.availableForSelection()) {
             paint.setColor(disabledTaskColor);
         } else if (index >= taskColors.length) {
             paint.setColor(taskColors[index - taskColors.length]);
@@ -258,7 +259,7 @@ public class TaskWheel extends View {
     }
 
     private int getAvailableTask(int taskIndex) {
-        if (taskWheelItems.get(taskIndex).task.isAvailable()) {
+        if (taskWheelItems.get(taskIndex).task.availableForSelection()) {
             return taskIndex;
         }
         if (taskIndex == taskWheelItems.size() - 1) {
