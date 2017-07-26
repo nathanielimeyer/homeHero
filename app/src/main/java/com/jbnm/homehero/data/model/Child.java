@@ -1,125 +1,127 @@
 package com.jbnm.homehero.data.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.jbnm.homehero.data.remote.FirebasePushIDGenerator;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by janek on 7/17/17.
  */
 
 public class Child {
-  private String id;
-  private int totalPoints;
-  private Task currentTask;
-  private List<Task> tasks = new ArrayList<>();
-  private Reward currentReward;
-  private List<Reward> rewards = new ArrayList<>();
-  private List<Reward> pendingRewards = new ArrayList<>();
+    private String id;
+    private int totalPoints;
+    private String currentTask;
+    private Map<String, Boolean> tasks = new HashMap<>();
+    private String currentReward;
+    private Map<String, Boolean> rewards = new HashMap<>();
+    private Map<String, Boolean> pendingRewards = new HashMap<>();
 
-  public Child() {}
+    public static Child newInstance() {
+        return new Child(FirebasePushIDGenerator.generatePushId());
+    }
 
-  public Child(String id, List<Task> tasks, List<Reward> rewards) {
-    this.id = id;
-    this.tasks = tasks;
-    this.rewards = rewards;
-    this.totalPoints = 0;
-  }
+    public Child() {}
 
-  public String getId() {
-    return id;
-  }
+//  public Child(String id, Map<String, Boolean> tasks, Map<String, Boolean> rewards) {
+//    this.id = id;
+//    this.tasks = tasks;
+//    this.rewards = rewards;
+//    this.totalPoints = 0;
+//  }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public Child(String id) {
+        this.id = id;
+        this.totalPoints = 0;
+    }
 
-  public int getTotalPoints() {
-    return totalPoints;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setTotalPoints(int totalPoints) {
-    this.totalPoints = totalPoints;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public Task getCurrentTask() {
-//      Uncomment to spoof a current task
-//      List<String> instructions = Arrays.asList("change bed", "vacuum walls");
-//      currentTask  = new Task("1", "Wash your room", instructions, true );
-      return currentTask;
-  }
+    public int getTotalPoints() {
+        return totalPoints;
+    }
 
-  public void setCurrentTask(Task currentTask) {
-    this.currentTask = currentTask;
-  }
+    public void setTotalPoints(int totalPoints) {
+        this.totalPoints = totalPoints;
+    }
 
-  public List<Task> getTasks() {
-    return tasks;
-  }
+    public String getCurrentTask() {
+        return currentTask;
+    }
 
-  public void setTasks(List<Task> tasks) {
-    this.tasks = tasks;
-  }
+    public void setCurrentTask(String currentTask) {
+        this.currentTask = currentTask;
+    }
 
-  public Reward getCurrentReward() {
-    return currentReward;
-  }
+    public Map<String, Boolean> getTasks() {
+        return tasks;
+    }
 
-  public void setCurrentReward(Reward currentReward) {
-    this.currentReward = currentReward;
-  }
+    public void setTasks(Map<String, Boolean> tasks) {
+        this.tasks = tasks;
+    }
 
-  public List<Reward> getRewards() {
-    return rewards;
-  }
+    public String getCurrentReward() {
+        return currentReward;
+    }
 
-  public void setRewards(List<Reward> rewards) {
-    this.rewards = rewards;
-  }
+    public void setCurrentReward(String currentReward) {
+        this.currentReward = currentReward;
+    }
 
-  public List<Reward> getPendingRewards() {
-    return pendingRewards;
-  }
+    public Map<String, Boolean> getRewards() {
+        return rewards;
+    }
 
-  public void setPendingRewards(List<Reward> pendingRewards) {
-    this.pendingRewards = pendingRewards;
-  }
+    public void setRewards(Map<String, Boolean> rewards) {
+        this.rewards = rewards;
+    }
+
+    public Map<String, Boolean> getPendingRewards() {
+        return pendingRewards;
+    }
+
+    public void setPendingRewards(Map<String, Boolean> pendingRewards) {
+        this.pendingRewards = pendingRewards;
+    }
 
 
 
-  public int calculatePendingPoints() {
+    public int calculatePendingPoints() {
 //    sum up value of all tasks that return true for pendingApproval
-    return 5;
-  }
+        return 5;
+    }
 
-  public List<Task> tasksPendingApproval() {
-//    return list of tasks that return true for pendingApproval
-    return tasks;
-  }
-
-  public void markTaskApproved(Task task) {
+    public void markTaskApproved(Task task) {
 //    mark task as approved
 //    add points to total points
 //    check if total points is enough to redeem prize
-  }
+    }
 
-  public void redeemReward() {
+    public void redeemReward() {
 //    subtract currentReward value from totalPoints
 //    trigger notification
 //    add currentReward to pendingRewards
-  }
+    }
 
-  public void fulfillReward(Reward reward) {
+    public void fulfillReward(Reward reward) {
 //    remove reward from pendingRewards
 //    increment timesRedeemed from reward in list of all rewards
   }
 
-  public boolean allTasksCompleted() {
-      for (Task task : tasks) {
-          if (task.isAvailable()) {
-              return false;
-          }
-      }
-      return true;
-  }
+//  public boolean allTasksCompleted() {
+//      for (Task task : tasks) {
+//          if (task.isAvailable()) {
+//              return false;
+//          }
+//      }
+//      return true;
+//  }
 }
