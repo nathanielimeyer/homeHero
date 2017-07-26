@@ -1,5 +1,6 @@
 package com.jbnm.homehero.ui.taskpicker
 
+import android.animation.ObjectAnimator
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -37,6 +38,11 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
 
     override fun showTasksCompleted(tasksCompleted: Int, tasksRequired: Int) {
         tasksCompletedTextView.text = String.format(getString(R.string.tasks_completed), tasksCompleted, tasksRequired)
+        tasksCompletedRatingBar.numStars = tasksRequired
+        val animation: ObjectAnimator = ObjectAnimator.ofFloat(tasksCompletedRatingBar, "rating", tasksCompleted.toFloat())
+        animation.duration = 500
+        animation.start()
+
     }
 
     override fun goalProgressIntent() {
@@ -49,12 +55,16 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
 
     override fun showLoading(): Boolean {
         taskSelector.visibility = View.GONE
+        tasksCompletedTextView.visibility = View.GONE
+        tasksCompletedRatingBar.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
         return false
     }
 
     override fun hideLoading() {
         taskSelector.visibility = View.VISIBLE
+        tasksCompletedTextView.visibility = View.VISIBLE
+        tasksCompletedRatingBar.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
     }
 
