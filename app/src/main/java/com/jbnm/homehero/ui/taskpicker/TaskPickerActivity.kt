@@ -21,6 +21,11 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerMvpView {
         taskSelector.setOnTaskSelectListener { task -> Toast.makeText(this, task.description, Toast.LENGTH_SHORT).show() }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detach()
+    }
+
     override fun addTasks(tasks: List<Task>) {
         taskSelector.addTasks(tasks)
     }

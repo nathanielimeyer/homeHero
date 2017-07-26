@@ -67,7 +67,7 @@ public class DataManager {
         return firebaseService.getTaskById(taskId);
     }
 
-    public Single<List<Task>> getAllTasks(String childId) {
+    public Observable<List<Task>> getAllTasks(String childId) {
         return firebaseService.getChildById(childId).switchMap(new Function<Child, ObservableSource<String>>() {
             @Override
             public ObservableSource<String> apply(Child child) throws Exception {
@@ -78,7 +78,7 @@ public class DataManager {
             public ObservableSource<Task> apply(String s) throws Exception {
                 return firebaseService.getTaskById(s);
             }
-        }).toList();
+        }).toList().toObservable();
     }
 
     public Observable<Reward> saveReward(String childId, Reward reward) {
@@ -96,7 +96,7 @@ public class DataManager {
         return firebaseService.getRewardById(rewardId);
     }
 
-    public Single<List<Reward>> getAllRewards(String childId) {
+    public Observable<List<Reward>> getAllRewards(String childId) {
         return firebaseService.getChildById(childId).switchMap(new Function<Child, ObservableSource<String>>() {
             @Override
             public ObservableSource<String> apply(Child child) throws Exception {
@@ -107,6 +107,6 @@ public class DataManager {
             public ObservableSource<Reward> apply(String s) throws Exception {
                 return firebaseService.getRewardById(s);
             }
-        }).toList();
+        }).toList().toObservable();
     }
 }
