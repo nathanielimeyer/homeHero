@@ -1,12 +1,14 @@
 package com.jbnm.homehero.ui.taskpicker
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.jbnm.homehero.R
 import com.jbnm.homehero.data.model.Task
+import com.jbnm.homehero.ui.goal.GoalActivity
 
 import kotlinx.android.synthetic.main.activity_task_picker.*
 
@@ -21,6 +23,8 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
         presenter.loadTasks()
 
         taskSelector.setOnTaskSelectListener { presenter.taskSelected(it) }
+
+        goalProgressButton.setOnClickListener { presenter.goalButtonClick() }
     }
 
     override fun onDestroy() {
@@ -46,7 +50,8 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
     }
 
     override fun goalProgressIntent() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent: Intent = Intent(this, GoalActivity::class.java)
+        startActivity(intent)
     }
 
     override fun taskProgressIntent() {
@@ -57,6 +62,7 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
         taskSelector.visibility = View.GONE
         tasksCompletedTextView.visibility = View.GONE
         tasksCompletedRatingBar.visibility = View.GONE
+        goalProgressButton.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
         return false
     }
@@ -65,6 +71,7 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
         taskSelector.visibility = View.VISIBLE
         tasksCompletedTextView.visibility = View.VISIBLE
         tasksCompletedRatingBar.visibility = View.VISIBLE
+        goalProgressButton.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
     }
 

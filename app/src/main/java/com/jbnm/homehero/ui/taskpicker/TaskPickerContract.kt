@@ -8,6 +8,7 @@ class TaskPickerContract {
     interface Presenter : BasePresenter {
         fun loadTasks()
         fun taskSelected(task: Task)
+        fun goalButtonClick()
     }
     interface MvpView : BaseMvpView {
         fun addTasks(tasks: List<Task>)
