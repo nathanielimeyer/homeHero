@@ -44,11 +44,15 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
     }
 
     override fun taskSelected(task: Task) {
-        mvpView.showSelectedTask(task.description)
+        mvpView.showSelectedTask(task)
     }
 
     override fun goalButtonClick() {
         mvpView.goalProgressIntent()
+    }
+
+    override fun taskButtonClick(task: Task) {
+        mvpView.taskProgressIntent(task)
     }
 
 }

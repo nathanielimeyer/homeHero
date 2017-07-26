@@ -2,4 +2,6 @@
     <string name="app_name">HomeHero</string>
     
     <string name="tasks_completed">Tasks Completed %d / %d</string>
+    <string name="task_get_started">Get Started</string>
+    <string name="task_select_result">Your Task: %s</string>
 </resources>
