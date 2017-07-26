@@ -9,7 +9,7 @@ import com.jbnm.homehero.ui.base.BasePresenter;
 
 public class GoalContract {
     interface Presenter extends BasePresenter {
-        void loadChildData();
+        void loadData();
         void checkProgress();
         void taskButtonClicked();
         void determineTaskButtonStatus();
@@ -21,5 +21,7 @@ public class GoalContract {
         void showTaskButton();
         void taskPickerIntent();
         void taskProgressIntent();
+        void setGoalDescription(String description);
+        void setGoalImage(String rewardImage);
     }
 }

@@ -7,18 +7,28 @@
     android:orientation="vertical"
     tools:context="com.jbnm.homehero.ui.goal.GoalActivity">
 
+    <TextView
+        android:id="@+id/goalDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/goalDescriptionText" />
+
     <com.hookedonplay.decoviewlib.DecoView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/dynamicArcView"/>
+        android:id="@+id/dynamicArcView"
+        android:layout_margin="8dp"/>
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         app:srcCompat="@drawable/camping"
-        android:contentDescription="@string/goalImageDescription" />
+        android:visibility="visible"/>
 
     <Button
         android:id="@+id/taskButton"

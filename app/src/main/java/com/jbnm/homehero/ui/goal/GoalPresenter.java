@@ -28,7 +28,7 @@ public class GoalPresenter implements GoalContract.Presenter {
         List<String> instructions = Arrays.asList("change bed", "vacuum walls");
         task = new Task("1", "Wash your room", instructions, true );
         List<Task> tasks = Arrays.asList(task);
-        reward = new Reward("1", "Disneyland", 20, "castle.jpg");
+        reward = new Reward("1", "Disneyland", 10, "disneycastle");
         List<Reward> rewards = Arrays.asList(reward);
         child = new Child("1", tasks, rewards);
         child.setTotalPoints(10);
@@ -42,13 +42,15 @@ public class GoalPresenter implements GoalContract.Presenter {
     }
 
     @Override
-    public void loadChildData() {
-
+    public void loadData() {
+        mvpView.setGoalDescription(reward.getDescription());
+        mvpView.setGoalImage(reward.getRewardImage());
     }
 
     @Override
     public void checkProgress() {
         if (child.getTotalPoints() >= reward.getValue()) {
+            mvpView.showProgress(reward.getDescription(), reward.getValue(), reward.getRewardImage(), child.getTotalPoints(), child.calculatePendingPoints());
             mvpView.showRewardAnimation();
         } else {
             mvpView.showProgress(reward.getDescription(), reward.getValue(), reward.getRewardImage(), child.getTotalPoints(), child.calculatePendingPoints());

@@ -5,8 +5,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.EdgeDetail;
@@ -28,6 +31,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     @BindView(R.id.dynamicArcView) DecoView arcView;
     @BindView(R.id.imageView) ImageView rewardImageView;
     @BindView(R.id.taskButton) Button taskButton;
+    @BindView(R.id.goalDescriptionTextView) TextView goalDescriptionTextView;
     public GoalPresenter presenter;
 
     @Override
@@ -38,7 +42,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
         ButterKnife.bind(this);
 
         presenter = new GoalPresenter(this, this);
-        presenter.loadChildData();
+        presenter.loadData();
         presenter.checkProgress();
 
         presenter.determineTaskButtonStatus();
@@ -124,7 +128,8 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
 
     @Override
     public void showRewardAnimation() {
-
+        Animation pulse = AnimationUtils.loadAnimation(this, R.anim.heart_pulse);
+        rewardImageView.startAnimation(pulse);
     }
 
     @Override
@@ -147,5 +152,15 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     public void taskProgressIntent() {
         Intent intent = new Intent(GoalActivity.this, TaskProgressActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void setGoalDescription(String description) {
+        goalDescriptionTextView.setText(description);
+    }
+
+    @Override
+    public void setGoalImage(String rewardImage) {
+        rewardImageView.setImageResource(getResources().getIdentifier(rewardImage, "drawable", getPackageName()));
     }
 }
