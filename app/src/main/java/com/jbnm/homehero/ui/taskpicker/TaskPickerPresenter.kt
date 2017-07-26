@@ -19,7 +19,7 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
         val childId = "-Kpulp2slG8NxvjE3l0u"
         dataManager?.getAllTasks(childId)
                 ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(getObserver {tasks -> mvpView.addTasks(tasks)})
+                ?.subscribe(getObserver {tasks -> processTasks(tasks)})
     }
 
     inline fun <T> getObserver(crossinline body: (T) -> Unit) = object : Observer<T>{
@@ -30,6 +30,11 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
         override fun onNext(t: T) { body(t) }
 
         override fun onError(e: Throwable) { e.printStackTrace() }
+    }
+
+    fun processTasks(tasks: List<Task>) {
+        mvpView.addTasks(tasks)
+        mvpView.showTasksCompleted(tasks.filter { it.availableForSelection() }.size, tasks.size)
     }
 
     override fun detach() {
