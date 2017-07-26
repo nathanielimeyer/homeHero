@@ -1,5 +1,7 @@
 package com.jbnm.homehero.ui.taskpicker
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -19,6 +21,7 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_picker)
+
         presenter = TaskPickerPresenter(this)
         presenter.loadTasks()
 
@@ -59,20 +62,29 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
     }
 
     override fun showLoading(): Boolean {
-        taskSelector.visibility = View.GONE
-        tasksCompletedTextView.visibility = View.GONE
-        tasksCompletedRatingBar.visibility = View.GONE
-        goalProgressButton.visibility = View.GONE
+        content.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
         return false
     }
 
     override fun hideLoading() {
-        taskSelector.visibility = View.VISIBLE
-        tasksCompletedTextView.visibility = View.VISIBLE
-        tasksCompletedRatingBar.visibility = View.VISIBLE
-        goalProgressButton.visibility = View.VISIBLE
-        progressBar.visibility = View.GONE
+        val shortAnimationDuration = resources.getInteger(android.R.integer.config_mediumAnimTime)
+        content.alpha = 0f
+        content.visibility = View.VISIBLE
+
+        content.animate()
+                .alpha(1f)
+                .setDuration(shortAnimationDuration.toLong())
+                .setListener(null)
+
+        progressBar.animate()
+                .alpha(0f)
+                .setDuration(shortAnimationDuration.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        progressBar.visibility = View.GONE
+                    }
+                })
     }
 
     override fun showError(): Boolean {
