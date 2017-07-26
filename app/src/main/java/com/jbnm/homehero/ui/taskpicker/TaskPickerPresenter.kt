@@ -1,25 +1,44 @@
 package com.jbnm.homehero.ui.taskpicker
 
+import android.util.Log
 import com.jbnm.homehero.data.model.Task
 import com.jbnm.homehero.data.remote.DataManager
+import com.jbnm.homehero.ui.base.BasePresenter
+import io.reactivex.Observer
+import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
-class TaskPickerPresenter(val mvpView: TaskPickerMvpView) {
+class TaskPickerPresenter(val mvpView: TaskPickerMvpView) : BasePresenter {
     var dataManager: DataManager? = null
+    var disposable: CompositeDisposable? = null
     init {
         dataManager = DataManager()
+        disposable = CompositeDisposable()
     }
 
     fun loadTasks() {
         val childId = "-Kpulp2slG8NxvjE3l0u"
         dataManager?.getAllTasks(childId)
                 ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(
-                        {tasks: List<Task> -> mvpView.addTasks(tasks)},
-                        {e: Throwable -> e.printStackTrace()}
-                )
+                ?.subscribe(getObserver {tasks -> mvpView.addTasks(tasks)})
     }
 
+    inline fun <T> getObserver(crossinline body: (T) -> Unit) = object : Observer<T>{
+        override fun onSubscribe(d: Disposable) { disposable?.add(d) }
+
+        override fun onComplete() {}
+
+        override fun onNext(t: T) { body(t) }
+
+        override fun onError(e: Throwable) { e.printStackTrace() }
+    }
+
+    override fun detach() {
+        Log.d("test", "size: ${disposable?.size()}")
+        disposable?.clear()
+    }
 
 
     fun generateTasks(): List<Task> {
