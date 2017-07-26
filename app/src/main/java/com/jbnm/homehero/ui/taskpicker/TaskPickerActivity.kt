@@ -34,6 +34,18 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
         Toast.makeText(this, task, Toast.LENGTH_SHORT).show()
     }
 
+    override fun showTasksCompleted(tasksCompleted: Int, tasksRequired: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun goalProgressIntent() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun taskProgressIntent() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun showLoading(): Boolean {
         return false
     }
