@@ -6,8 +6,8 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.jbnm.homehero.R
 import com.jbnm.homehero.data.model.Task
 import com.jbnm.homehero.ui.goal.GoalActivity
@@ -39,8 +39,29 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
         taskSelector.addTasks(tasks)
     }
 
-    override fun showSelectedTask(task: String) {
-        Toast.makeText(this, task, Toast.LENGTH_SHORT).show()
+    override fun showSelectedTask(task: Task) {
+        val animationDuration = resources.getInteger(android.R.integer.config_longAnimTime).toLong()
+
+        resultTextView.text = String.format(getString(R.string.task_select_result), task.description)
+        taskProgressButton.setOnClickListener { presenter.taskButtonClick(task) }
+
+        result.alpha = 0f
+        result.visibility = View.VISIBLE
+
+        result.animate()
+                .alpha(1f)
+                .setDuration(animationDuration)
+                .setListener(null)
+
+        content.animate()
+                .alpha(0f)
+                .setDuration(animationDuration)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        content.visibility = View.GONE
+                    }
+                })
+
     }
 
     override fun showTasksCompleted(tasksCompleted: Int, tasksRequired: Int) {
@@ -48,6 +69,7 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
         tasksCompletedRatingBar.numStars = tasksRequired
         val animation: ObjectAnimator = ObjectAnimator.ofFloat(tasksCompletedRatingBar, "rating", tasksCompleted.toFloat())
         animation.duration = 500
+        animation.startDelay = 500
         animation.start()
 
     }
@@ -57,29 +79,31 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
         startActivity(intent)
     }
 
-    override fun taskProgressIntent() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun taskProgressIntent(task: Task) {
+        Log.d("TaskPickerActivity", task.description)
     }
 
     override fun showLoading(): Boolean {
+        result.visibility = View.GONE
         content.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
         return false
     }
 
     override fun hideLoading() {
-        val shortAnimationDuration = resources.getInteger(android.R.integer.config_mediumAnimTime)
+        val animationDuration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+
         content.alpha = 0f
         content.visibility = View.VISIBLE
 
         content.animate()
                 .alpha(1f)
-                .setDuration(shortAnimationDuration.toLong())
+                .setDuration(animationDuration)
                 .setListener(null)
 
         progressBar.animate()
                 .alpha(0f)
-                .setDuration(shortAnimationDuration.toLong())
+                .setDuration(animationDuration)
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator?) {
                         progressBar.visibility = View.GONE

@@ -9,12 +9,13 @@ class TaskPickerContract {
         fun loadTasks()
         fun taskSelected(task: Task)
         fun goalButtonClick()
+        fun taskButtonClick(task: Task)
     }
     interface MvpView : BaseMvpView {
         fun addTasks(tasks: List<Task>)
-        fun showSelectedTask(task: String)
+        fun showSelectedTask(task: Task)
         fun showTasksCompleted(tasksCompleted: Int, tasksRequired: Int)
-        fun taskProgressIntent()
+        fun taskProgressIntent(task: Task)
         fun goalProgressIntent()
     }
 }
