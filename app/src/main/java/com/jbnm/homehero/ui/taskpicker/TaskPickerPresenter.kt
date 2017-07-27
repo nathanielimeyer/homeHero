@@ -32,10 +32,13 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
     }
 
     fun processError(error: Throwable) {
+        // Handle error here
+        mvpView.hideLoading()
         error.printStackTrace()
     }
 
     fun checkTutorialViewed() {
+        // check if sharedPref for tutorial viewed exists
         mvpView.showTutorial()
     }
 
@@ -52,15 +55,16 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
                         { processError(it) }))
     }
 
-    override fun goalButtonClick() {
+    override fun handleGoalButtonClick() {
         mvpView.goalProgressIntent()
     }
 
-    override fun taskButtonClick(task: Task) {
+    override fun handleTaskButtonClick(task: Task) {
         mvpView.taskProgressIntent(task)
     }
 
-    override fun tutorialClick() {
+    override fun handleTutorialClick() {
+        // set sharedPref for tutorial viewed
         mvpView.hideTutorial()
     }
 
