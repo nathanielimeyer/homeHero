@@ -132,7 +132,21 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     @Override
     public void showRewardAnimation() {
         Animation pulse = AnimationUtils.loadAnimation(this, R.anim.heart_pulse);
+        pulse.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                showGoalPickerDialog();
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
         rewardImageView.startAnimation(pulse);
+    }
+
+    @Override
+    public void showGoalPickerDialog() {
         DialogFragment goalPicker = new GoalPickerDialogFragment();
         goalPicker.show(getFragmentManager(), "goalPicker");
     }

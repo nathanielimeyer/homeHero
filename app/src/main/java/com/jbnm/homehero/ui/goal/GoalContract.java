@@ -17,6 +17,7 @@ public class GoalContract {
     interface MvpView extends BaseMvpView {
         void showProgress(String description, int rewardValue, String rewardImage, int approvedPoints, int pendingPoints);
         void showRewardAnimation();
+        void showGoalPickerDialog();
         void hideTaskButton();
         void showTaskButton();
         void taskPickerIntent();
