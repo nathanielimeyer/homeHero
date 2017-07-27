@@ -30,6 +30,7 @@ public class GoalPresenter implements GoalContract.Presenter {
     public GoalPresenter(GoalContract.MvpView view, Context context) {
         mvpView = view;
         mContext = context;
+        dataManager = new DataManager();
 
 //        String childId = "-Kpulp2slG8NxvjE3l0u";
 //        dataManager.getChild(childId).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Child>() {
