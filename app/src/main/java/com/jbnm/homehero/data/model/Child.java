@@ -33,7 +33,7 @@ public class Child {
 
     public Child(String id) {
         this.id = id;
-        this.totalPoints = 0;
+        this.totalPoints = 10;
     }
 
     public String getId() {
@@ -116,12 +116,12 @@ public class Child {
 //    increment timesRedeemed from reward in list of all rewards
   }
 
-//  public boolean allTasksCompleted() {
+  public boolean allTasksCompleted() {
 //      for (Task task : tasks) {
 //          if (task.isAvailable()) {
 //              return false;
 //          }
 //      }
-//      return true;
-//  }
+      return true;
+  }
 }
