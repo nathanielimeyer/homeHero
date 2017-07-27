@@ -7,6 +7,8 @@ import com.jbnm.homehero.data.model.Task;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -58,10 +60,14 @@ public class FirebaseService {
 
     private static final String FIREBASE_URL = "https://homehero-a7715.firebaseio.com/";
 
+    private static OkHttpClient httpClient = new OkHttpClient.Builder()
+            .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build();
+
     private static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(FIREBASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .client(httpClient)
             .build();
 
     public static <S> S createService(Class<S> serviceClass) {
