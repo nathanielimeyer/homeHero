@@ -83,6 +83,7 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
     }
 
     override fun showLoading(): Boolean {
+        tutorialView.visibility = View.GONE
         result.visibility = View.GONE
         content.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
@@ -115,5 +116,14 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
     }
 
     override fun hideError() {
+    }
+
+    override fun showTutorial() {
+        tutorialView.visibility = View.VISIBLE
+        tutorialView.setOnClickListener { presenter.tutorialClick() }
+    }
+
+    override fun hideTutorial() {
+        tutorialView.visibility = View.GONE
     }
 }
