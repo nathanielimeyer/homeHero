@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.task_picker_result.*
 class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
 
     lateinit var presenter: TaskPickerContract.Presenter
-    var tutorialAnimation: ObjectAnimator? = null
+    lateinit var tutorialAnimation: ObjectAnimator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
         result.visibility = View.GONE
 
         taskSelector.setOnTaskSelectListener { presenter.taskSelected(it) }
-        goalProgressButton.setOnClickListener { presenter.goalButtonClick() }
+        goalProgressButton.setOnClickListener { presenter.handleGoalButtonClick() }
     }
 
     override fun onDestroy() {
@@ -45,7 +45,7 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
         val animationDuration = resources.getInteger(android.R.integer.config_longAnimTime).toLong()
 
         resultTextView.text = String.format(getString(R.string.task_select_result), task.description)
-        taskProgressButton.setOnClickListener { presenter.taskButtonClick(task) }
+        taskProgressButton.setOnClickListener { presenter.handleTaskButtonClick(task) }
 
         result.alpha = 0f
         result.visibility = View.VISIBLE
@@ -90,16 +90,16 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
         tutorialAnimation = ObjectAnimator.ofPropertyValuesHolder(tutorialImageView,
                 PropertyValuesHolder.ofFloat("scaleX", 0.8f),
                 PropertyValuesHolder.ofFloat("scaleY", 0.8f))
-        tutorialAnimation?.duration = 500
-        tutorialAnimation?.repeatCount = ObjectAnimator.INFINITE
-        tutorialAnimation?.repeatMode = ObjectAnimator.REVERSE
-        tutorialAnimation?.start()
+        tutorialAnimation.duration = 500
+        tutorialAnimation.repeatCount = ObjectAnimator.INFINITE
+        tutorialAnimation.repeatMode = ObjectAnimator.REVERSE
+        tutorialAnimation.start()
 
-        taskSelector.setOnSpinStartListener { presenter.tutorialClick() }
+        taskSelector.setOnSpinStartListener { presenter.handleTutorialClick() }
     }
 
     override fun hideTutorial() {
         tutorialImageView.visibility = View.GONE
-        tutorialAnimation?.end()
+        tutorialAnimation.end()
     }
 }
