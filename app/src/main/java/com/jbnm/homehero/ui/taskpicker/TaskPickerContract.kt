@@ -6,7 +6,6 @@ import com.jbnm.homehero.ui.base.BasePresenter
 
 class TaskPickerContract {
     interface Presenter : BasePresenter {
-        fun loadTasks()
         fun taskSelected(task: Task)
         fun goalButtonClick()
         fun taskButtonClick(task: Task)

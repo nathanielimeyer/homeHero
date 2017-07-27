@@ -11,6 +11,8 @@ import io.reactivex.disposables.Disposable
 class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerContract.Presenter {
     var dataManager: DataManager? = null
     var disposable: CompositeDisposable? = null
+
+    // Temporary, will be passed in to from activity or retrieved based on logged in user
     val childId = "-Kpulp2slG8NxvjE3l0u"
     var child: Child? = null
     init {
@@ -26,7 +28,7 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
                 })
     }
 
-    override fun loadTasks() {
+    fun loadTasks() {
         dataManager?.getAllTasksFromList(child?.tasks?.keys?.toList())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(getObserver {tasks -> processTasks(tasks)})
