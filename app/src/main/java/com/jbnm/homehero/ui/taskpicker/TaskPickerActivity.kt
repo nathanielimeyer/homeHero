@@ -23,7 +23,7 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
         setContentView(R.layout.activity_task_picker)
 
         presenter = TaskPickerPresenter(this)
-        presenter.loadTasks()
+//        presenter.loadTasks()
 
         taskSelector.setOnTaskSelectListener { presenter.taskSelected(it) }
 

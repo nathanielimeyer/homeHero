@@ -1,5 +1,6 @@
 package com.jbnm.homehero.ui.taskpicker
 
+import com.jbnm.homehero.data.model.Child
 import com.jbnm.homehero.data.model.Task
 import com.jbnm.homehero.data.remote.DataManager
 import io.reactivex.Observer
@@ -10,15 +11,23 @@ import io.reactivex.disposables.Disposable
 class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerContract.Presenter {
     var dataManager: DataManager? = null
     var disposable: CompositeDisposable? = null
+    val childId = "-Kpulp2slG8NxvjE3l0u"
+    var child: Child? = null
     init {
         dataManager = DataManager()
         disposable = CompositeDisposable()
         mvpView.showLoading()
+
+        dataManager?.getChild(childId)
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(getObserver { childResult ->
+                    child = childResult
+                    loadTasks()
+                })
     }
 
     override fun loadTasks() {
-        val childId = "-Kpulp2slG8NxvjE3l0u"
-        dataManager?.getAllTasks(childId)
+        dataManager?.getAllTasksFromList(child?.tasks?.keys?.toList())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(getObserver {tasks -> processTasks(tasks)})
     }
@@ -44,7 +53,10 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
     }
 
     override fun taskSelected(task: Task) {
-        mvpView.showSelectedTask(task)
+        child?.currentTask = task.id
+        dataManager?.updateChild(child)
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(getObserver { mvpView.showSelectedTask(task) })
     }
 
     override fun goalButtonClick() {
