@@ -47,6 +47,10 @@ public class DataManager {
                 });
     }
 
+    public Observable<Child> updateChild(Child child) {
+        return firebaseService.saveChild(child.getId(), child);
+    }
+
     public Observable<Child> getChild(String childId) {
         return firebaseService.getChildById(childId);
     }
@@ -60,6 +64,10 @@ public class DataManager {
                         return task;
                     }
                 });
+    }
+
+    public Observable<Task> updateTask(Task task) {
+        return firebaseService.saveTask(task.getId(), task);
     }
 
     public Observable<Task> getTask(String taskId) {
@@ -80,6 +88,15 @@ public class DataManager {
         }).toList().toObservable();
     }
 
+    public Observable<List<Task>> getAllTasksFromList(List<String> tasks) {
+        return Observable.fromIterable(tasks).flatMap(new Function<String, ObservableSource<Task>>() {
+            @Override
+            public ObservableSource<Task> apply(String s) throws Exception {
+                return firebaseService.getTaskById(s);
+            }
+        }).toList().toObservable();
+    }
+
     public Observable<Reward> saveReward(String childId, Reward reward) {
         return Observable.combineLatest(firebaseService.saveReward(reward.getId(), reward),
                 firebaseService.addRewardsToChild(childId, reward.getId(), true),
@@ -89,6 +106,10 @@ public class DataManager {
                         return reward;
                     }
                 });
+    }
+
+    public Observable<Reward> updateReward(Reward reward) {
+        return firebaseService.saveReward(reward.getId(), reward);
     }
 
     public Observable<Reward> getReward(String rewardId) {
