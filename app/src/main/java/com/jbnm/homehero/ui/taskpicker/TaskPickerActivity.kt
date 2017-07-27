@@ -83,13 +83,6 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
         Log.d("TaskPickerActivity", task.description)
     }
 
-    override fun showError(): Boolean {
-        return false
-    }
-
-    override fun hideError() {
-    }
-
     override fun showTutorial() {
         tutorialView.visibility = View.VISIBLE
         tutorialView.setOnClickListener { presenter.tutorialClick() }
