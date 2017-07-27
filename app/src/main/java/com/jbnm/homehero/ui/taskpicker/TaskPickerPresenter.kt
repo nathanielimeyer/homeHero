@@ -28,7 +28,7 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
         mvpView.addTasks(tasks)
         checkTutorialViewed()
         mvpView.hideLoading()
-        mvpView.showTasksCompleted(tasks.filter { !it.availableForSelection() }.size, tasks.size)
+        mvpView.showTasksCompleted(tasks.filter { !it.availableForSelection() }.size)
     }
 
     fun processError(error: Throwable) {

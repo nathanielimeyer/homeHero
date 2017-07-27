@@ -66,14 +66,8 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
 
     }
 
-    override fun showTasksCompleted(tasksCompleted: Int, tasksRequired: Int) {
-        tasksCompletedTextView.text = String.format(getString(R.string.tasks_completed), tasksCompleted, tasksRequired)
-        tasksCompletedRatingBar.numStars = tasksRequired
-        val animation: ObjectAnimator = ObjectAnimator.ofFloat(tasksCompletedRatingBar, "rating", tasksCompleted.toFloat())
-        animation.duration = 500
-        animation.startDelay = 500
-        animation.start()
-
+    override fun showTasksCompleted(tasksCompleted: Int) {
+        tasksCompletedTextView.text = String.format(getString(R.string.tasks_completed), tasksCompleted)
     }
 
     override fun goalProgressIntent() {
