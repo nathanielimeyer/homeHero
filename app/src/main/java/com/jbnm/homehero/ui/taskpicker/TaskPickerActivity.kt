@@ -4,17 +4,17 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.jbnm.homehero.R
 import com.jbnm.homehero.data.model.Task
+import com.jbnm.homehero.ui.base.BaseActivity
 import com.jbnm.homehero.ui.goal.GoalActivity
 
 import kotlinx.android.synthetic.main.activity_task_picker.*
 
-class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
+class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
 
     lateinit var presenter: TaskPickerContract.Presenter
 
@@ -23,9 +23,10 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
         setContentView(R.layout.activity_task_picker)
 
         presenter = TaskPickerPresenter(this)
+        tutorialView.visibility = View.GONE
+        result.visibility = View.GONE
 
         taskSelector.setOnTaskSelectListener { presenter.taskSelected(it) }
-
         goalProgressButton.setOnClickListener { presenter.goalButtonClick() }
     }
 
@@ -80,35 +81,6 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
 
     override fun taskProgressIntent(task: Task) {
         Log.d("TaskPickerActivity", task.description)
-    }
-
-    override fun showLoading(): Boolean {
-        tutorialView.visibility = View.GONE
-        result.visibility = View.GONE
-        content.visibility = View.GONE
-        progressBar.visibility = View.VISIBLE
-        return false
-    }
-
-    override fun hideLoading() {
-        val animationDuration = resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
-
-        content.alpha = 0f
-        content.visibility = View.VISIBLE
-
-        content.animate()
-                .alpha(1f)
-                .setDuration(animationDuration)
-                .setListener(null)
-
-        progressBar.animate()
-                .alpha(0f)
-                .setDuration(animationDuration)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator?) {
-                        progressBar.visibility = View.GONE
-                    }
-                })
     }
 
     override fun showError(): Boolean {
