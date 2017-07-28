@@ -21,13 +21,6 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ processResult(it) },
                         { processError(it) }))
-
-//        disposable.add(dataManager.getChild(childId)
-//                .doOnNext { childResult -> child = childResult }
-//                .switchMap { childResult -> dataManager.getAllTasksFromList(childResult.tasks.keys.toList()) }
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({ processTasks(it) },
-//                        { processError(it) }))
     }
 
     fun processResult(childResult: Child) {
