@@ -12,11 +12,11 @@ import java.util.Map;
 public class Child {
     private String id;
     private int totalPoints;
-    private String currentTask;
-    private Map<String, Boolean> tasks = new HashMap<>();
-    private String currentReward;
-    private Map<String, Boolean> rewards = new HashMap<>();
-    private Map<String, Boolean> pendingRewards = new HashMap<>();
+    private String currentTaskKey;
+    private Map<String, Task> tasks = new HashMap<>();
+    private String currentRewardKey;
+    private Map<String, Reward> rewards = new HashMap<>();
+    private Map<String, Reward> pendingRewards = new HashMap<>();
 
     public static Child newInstance() {
         return new Child(FirebasePushIDGenerator.generatePushId());
@@ -52,46 +52,62 @@ public class Child {
         this.totalPoints = totalPoints;
     }
 
-    public String getCurrentTask() {
-        return currentTask;
+    public String getCurrentTaskKey() {
+        return currentTaskKey;
     }
 
-    public void setCurrentTask(String currentTask) {
-        this.currentTask = currentTask;
+    public void setCurrentTaskKey(String currentTaskKey) {
+        this.currentTaskKey = currentTaskKey;
     }
 
-    public Map<String, Boolean> getTasks() {
+    public Map<String, Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Map<String, Boolean> tasks) {
+    public void setTasks(Map<String, Task> tasks) {
         this.tasks = tasks;
     }
 
-    public String getCurrentReward() {
-        return currentReward;
+    public String getCurrentRewardKey() {
+        return currentRewardKey;
     }
 
-    public void setCurrentReward(String currentReward) {
-        this.currentReward = currentReward;
+    public void setCurrentRewardKey(String currentRewardKey) {
+        this.currentRewardKey = currentRewardKey;
     }
 
-    public Map<String, Boolean> getRewards() {
+    public Map<String, Reward> getRewards() {
         return rewards;
     }
 
-    public void setRewards(Map<String, Boolean> rewards) {
+    public void setRewards(Map<String, Reward> rewards) {
         this.rewards = rewards;
     }
 
-    public Map<String, Boolean> getPendingRewards() {
+    public Map<String, Reward> getPendingRewards() {
         return pendingRewards;
     }
 
-    public void setPendingRewards(Map<String, Boolean> pendingRewards) {
+    public void setPendingRewards(Map<String, Reward> pendingRewards) {
         this.pendingRewards = pendingRewards;
     }
 
+
+    public void addTask(Task task) {
+        this.tasks.put(task.getId(), task);
+    }
+
+    public Task currentTask() {
+        return this.tasks.get(this.currentTaskKey);
+    }
+
+    public void addReward(Reward reward) {
+        this.rewards.put(reward.getId(), reward);
+    }
+
+    public Reward currentReward() {
+        return this.rewards.get(this.currentRewardKey);
+    }
 
 
     public int calculatePendingPoints() {
@@ -106,9 +122,9 @@ public class Child {
     }
 
     public void redeemReward() {
-//    subtract currentReward value from totalPoints
+//    subtract currentRewardKey value from totalPoints
 //    trigger notification
-//    add currentReward to pendingRewards
+//    add currentRewardKey to pendingRewards
     }
 
     public void fulfillReward(Reward reward) {
