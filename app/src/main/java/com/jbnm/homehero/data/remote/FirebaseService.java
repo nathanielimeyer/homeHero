@@ -39,25 +39,6 @@ public class FirebaseService {
         @PUT("children/{childId}/.json")
         Observable<Child> saveChild(@Path("childId") String childId, @Body Child child);
 
-
-//
-//        @GET("tasks/{taskId}/.json")
-//        Observable<Task> getTaskById(@Path("taskId") String taskId);
-//
-//        @GET("rewards/{rewardId}/.json")
-//        Observable<Reward> getRewardById(@Path("rewardId") String rewardId);
-//
-//        @PUT("children/{childId}/tasks/{taskId}.json")
-//        Observable<Boolean> addTaskToChild(@Path("childId") String childId, @Path("taskId") String taskId, @Body Boolean task);
-//
-//        @PUT("children/{childId}/rewards/{rewardId}.json")
-//        Observable<Boolean> addRewardsToChild(@Path("childId") String childId, @Path("rewardId") String rewardId, @Body Boolean rewards);
-//
-//        @PUT("tasks/{taskId}/.json")
-//        Observable<Task> saveTask(@Path("taskId") String taskId, @Body Task task);
-//
-//        @PUT("rewards/{rewardId}/.json")
-//        Observable<Reward> saveReward(@Path("rewardId") String rewardId, @Body Reward reward);
     }
 
     private static final String FIREBASE_URL = "https://homehero-a7715.firebaseio.com/";

@@ -1,7 +1,6 @@
 package com.jbnm.homehero;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -70,7 +69,9 @@ public class MainActivity extends BaseActivity {
 
         dataManager.saveChild(child).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Child>() {
             @Override public void onSubscribe(Disposable d) {}
-            @Override public void onNext(Child child) {}
+            @Override public void onNext(Child child) {
+
+            }
             @Override public void onError(Throwable e) {}
             @Override public void onComplete() {
                 Log.d("test", "child saved");
