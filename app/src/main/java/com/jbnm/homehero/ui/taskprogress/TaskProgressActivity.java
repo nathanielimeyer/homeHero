@@ -63,9 +63,18 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
     @Override
     public void showTask(Task task) {
         if (task != null) {
-            // set icon image here
+            taskIconImageView.setImageResource(getTaskIcon(task));
             taskDescriptionTextView.setText(task.getDescription());
             setUpAdapter(task.getInstructions());
+        }
+    }
+
+    private int getTaskIcon(Task task) {
+        if (task.getIcon() != null) {
+            return getResources().getIdentifier(task.getIcon(), "drawable", getPackageName());
+        } else {
+            // TODO: add default task icon here
+            return getResources().getIdentifier("down_arrow", "drawable", getPackageName());
         }
     }
 
