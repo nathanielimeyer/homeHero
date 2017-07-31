@@ -36,9 +36,9 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
     }
 
     fun processError(error: Throwable) {
-        // TODO: Handle error here
         mvpView.hideLoading()
         error.printStackTrace()
+        mvpView.showError(error.message)
     }
 
     fun checkTutorialViewed() {

@@ -80,7 +80,8 @@ public class TaskProgressPresenter implements TaskProgressContract.Presenter {
     }
 
     private void processError(Throwable e) {
-        // TODO: handle errors
+        mvpView.hideLoading();
         e.printStackTrace();
+        mvpView.showError(e.getMessage());
     }
 }
