@@ -29,6 +29,7 @@ public class TaskProgressPresenter implements TaskProgressContract.Presenter {
 
     @Override
     public void loadTask(String childId) {
+        mvpView.showLoading();
         disposable.add(dataManager.getChild(childId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<Child>() {
@@ -72,6 +73,7 @@ public class TaskProgressPresenter implements TaskProgressContract.Presenter {
         } else {
             mvpView.showTask(child.currentTask());
         }
+        mvpView.hideLoading();
     }
 
     private void processError(Throwable e) {

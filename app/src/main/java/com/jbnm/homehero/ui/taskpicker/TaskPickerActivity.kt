@@ -12,6 +12,7 @@ import com.jbnm.homehero.R
 import com.jbnm.homehero.data.model.Task
 import com.jbnm.homehero.ui.base.BaseActivity
 import com.jbnm.homehero.ui.goal.GoalActivity
+import com.jbnm.homehero.ui.taskprogress.TaskProgressActivity
 
 import kotlinx.android.synthetic.main.activity_task_picker.*
 import kotlinx.android.synthetic.main.task_picker_result.*
@@ -45,7 +46,7 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
         val animationDuration = resources.getInteger(android.R.integer.config_longAnimTime).toLong()
 
         resultTextView.text = String.format(getString(R.string.task_select_result), task.description)
-        taskProgressButton.setOnClickListener { presenter.handleTaskButtonClick(task) }
+        taskProgressButton.setOnClickListener { presenter.handleTaskButtonClick() }
 
         result.alpha = 0f
         result.visibility = View.VISIBLE
@@ -75,8 +76,10 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
         startActivity(intent)
     }
 
-    override fun taskProgressIntent(task: Task) {
-        Log.d("TaskPickerActivity", task.description)
+    override fun taskProgressIntent(childId: String) {
+        val intent: Intent = Intent(this, TaskProgressActivity::class.java)
+        intent.putExtra(getString(R.string.childId_intent_key), childId)
+        startActivity(intent)
     }
 
     override fun showTutorial() {

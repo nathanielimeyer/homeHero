@@ -8,14 +8,14 @@ class TaskPickerContract {
     interface Presenter : BasePresenter {
         fun taskSelected(task: Task)
         fun handleGoalButtonClick()
-        fun handleTaskButtonClick(task: Task)
+        fun handleTaskButtonClick()
         fun handleTutorialClick()
     }
     interface MvpView : BaseMvpView {
         fun addTasks(tasks: List<Task>)
         fun showSelectedTask(task: Task)
         fun showTasksCompleted(tasksCompleted: Int)
-        fun taskProgressIntent(task: Task)
+        fun taskProgressIntent(childId: String)
         fun goalProgressIntent()
         fun showTutorial()
         fun hideTutorial()
