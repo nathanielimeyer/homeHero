@@ -1,5 +1,7 @@
 package com.jbnm.homehero.ui.goal;
 
+import android.content.Context;
+
 import com.jbnm.homehero.ui.base.BaseMvpView;
 import com.jbnm.homehero.ui.base.BasePresenter;
 
@@ -17,7 +19,7 @@ public class GoalContract {
     interface MvpView extends BaseMvpView {
         void showProgress(String description, int rewardValue, String rewardImage, int approvedPoints, int pendingPoints);
         void showRewardAnimation();
-        void showGoalPickerDialog();
+//        void showGoalPickerDialog();
         void hideTaskButton();
         void showTaskButton();
         void taskPickerIntent();
