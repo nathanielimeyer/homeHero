@@ -2,7 +2,9 @@ package com.jbnm.homehero.data.model;
 
 import com.jbnm.homehero.data.remote.FirebasePushIDGenerator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +16,7 @@ public class Child {
     private int totalPoints;
     private String currentTaskKey;
     private Map<String, Task> tasks = new HashMap<>();
+    private List<String> rejectedTasks = new ArrayList<>();
     private String currentRewardKey;
     private Map<String, Reward> rewards = new HashMap<>();
     private Map<String, Reward> pendingRewards = new HashMap<>();
@@ -59,6 +62,14 @@ public class Child {
 
     public void setTasks(Map<String, Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public List<String> getRejectedTasks() {
+        return rejectedTasks;
+    }
+
+    public void setRejectedTasks(List<String> rejectedTasks) {
+        this.rejectedTasks = rejectedTasks;
     }
 
     public String getCurrentRewardKey() {
@@ -108,10 +119,14 @@ public class Child {
         return 5;
     }
 
-    public void markTaskApproved(Task task) {
+    public void markTaskApproved(String taskId) {
 //    mark task as approved
 //    add points to total points
 //    check if total points is enough to redeem prize
+    }
+
+    public void markTaskRejected(String taskId) {
+        this.rejectedTasks.add(taskId);
     }
 
     public void redeemReward() {

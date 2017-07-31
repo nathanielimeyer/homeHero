@@ -11,6 +11,7 @@ public class TaskProgressContract {
     }
     interface MvpView extends BaseMvpView {
         void showTask(Task task);
+        void goalProgressIntent();
 
     }
 }
