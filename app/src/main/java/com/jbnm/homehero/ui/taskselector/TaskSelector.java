@@ -61,4 +61,8 @@ public class TaskSelector extends RelativeLayout {
         taskWheel.setOnTaskSelectListener(onTaskSelectListener);
     }
 
+    public void setOnSpinStartListener(TaskWheel.OnSpinStartListener onSpinStartListener) {
+        taskWheel.setOnSpinStartListener(onSpinStartListener);
+    }
+
 }
