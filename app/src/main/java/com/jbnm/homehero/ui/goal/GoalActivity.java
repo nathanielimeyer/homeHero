@@ -3,6 +3,8 @@ package com.jbnm.homehero.ui.goal;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ import com.jbnm.homehero.ui.taskprogress.TaskProgressActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.jbnm.homehero.R.array.replace_me;
+
 /**
  * Created by nathanielmeyer on 7/18/17.
  */
@@ -36,6 +40,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     @BindView(R.id.taskButton) Button taskButton;
     @BindView(R.id.goalDescriptionTextView) TextView goalDescriptionTextView;
     public GoalPresenter presenter;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +142,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
             public void onAnimationStart(Animation animation) {}
             @Override
             public void onAnimationEnd(Animation animation) {
-                showGoalPickerDialog();
+                showGoalPickerDialog(selectNewGoalCallback);
             }
             @Override
             public void onAnimationRepeat(Animation animation) {}
@@ -145,11 +150,48 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
         rewardImageView.startAnimation(pulse);
     }
 
-    @Override
-    public void showGoalPickerDialog() {
-        DialogFragment goalPicker = new GoalPickerDialogFragment();
-        goalPicker.show(getFragmentManager(), "goalPicker");
+//    @Override
+    public void showGoalPickerDialog(final DialogListCallback callback) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Pick a new goal")
+                .setTitle("New Goal Picker")
+                .setItems(replace_me, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                callback.callbackFirstOption();
+                                break;
+                            case 1:
+                                callback.callbackSecondOption();
+
+                                break;
+                        }
+                    }
+                });
+        builder.create().show();
     }
+
+
+    public interface DialogListCallback {
+        void callbackFirstOption();
+
+        void callbackSecondOption();
+
+    }
+
+    DialogListCallback selectNewGoalCallback = new DialogListCallback() {
+        @Override
+        public void callbackFirstOption() {
+
+        }
+
+        @Override
+        public void callbackSecondOption() {
+
+        }
+    };
+
 
     @Override
     public void hideTaskButton() {
