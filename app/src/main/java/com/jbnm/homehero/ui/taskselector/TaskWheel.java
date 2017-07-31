@@ -48,6 +48,7 @@ public class TaskWheel extends View {
     private boolean animationRunning = false;
     private GestureDetector gestureDetector;
     private OnTaskSelectListener onTaskSelectListener;
+    private OnSpinStartListener onSpinStartListener;
 
     public TaskWheel(Context context) {
         super(context);
@@ -94,6 +95,10 @@ public class TaskWheel extends View {
 
     public void setOnTaskSelectListener(OnTaskSelectListener onTaskSelectListener) {
         this.onTaskSelectListener = onTaskSelectListener;
+    }
+
+    public void setOnSpinStartListener(OnSpinStartListener onSpinStartListener) {
+        this.onSpinStartListener = onSpinStartListener;
     }
 
     @Override
@@ -295,6 +300,7 @@ public class TaskWheel extends View {
                 int taskIndex = (int)Math.floor(Math.abs(angle) / taskAngle);
                 int rotations = (int)Math.ceil(Math.abs(flingStrength) / 360);
                 rotateToTask(taskIndex, rotations);
+                onSpinStartListener.onSpinStart();
             } else {
                 wrongDirection();
             }
@@ -328,6 +334,10 @@ public class TaskWheel extends View {
 
     public interface OnTaskSelectListener {
         void onTaskSelect(Task task);
+    }
+
+    public interface OnSpinStartListener {
+        void onSpinStart();
     }
 
 }
