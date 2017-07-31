@@ -19,7 +19,7 @@ public class GoalPickerDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Pick a new goal")
                 .setTitle("New Goal Picker")
-                .setItems(R.array.replaceMe, new DialogInterface.OnClickListener() {
+                .setItems(R.array.replace_me, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         selectedReward = i;

@@ -76,4 +76,12 @@ public class GoalPresenter implements GoalContract.Presenter {
             mvpView.showTaskButton();
         }
     }
+
+    @Override
+    public void setNewRewardAndDecrementPoints(int i) {
+        child.setTotalPoints(child.getTotalPoints() - reward.getValue());
+        reward = new Reward("1", "Camping", 10, "camping");
+        loadData();
+        checkProgress();
+    }
 }

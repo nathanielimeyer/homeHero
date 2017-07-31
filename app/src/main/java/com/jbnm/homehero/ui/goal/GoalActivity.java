@@ -66,7 +66,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
 
     @Override
     public void showProgress(String description, int rewardValue, String rewardImage, int approvedPoints, int pendingPoints) {
-
+        arcView.executeReset();
         arcView.addSeries(new SeriesItem.Builder(Color.argb(255,218,218,218))
                 .setRange(0, rewardValue, rewardValue)
                 .setChartStyle(SeriesItem.ChartStyle.STYLE_PIE)
@@ -154,9 +154,8 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     public void showGoalPickerDialog(final DialogListCallback callback) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Pick a new goal")
-                .setTitle("New Goal Picker")
-                .setItems(replace_me, new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.goal_picker_title)
+                .setItems(R.array.replace_me, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
@@ -164,7 +163,6 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
                                 break;
                             case 1:
                                 callback.callbackSecondOption();
-
                                 break;
                         }
                     }
@@ -175,15 +173,13 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
 
     public interface DialogListCallback {
         void callbackFirstOption();
-
         void callbackSecondOption();
-
     }
 
     DialogListCallback selectNewGoalCallback = new DialogListCallback() {
         @Override
         public void callbackFirstOption() {
-
+            presenter.setNewRewardAndDecrementPoints(1);
         }
 
         @Override
