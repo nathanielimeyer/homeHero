@@ -28,6 +28,7 @@ public class Task {
     public Task(String id, String description, String icon, List<String> instructions, boolean available) {
         this.id = id;
         this.description = description;
+        this.icon = icon;
         this.instructions = instructions;
         this.available = available;
     }
