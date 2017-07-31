@@ -99,7 +99,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     }
 
     @Override
-    public boolean showError() {
+    public boolean showError(String errorMessage) {
         return false;
     }
 
