@@ -8,6 +8,7 @@ public class TaskProgressContract {
     interface Presenter extends BasePresenter {
         void loadTask(String childId);
         void handleTaskCompleteClick();
+        void handleGoalProgressClick();
     }
     interface MvpView extends BaseMvpView {
         void showTask(Task task);

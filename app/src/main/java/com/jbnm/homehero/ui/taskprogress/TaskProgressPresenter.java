@@ -54,6 +54,8 @@ public class TaskProgressPresenter implements TaskProgressContract.Presenter {
         } else {
             child.setCurrentTaskKey(null);
         }
+
+        mvpView.showLoading();
         disposable.add(dataManager.updateChild(child)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Child>() {
@@ -61,10 +63,11 @@ public class TaskProgressPresenter implements TaskProgressContract.Presenter {
                     @Override public void onError(Throwable e) { processError(e); }
                     @Override public void onComplete() {}
                 }));
-        // mark current task as complete - put it into pending state
-        // check queue for rejected tasks
-        // - if tasks in queue set new current task and reload page
-        // - else set current task to null and go to task progress screen
+    }
+
+    @Override
+    public void handleGoalProgressClick() {
+        mvpView.goalProgressIntent();
     }
 
     private void processResult(Child child) {

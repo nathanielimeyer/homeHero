@@ -2,25 +2,32 @@ package com.jbnm.homehero.ui.taskprogress;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.ui.base.BaseActivity;
-import com.jbnm.homehero.ui.goal.GoalActivity;
 import com.jbnm.homehero.ui.taskpicker.TaskPickerActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TaskProgressActivity extends BaseActivity implements TaskProgressContract.MvpView {
     @BindView(R.id.taskCompleteButton) Button taskCompleteButton;
+    @BindView(R.id.goalProgressButton) Button goalProgressButton;
     @BindView(R.id.taskDescriptionTextView) TextView taskDescriptionTextView;
-    @BindView(R.id.taskInstructionsListView) ListView taskInstructionsListView;
+    @BindView(R.id.taskInstructionsRecyclerView) RecyclerView taskInstructionsRecyclerView;
+    @BindView(R.id.taskIconImageView) ImageView taskIconImageView;
 
     private TaskProgressContract.Presenter presenter;
 
@@ -39,6 +46,12 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
                 presenter.handleTaskCompleteClick();
             }
         });
+
+        goalProgressButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                presenter.handleGoalProgressClick();
+            }
+        });
     }
 
     @Override
@@ -50,12 +63,18 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
     @Override
     public void showTask(Task task) {
         if (task != null) {
+            // set icon image here
             taskDescriptionTextView.setText(task.getDescription());
-            ArrayAdapter<String> instructionsAdapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_list_item_1,
-                    task.getInstructions());
-            taskInstructionsListView.setAdapter(instructionsAdapter);
+            setUpAdapter(task.getInstructions());
         }
+    }
+
+    private void setUpAdapter(List<String> instructions) {
+        taskInstructionsRecyclerView.setAdapter(new TaskInstructionsAdapter(instructions));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        taskInstructionsRecyclerView.setLayoutManager(layoutManager);
+        taskInstructionsRecyclerView.setHasFixedSize(true);
+        taskInstructionsRecyclerView.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
     }
 
     @Override

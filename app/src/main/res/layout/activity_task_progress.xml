@@ -10,59 +10,87 @@
     <Button
         android:id="@+id/taskCompleteButton"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:padding="18dp"
-        android:text="@string/task_complete_button_label"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/task_progress_complete_button_label"
+        app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+        app:layout_constraintTop_toBottomOf="@+id/taskDescriptionTextView"/>
 
     <TextView
         android:id="@+id/taskDescriptionTextView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center_vertical"
         android:text="Task Title"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textSize="30sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <ListView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/taskCompleteButton"
-        android:id="@+id/taskInstructionsListView"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/taskInstructionsLabelTextView"/>
+        app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/taskInstructionsLabelTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
         android:text="@string/task_instructions_label"
-        app:layout_constraintEnd_toEndOf="@+id/taskInstructionsListView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/taskInstructionsListView"
-        app:layout_constraintTop_toBottomOf="@+id/taskDescriptionTextView"
-        />
+        app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+        app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
+
+    <ImageView
+        android:id="@+id/taskIconImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/taskDescriptionTextView"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/contentLeftMarginKeyLIne"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/taskDescriptionTextView"
+        app:srcCompat="@android:drawable/btn_star"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contentLeftMarginKeyLIne"
+        app:layout_constraintGuide_begin="72dp"
+        android:orientation="vertical"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/taskInstructionsRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskInstructionsLabelTextView"/>
+
+    <Button
+        android:id="@+id/goalProgressButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:backgroundTint="@color/label_text_light"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/task_progress_goal_button_label"
+        android:textColor="@color/label_text_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/taskCompleteButton"
+        app:layout_constraintStart_toEndOf="@+id/taskCompleteButton"
+        app:layout_constraintTop_toTopOf="@+id/taskCompleteButton"/>
 </android.support.constraint.ConstraintLayout>
