@@ -11,17 +11,21 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
     val disposable: CompositeDisposable = CompositeDisposable()
 
     // Temporary, will be passed in to from activity or retrieved based on logged in user
-    val childId = "-Kpulp2slG8NxvjE3l0u"
+//    val childId = "-Kpulp2slG8NxvjE3l0u"
+    val childId = "-Kq5YlmM3saCunGh6Jr_"
     lateinit var child: Child
     init {
         mvpView.showLoading()
 
         disposable.add(dataManager.getChild(childId)
-                .doOnNext { childResult -> child = childResult }
-                .switchMap { childResult -> dataManager.getAllTasksFromList(childResult.tasks.keys.toList()) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ processTasks(it) },
+                .subscribe({ processResult(it) },
                         { processError(it) }))
+    }
+
+    fun processResult(childResult: Child) {
+        child = childResult
+        processTasks(child.tasks.values.toList())
     }
 
     fun processTasks(tasks: List<Task>) {
@@ -47,7 +51,7 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
     }
 
     override fun taskSelected(task: Task) {
-        child.currentTask = task.id
+        child.currentTaskKey = task.id
 
         disposable.add(dataManager.updateChild(child)
                 .observeOn(AndroidSchedulers.mainThread())
