@@ -12,6 +12,7 @@ import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.goal.GoalActivity;
+import com.jbnm.homehero.ui.taskpicker.TaskPickerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +60,8 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
 
     @Override
     public void goalProgressIntent() {
-        Intent intent = new Intent(TaskProgressActivity.this, GoalActivity.class);
+        Intent intent = new Intent(TaskProgressActivity.this, TaskPickerActivity.class);
+//        Intent intent = new Intent(TaskProgressActivity.this, GoalActivity.class);
         startActivity(intent);
     }
 }

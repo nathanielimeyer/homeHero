@@ -66,4 +66,8 @@ public class Reward {
     public void setRewardImage(String rewardImage) {
         this.rewardImage = rewardImage;
     }
+
+    public void incrementTimesRedeemed() {
+        this.timesRedeemed += 1;
+    }
 }
