@@ -36,13 +36,13 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
     }
 
     fun processError(error: Throwable) {
-        // Handle error here
+        // TODO: Handle error here
         mvpView.hideLoading()
         error.printStackTrace()
     }
 
     fun checkTutorialViewed() {
-        // check if sharedPref for tutorial viewed exists
+        // TODO: check if sharedPref for tutorial viewed exists
         mvpView.showTutorial()
     }
 
@@ -68,7 +68,7 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerC
     }
 
     override fun handleTutorialClick() {
-        // set sharedPref for tutorial viewed
+        // TODO: set sharedPref for tutorial viewed
         mvpView.hideTutorial()
     }
 

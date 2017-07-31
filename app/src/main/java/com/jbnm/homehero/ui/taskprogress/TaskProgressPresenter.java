@@ -80,7 +80,7 @@ public class TaskProgressPresenter implements TaskProgressContract.Presenter {
     }
 
     private void processError(Throwable e) {
+        // TODO: handle errors
         e.printStackTrace();
-        // Handle error here
     }
 }
