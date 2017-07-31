@@ -15,6 +15,7 @@ public class GoalContract {
         void checkProgress();
         void taskButtonClicked();
         void determineTaskButtonStatus();
+        void setNewRewardAndDecrementPoints(int i);
     }
     interface MvpView extends BaseMvpView {
         void showProgress(String description, int rewardValue, String rewardImage, int approvedPoints, int pendingPoints);
