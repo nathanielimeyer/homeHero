@@ -1,24 +1,35 @@
 package com.jbnm.homehero.ui.taskpicker
 
-import android.support.v7.app.AppCompatActivity
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.util.Log
+import android.view.View
 import com.jbnm.homehero.R
 import com.jbnm.homehero.data.model.Task
+import com.jbnm.homehero.ui.base.BaseActivity
+import com.jbnm.homehero.ui.goal.GoalActivity
 
 import kotlinx.android.synthetic.main.activity_task_picker.*
+import kotlinx.android.synthetic.main.task_picker_result.*
 
-class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
+class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
 
     lateinit var presenter: TaskPickerContract.Presenter
+    lateinit var tutorialAnimation: ObjectAnimator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_picker)
+
         presenter = TaskPickerPresenter(this)
-        presenter.loadTasks()
+        result.visibility = View.GONE
 
         taskSelector.setOnTaskSelectListener { presenter.taskSelected(it) }
+        goalProgressButton.setOnClickListener { presenter.handleGoalButtonClick() }
     }
 
     override fun onDestroy() {
@@ -30,21 +41,59 @@ class TaskPickerActivity : AppCompatActivity(), TaskPickerContract.MvpView {
         taskSelector.addTasks(tasks)
     }
 
-    override fun showSelectedTask(task: String) {
-        Toast.makeText(this, task, Toast.LENGTH_SHORT).show()
+    override fun showSelectedTask(task: Task) {
+        val animationDuration = resources.getInteger(android.R.integer.config_longAnimTime).toLong()
+
+        resultTextView.text = String.format(getString(R.string.task_select_result), task.description)
+        taskProgressButton.setOnClickListener { presenter.handleTaskButtonClick(task) }
+
+        result.alpha = 0f
+        result.visibility = View.VISIBLE
+
+        result.animate()
+                .alpha(1f)
+                .setDuration(animationDuration)
+                .setListener(null)
+
+        content.animate()
+                .alpha(0f)
+                .setDuration(animationDuration)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        content.visibility = View.GONE
+                    }
+                })
+
     }
 
-    override fun showLoading(): Boolean {
-        return false
+    override fun showTasksCompleted(tasksCompleted: Int) {
+        tasksCompletedTextView.text = String.format(getString(R.string.tasks_completed), tasksCompleted)
     }
 
-    override fun hideLoading() {
+    override fun goalProgressIntent() {
+        val intent: Intent = Intent(this, GoalActivity::class.java)
+        startActivity(intent)
     }
 
-    override fun showError(): Boolean {
-        return false
+    override fun taskProgressIntent(task: Task) {
+        Log.d("TaskPickerActivity", task.description)
     }
 
-    override fun hideError() {
+    override fun showTutorial() {
+        tutorialImageView.visibility = View.VISIBLE
+        tutorialAnimation = ObjectAnimator.ofPropertyValuesHolder(tutorialImageView,
+                PropertyValuesHolder.ofFloat("scaleX", 0.8f),
+                PropertyValuesHolder.ofFloat("scaleY", 0.8f))
+        tutorialAnimation.duration = 500
+        tutorialAnimation.repeatCount = ObjectAnimator.INFINITE
+        tutorialAnimation.repeatMode = ObjectAnimator.REVERSE
+        tutorialAnimation.start()
+
+        taskSelector.setOnSpinStartListener { presenter.handleTutorialClick() }
+    }
+
+    override fun hideTutorial() {
+        tutorialImageView.visibility = View.GONE
+        tutorialAnimation.end()
     }
 }
