@@ -28,7 +28,10 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
         setContentView(R.layout.activity_task_progress);
         ButterKnife.bind(this);
 
+        String childId = getIntent().getStringExtra(getString(R.string.childId_intent_key));
+
         presenter = new TaskProgressPresenter(this);
+        presenter.loadTask(childId);
 
         taskCompleteButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
@@ -47,7 +50,7 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
     public void showTask(Task task) {
         if (task != null) {
             taskDescriptionTextView.setText(task.getDescription());
-            ArrayAdapter<String> instructionsAdapter = new ArrayAdapter<String>(this,
+            ArrayAdapter<String> instructionsAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_list_item_1,
                     task.getInstructions());
             taskInstructionsListView.setAdapter(instructionsAdapter);
