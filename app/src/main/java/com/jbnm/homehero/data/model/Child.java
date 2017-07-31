@@ -19,7 +19,7 @@ public class Child {
     private List<String> rejectedTasks = new ArrayList<>();
     private String currentRewardKey;
     private Map<String, Reward> rewards = new HashMap<>();
-    private Map<String, Reward> pendingRewards = new HashMap<>();
+    private List<String> pendingRewards = new ArrayList<>();
 
     public static Child newInstance() {
         return new Child(FirebasePushIDGenerator.generatePushId());
@@ -88,11 +88,11 @@ public class Child {
         this.rewards = rewards;
     }
 
-    public Map<String, Reward> getPendingRewards() {
+    public List<String> getPendingRewards() {
         return pendingRewards;
     }
 
-    public void setPendingRewards(Map<String, Reward> pendingRewards) {
+    public void setPendingRewards(List<String> pendingRewards) {
         this.pendingRewards = pendingRewards;
     }
 
@@ -115,14 +115,18 @@ public class Child {
 
 
     public int calculatePendingPoints() {
-//    sum up value of all tasks that return true for pendingApproval
-        return 5;
+        int pendingPoints = 0;
+        for(Task task : this.tasks.values()) {
+            if (task.pendingApproval()) {
+                pendingPoints += 1;
+            }
+        }
+        return pendingPoints;
     }
 
     public void markTaskApproved(String taskId) {
-//    mark task as approved
-//    add points to total points
-//    check if total points is enough to redeem prize
+        this.tasks.get(taskId).markTaskApproved();
+        this.totalPoints += 1;
     }
 
     public void markTaskRejected(String taskId) {
@@ -130,13 +134,15 @@ public class Child {
     }
 
     public void redeemReward() {
-//    subtract currentRewardKey value from totalPoints
-//    trigger notification
-//    add currentRewardKey to pendingRewards
+        if (this.currentRewardKey != null && this.totalPoints >= this.currentReward().getValue()) {
+            this.totalPoints -= this.currentReward().getValue();
+            this.pendingRewards.add(this.currentRewardKey);
+            this.currentRewardKey = null;
+        }
     }
 
-    public void fulfillReward(Reward reward) {
-//    remove reward from pendingRewards
-//    increment timesRedeemed from reward in list of all rewards
+    public void fulfillReward(String rewardId) {
+        this.pendingRewards.remove(rewardId);
+        this.rewards.get(rewardId).incrementTimesRedeemed();
     }
 }
