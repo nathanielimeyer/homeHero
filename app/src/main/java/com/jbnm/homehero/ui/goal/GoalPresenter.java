@@ -1,6 +1,7 @@
 package com.jbnm.homehero.ui.goal;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
@@ -14,8 +15,13 @@ import com.jbnm.homehero.data.remote.DataManager;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
 
 import static android.content.ContentValues.TAG;
 
@@ -31,8 +37,10 @@ public class GoalPresenter implements GoalContract.Presenter {
     private Reward reward;
     private Task task;
     private DataManager dataManager;
+    private CompositeDisposable disposable = new CompositeDisposable();
     private ListAdapter adapter;
     private List<Reward> rewards;
+
     public static class DialogItem{
         public final String text;
         public final int image;
@@ -50,18 +58,6 @@ public class GoalPresenter implements GoalContract.Presenter {
         mvpView = view;
         mContext = context;
         dataManager = new DataManager();
-
-        //replace this with code for loading these objects from firebase
-        List<String> instructions = Arrays.asList("change bed", "vacuum walls");
-        task = new Task("1", "Wash your room", instructions, true);
-        List<Task> tasks = Arrays.asList(task);
-        reward = new Reward("1", "Disneyland", 10, "disneycastle");
-        List<Reward> rewards = Arrays.asList(reward);
-        child = new Child("1");
-
-//        child = dataManager.getChild("-Kpulp2slG8NxvjE3l0u");
-        child.setTotalPoints(10);
-        //replace this with code for loading these objects from firebase
     }
 
     @Override
@@ -71,17 +67,41 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     @Override
     public void loadData() {
-        mvpView.setGoalDescription(reward.getDescription());
-        mvpView.setGoalImage(reward.getRewardImage());
+        disposable.add(dataManager.getChild("-Kq5YlmM3saCunGh6Jr_")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Child>() {
+                    @Override
+                    public void onNext(Child childResult) {
+                        child = childResult;
+                        populateAllTheThings();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {}
+                }));
     }
 
+//    @Override
+    public void populateAllTheThings() {
+        rewards = new ArrayList(child.getRewards().values());
+        mvpView.setGoalDescription(child.currentReward().getDescription());
+        mvpView.setGoalImage(child.currentReward().getRewardImage());
+        checkProgress();
+        determineTaskButtonStatus();
+        mvpView.buildGoalPickerDialog();
+    }
     @Override
     public void checkProgress() {
-        if (child.getTotalPoints() >= reward.getValue()) {
-            mvpView.showProgress(reward.getDescription(), reward.getValue(), reward.getRewardImage(), child.getTotalPoints(), child.calculatePendingPoints());
+        if (child.getTotalPoints() >= child.currentReward().getValue()) {
+            mvpView.showProgress(child.currentReward().getDescription(), child.currentReward().getValue(), child.currentReward().getRewardImage(), child.getTotalPoints(), child.calculatePendingPoints());
             mvpView.showRewardAnimation();
         } else {
-            mvpView.showProgress(reward.getDescription(), reward.getValue(), reward.getRewardImage(), child.getTotalPoints(), child.calculatePendingPoints());
+            mvpView.showProgress(child.currentReward().getDescription(), child.currentReward().getValue(), child.currentReward().getRewardImage(), child.getTotalPoints(), child.calculatePendingPoints());
         }
     }
 
@@ -105,10 +125,21 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     @Override
     public void setNewRewardAndDecrementPoints(int i) {
-        child.setTotalPoints(child.getTotalPoints() - reward.getValue());
-        reward = new Reward("1", "Camping", 10, "camping");
-        loadData();
-        checkProgress();
+        Log.d(TAG, "total points = " + child.getTotalPoints());
+        child.setTotalPoints(child.getTotalPoints() - child.currentReward().getValue());
+        Log.d(TAG, "total points = " + child.getTotalPoints());
+        Log.d(TAG, "New Reward Key: " + rewards.get(i).getId());
+        child.setCurrentRewardKey(rewards.get(i).getId());
+        disposable.add(dataManager.updateChild(child)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Child>() {
+                    @Override public void onNext(Child childResult ) {
+                        child = childResult;
+                        populateAllTheThings();
+                    }
+                    @Override public void onError(Throwable e) { processError(e); }
+                    @Override public void onComplete() {}
+                }));
     }
 
     @Override
@@ -128,11 +159,27 @@ public class GoalPresenter implements GoalContract.Presenter {
         dialogItems.add(new DialogItem("Disneyland", android.R.drawable.ic_menu_add));
         dialogItems.add(new DialogItem("Camping", android.R.drawable.ic_menu_delete));
         dialogItems.add(new DialogItem("Laser Tag", android.R.drawable.ic_menu_add));
-//        Map<String, Reward> map = child.getRewards();
+
+//        rewards = {
+//            new Reward("1", "Disneyland", 20, "android.R.drawable.ic_menu_add");
+//            new Reward("2", "Camping", 15, "android.R.drawable.ic_menu_delete");
+//            new Reward("3", "Laser Tag", 25, "android.R.drawable.arrow_up_float)";
+//        }
+//        for (Reward reward : rewards) {
+//            Log.d(TAG, "Description = " + reward.getDescription());
+//            dialogItems.add(new DialogItem(reward.getDescription(), reward.getRewardImage()));
+//        }
+
+//        Map<String, Reward> rewardMap = child.getRewards();
 //        for (Reward mReward : map.values()) {
 //            dialogItems.add(new DialogItem(mReward.getDescription(), mReward.getRewardImage()));
-//            Log.d(TAG, "Description = " + mReward.getDescription());
 //        }
         return dialogItems;
+    }
+
+    private void processError(Throwable e) {
+        mvpView.hideLoading();
+        e.printStackTrace();
+        mvpView.showError(e.getMessage());
     }
 }

@@ -73,15 +73,17 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
 
         presenter = new GoalPresenter(this, this);
         presenter.loadData();
-        presenter.checkProgress();
-        presenter.determineTaskButtonStatus();
+
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.taskButtonClicked();
             }
         });
+    }
 
+    @Override
+    public void buildGoalPickerDialog() {
         List<GoalPresenter.DialogItem> dialogItemList = presenter.buildRewardDialogList();
         final GoalPresenter.DialogItem[] dialogItems = new GoalPresenter.DialogItem[dialogItemList.size()];
         dialogItemList.toArray(dialogItems);
@@ -98,7 +100,6 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
 
                 //Put the image on the TextView
 
-
                 tv.setCompoundDrawablesWithIntrinsicBounds(dialogItems[position].image, 0, 0, 0);
 
                 //Add margin between image and text (support various screen densities)
@@ -108,7 +109,6 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
                 return v;
             }
         };
-
     }
 
     @Override
@@ -172,7 +172,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     }
 
     @Override
-    public boolean showError() {
+    public boolean showError(String e) {
         return false;
     }
 
