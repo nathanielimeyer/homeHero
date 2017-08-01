@@ -155,25 +155,17 @@ public class GoalPresenter implements GoalContract.Presenter {
     @Override
     public List buildRewardDialogList() {
         List<DialogItem> dialogItems = new ArrayList<>();
-        Log.d(TAG, "Called buildRewardDialogList" );
-        dialogItems.add(new DialogItem("Disneyland", android.R.drawable.ic_menu_add));
-        dialogItems.add(new DialogItem("Camping", android.R.drawable.ic_menu_delete));
-        dialogItems.add(new DialogItem("Laser Tag", android.R.drawable.ic_menu_add));
 
-//        rewards = {
-//            new Reward("1", "Disneyland", 20, "android.R.drawable.ic_menu_add");
-//            new Reward("2", "Camping", 15, "android.R.drawable.ic_menu_delete");
-//            new Reward("3", "Laser Tag", 25, "android.R.drawable.arrow_up_float)";
-//        }
-//        for (Reward reward : rewards) {
-//            Log.d(TAG, "Description = " + reward.getDescription());
-//            dialogItems.add(new DialogItem(reward.getDescription(), reward.getRewardImage()));
-//        }
+//        dialogItems.add(new DialogItem("Disneyland", android.R.drawable.ic_menu_add));
+//        dialogItems.add(new DialogItem("Camping", android.R.drawable.ic_menu_delete));
+//        dialogItems.add(new DialogItem("Laser Tag", android.R.drawable.ic_menu_add));
 
-//        Map<String, Reward> rewardMap = child.getRewards();
-//        for (Reward mReward : map.values()) {
-//            dialogItems.add(new DialogItem(mReward.getDescription(), mReward.getRewardImage()));
-//        }
+        for (Reward reward : rewards) {
+            Log.d(TAG, "Description = " + reward.getDescription());
+//            dialogItems.add(new DialogItem(reward.getDescription() + ": " + reward.getValue() + " pts.", reward.getRewardImage()));
+            dialogItems.add(new DialogItem(reward.getDescription() + ": " + reward.getValue() + " pts.", android.R.drawable.ic_menu_add));
+        }
+
         return dialogItems;
     }
 
