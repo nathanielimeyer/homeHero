@@ -11,7 +11,7 @@ public class TaskReviewContract {
     interface Presenter extends BasePresenter {
 
     }
-    interface MvpView {
+    interface MvpView extends BaseMvpView{
 
     }
 }
