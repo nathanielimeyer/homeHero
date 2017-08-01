@@ -9,4 +9,10 @@
     <string name="task_instructions_label">Task Instructions</string>
 
     <string name="childId_intent_key">childId</string>
+
+    <string name="title_activity_parent">ParentActivity</string>
+    <string name="tab_text_1">Task Review</string>
+    <string name="tab_text_2">Settings</string>
+    <string name="action_settings">Settings</string>
+
 </resources>
