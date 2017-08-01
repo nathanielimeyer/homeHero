@@ -10,10 +10,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.hookedonplay.decoviewlib.DecoView;
@@ -22,8 +25,11 @@ import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 import com.jbnm.homehero.R;
+import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.ui.taskpicker.TaskPickerActivity;
 import com.jbnm.homehero.ui.taskprogress.TaskProgressActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +48,22 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     public GoalPresenter presenter;
     private Context context = this;
 
+//    List<GoalPresenter.DialogItem> dialogItemList = presenter.buildRewardDialogList();
+//    public static class Item{
+//        public final String text;
+//        public final int icon;
+//        public Item(String text, Integer icon) {
+//            this.text = text;
+//            this.icon = icon;
+//        }
+//        @Override
+//        public String toString() {
+//            return text;
+//        }
+//    }
+//
+    ListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -52,15 +74,40 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
         presenter = new GoalPresenter(this, this);
         presenter.loadData();
         presenter.checkProgress();
-
         presenter.determineTaskButtonStatus();
-
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.taskButtonClicked();
             }
         });
+
+        List<GoalPresenter.DialogItem> dialogItemList = presenter.buildRewardDialogList();
+        final GoalPresenter.DialogItem[] dialogItems = new GoalPresenter.DialogItem[dialogItemList.size()];
+        dialogItemList.toArray(dialogItems);
+
+        adapter = new ArrayAdapter<GoalPresenter.DialogItem>(
+                this,
+                android.R.layout.select_dialog_item,
+                android.R.id.text1,
+                dialogItems){
+            public View getView(int position, View convertView, ViewGroup parent) {
+                //Use super class to create the View
+                View v = super.getView(position, convertView, parent);
+                TextView tv = (TextView)v.findViewById(android.R.id.text1);
+
+                //Put the image on the TextView
+
+
+                tv.setCompoundDrawablesWithIntrinsicBounds(dialogItems[position].image, 0, 0, 0);
+
+                //Add margin between image and text (support various screen densities)
+                int dp5 = (int) (5 * getResources().getDisplayMetrics().density + 0.5f);
+                tv.setCompoundDrawablePadding(dp5);
+
+                return v;
+            }
+        };
 
     }
 
@@ -77,7 +124,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
                 .setRange(0, rewardValue, 0)
                 .setInitialVisibility(false)
                 .setLineWidth(46f)
-                .setSeriesLabel(new SeriesLabel.Builder("Pending").build())
+//                .setSeriesLabel(new SeriesLabel.Builder("Pending").build())
                 .setCapRounded(false)
                 .addEdgeDetail(new EdgeDetail(EdgeDetail.EdgeType.EDGE_INNER, Color.parseColor("#22000000"), 0.3f))
                 .setShowPointWhenEmpty(false)
@@ -87,7 +134,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
                 .setRange(0, rewardValue, 0)
                 .setInitialVisibility(false)
                 .setLineWidth(46f)
-                .setSeriesLabel(new SeriesLabel.Builder("Approved").build())
+//                .setSeriesLabel(new SeriesLabel.Builder("Approved").build())
                 .setCapRounded(false)
                 .addEdgeDetail(new EdgeDetail(EdgeDetail.EdgeType.EDGE_INNER, Color.parseColor("#22000000"), 0.3f))
                 .setShowPointWhenEmpty(false)
@@ -142,7 +189,7 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
             public void onAnimationStart(Animation animation) {}
             @Override
             public void onAnimationEnd(Animation animation) {
-                showGoalPickerDialog(selectNewGoalCallback);
+                presenter.rewardAnimationEnded();
             }
             @Override
             public void onAnimationRepeat(Animation animation) {}
@@ -150,44 +197,18 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
         rewardImageView.startAnimation(pulse);
     }
 
-//    @Override
-    public void showGoalPickerDialog(final DialogListCallback callback) {
-
+    @Override
+    public void showGoalPickerDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.goal_picker_title)
-                .setItems(R.array.replace_me, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                callback.callbackFirstOption();
-                                break;
-                            case 1:
-                                callback.callbackSecondOption();
-                                break;
-                        }
+                .setAdapter(adapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        presenter.setNewRewardAndDecrementPoints(i);
                     }
                 });
         builder.create().show();
     }
-
-
-    public interface DialogListCallback {
-        void callbackFirstOption();
-        void callbackSecondOption();
-    }
-
-    DialogListCallback selectNewGoalCallback = new DialogListCallback() {
-        @Override
-        public void callbackFirstOption() {
-            presenter.setNewRewardAndDecrementPoints(1);
-        }
-
-        @Override
-        public void callbackSecondOption() {
-
-        }
-    };
-
 
     @Override
     public void hideTaskButton() {
