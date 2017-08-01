@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".ui.base.BaseActivity">
         </activity>
+        <activity android:name=".ui.taskprogress.TaskProgressActivity">
+        </activity>
     </application>
 
 </manifest>

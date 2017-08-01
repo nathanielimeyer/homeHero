@@ -14,19 +14,21 @@ import java.util.List;
 public class Task {
     private String id;
     private String description;
+    private String icon;
     private List<String> instructions = new ArrayList<>();
     private boolean available;
     private long lastCompleted;
 
-    public static Task newInstance(String description, List<String> instructions) {
-        return new Task(FirebasePushIDGenerator.generatePushId(), description, instructions, true);
+    public static Task newInstance(String description, String icon, List<String> instructions) {
+        return new Task(FirebasePushIDGenerator.generatePushId(), description, icon, instructions, true);
     }
 
     public Task() {}
 
-    public Task(String id, String description, List<String> instructions, boolean available) {
+    public Task(String id, String description, String icon, List<String> instructions, boolean available) {
         this.id = id;
         this.description = description;
+        this.icon = icon;
         this.instructions = instructions;
         this.available = available;
     }
@@ -45,6 +47,14 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public List<String> getInstructions() {
