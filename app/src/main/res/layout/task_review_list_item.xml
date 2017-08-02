@@ -30,7 +30,7 @@
             android:textSize="16sp"/>
 
         <TextView
-            android:id="@+id/taskStatusTextView"
+            android:id="@+id/taskLastCompleteTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Task Status"/>
