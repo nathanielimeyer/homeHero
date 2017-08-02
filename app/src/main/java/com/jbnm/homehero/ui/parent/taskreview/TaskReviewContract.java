@@ -13,8 +13,8 @@ import java.util.List;
 public class TaskReviewContract {
     interface Presenter extends BasePresenter {
         void loadTasks(String childId);
-        void handleTaskMarkedComplete(String taskId);
-        void handleTaskMarkedIncomplete(String taskId);
+        void handleTaskApprove(String taskId);
+        void handleTaskReject(String taskId);
     }
     interface MvpView extends BaseMvpView{
         void showTasks(List<Object> tasks);
