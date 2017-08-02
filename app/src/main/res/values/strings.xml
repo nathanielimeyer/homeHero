@@ -11,6 +11,7 @@
     <string name="task_progress_goal_button_label">View Goal</string>
     <string name="task_instructions_label">Task Instructions</string>
     <string name="task_last_completed">Last Completed: %s</string>
+    <string name="task_last_completed_days">%d days</string>
 
     <string name="childId_intent_key">childId</string>
 
