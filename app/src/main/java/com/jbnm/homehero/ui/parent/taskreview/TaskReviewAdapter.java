@@ -127,7 +127,7 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             taskItemClickListener.onTaskItemReject(task.getId());
         }
 
-        
+
         private String getDate(long day) {
             long daysSinceLastComplete = DateUtil.daysSince(day);
             if (day == 0) {
@@ -146,7 +146,7 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 return context.getResources().getIdentifier(task.getIcon(), "drawable", context.getPackageName());
             } else {
                 // TODO: add default task icon here
-                return context.getResources().getIdentifier("down_arrow", "drawable", context.getPackageName());
+                return context.getResources().getIdentifier("ic_close_white_24dp", "drawable", context.getPackageName());
             }
         }
     }
