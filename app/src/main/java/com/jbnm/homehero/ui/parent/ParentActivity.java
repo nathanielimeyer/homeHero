@@ -56,7 +56,6 @@ public class ParentActivity extends BaseActivity {
 //        setup();
     }
 
-
     public class ParentPagerAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragments = new ArrayList<>();
 
