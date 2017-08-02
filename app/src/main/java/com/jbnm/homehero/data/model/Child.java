@@ -143,6 +143,15 @@ public class Child {
         }
     }
 
+    public boolean allTasksCompleted() {
+//      for (Task task : tasks) {
+//          if (task.isAvailable()) {
+//              return false;
+//          }
+//      }
+      return false;
+  }
+
     public void fulfillReward(String rewardId) {
         this.pendingRewards.remove(rewardId);
         this.rewards.get(rewardId).incrementTimesRedeemed();
