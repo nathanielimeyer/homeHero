@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
+import com.jbnm.homehero.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,12 +127,18 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             taskItemClickListener.onTaskItemReject(task.getId());
         }
 
+        
         private String getDate(long day) {
-            // process date
+            long daysSinceLastComplete = DateUtil.daysSince(day);
             if (day == 0) {
                 return "never";
+            } else if (daysSinceLastComplete == 0) {
+                return "today";
+            } else if (daysSinceLastComplete == 1) {
+                return "yesterday";
+            } else {
+                return String.format(context.getString(R.string.task_last_completed_days), daysSinceLastComplete);
             }
-            return "never";
         }
 
         private int getTaskIcon(Task task) {
