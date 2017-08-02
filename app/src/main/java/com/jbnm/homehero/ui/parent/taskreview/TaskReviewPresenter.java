@@ -1,7 +1,5 @@
 package com.jbnm.homehero.ui.parent.taskreview;
 
-import android.util.Log;
-
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.data.model.TaskStatus;
@@ -14,14 +12,11 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
-import io.reactivex.observables.GroupedObservable;
 import io.reactivex.observers.DisposableObserver;
 
 /**

@@ -15,4 +15,14 @@ public class SettingsPresenter implements SettingsContract.Presenter {
     public void detach() {
 
     }
+
+    @Override
+    public void handleTaskEditButtonClick() {
+        mvpView.taskEditIntent();
+    }
+
+    @Override
+    public void handleRewardEditButtonClick() {
+        mvpView.rewardEditIntent();
+    }
 }

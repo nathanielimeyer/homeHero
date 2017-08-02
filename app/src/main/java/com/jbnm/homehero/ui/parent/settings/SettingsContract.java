@@ -9,9 +9,11 @@ import com.jbnm.homehero.ui.base.BasePresenter;
 
 public class SettingsContract {
     interface Presenter extends BasePresenter {
-
+        void handleTaskEditButtonClick();
+        void handleRewardEditButtonClick();
     }
     interface MvpView extends BaseMvpView {
-
+        void taskEditIntent();
+        void rewardEditIntent();
     }
 }

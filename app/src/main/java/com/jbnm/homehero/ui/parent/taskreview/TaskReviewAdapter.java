@@ -25,7 +25,8 @@ import butterknife.OnClick;
  */
 
 public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    private static final int HEADER = 0;
+    private static final int TASK_ITEM = 1;
     private List<Object> taskItems = new ArrayList<>();
     private TaskItemClickListener taskItemClickListener;
 
@@ -47,9 +48,9 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
-        if (viewType == 0) {
+        if (viewType == HEADER) {
             ((HeaderViewHolder) holder).bindHeader(taskItems.get(position).toString());
-        } else {
+        } else if (viewType == TASK_ITEM) {
             ((TaskViewHolder) holder).bindTask((Task) taskItems.get(position));
         }
     }
@@ -62,9 +63,9 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public int getItemViewType(int position) {
         if (taskItems.get(position) instanceof String) {
-            return 0;
+            return HEADER;
         } else {
-            return 1;
+            return TASK_ITEM;
         }
     }
 

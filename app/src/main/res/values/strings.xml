@@ -13,6 +13,9 @@
     <string name="task_last_completed">Last Completed: %s</string>
     <string name="task_last_completed_days">%d days</string>
 
+    <string name="parent_settings_manage_tasks_button">Manage Tasks</string>
+    <string name="parent_settings_manage_rewards_button">Manage Rewards</string>
+
     <string name="childId_intent_key">childId</string>
 
     <string name="title_activity_parent">ParentActivity</string>

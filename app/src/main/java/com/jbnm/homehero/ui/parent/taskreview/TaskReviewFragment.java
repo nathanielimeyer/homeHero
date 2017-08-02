@@ -32,27 +32,17 @@ public class TaskReviewFragment extends BaseFragment implements TaskReviewContra
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = new TaskReviewPresenter(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.detach();
-    }
-
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
+        presenter = new TaskReviewPresenter(this);
         presenter.loadTasks("-KqZYJOtnw-96-kxmWZC");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        presenter.detach();
         unbinder.unbind();
     }
 
