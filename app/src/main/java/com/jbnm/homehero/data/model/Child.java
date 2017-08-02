@@ -117,7 +117,7 @@ public class Child {
     public int calculatePendingPoints() {
         int pendingPoints = 0;
         for(Task task : this.tasks.values()) {
-            if (task.pendingApproval()) {
+            if (task.pending()) {
                 pendingPoints += 1;
             }
         }

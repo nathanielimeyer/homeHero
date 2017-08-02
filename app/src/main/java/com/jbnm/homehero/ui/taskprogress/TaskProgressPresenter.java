@@ -47,7 +47,7 @@ public class TaskProgressPresenter implements TaskProgressContract.Presenter {
     @Override
     public void handleTaskCompleteClick() {
         if (child.getCurrentTaskKey() != null) {
-            child.currentTask().markTaskComplete();
+            child.currentTask().completeTask();
         }
         if (child.getRejectedTasks().size() > 0) {
             child.setCurrentTaskKey(child.getRejectedTasks().remove(0));

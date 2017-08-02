@@ -16,7 +16,7 @@ public class Task {
     private String description;
     private String icon;
     private List<String> instructions = new ArrayList<>();
-    private boolean available;
+//    private boolean available;
     private long lastCompleted;
 
     private TaskState state;
@@ -67,13 +67,13 @@ public class Task {
         this.instructions = instructions;
     }
 
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
+//    public boolean isAvailable() {
+//        return available;
+//    }
+//
+//    public void setAvailable(boolean available) {
+//        this.available = available;
+//    }
 
     public long getLastCompleted() {
         return lastCompleted;
@@ -106,7 +106,7 @@ public class Task {
         setLastCompleted(truncateDate(new Date()));
     }
 
-    public boolean availableForWheel() {
+    public boolean availableForSelection() {
         return state == TaskState.INCOMPLETE && notCompletedToday();
     }
 
@@ -126,27 +126,27 @@ public class Task {
         }
     }
 
-
-    public void markTaskComplete() {
-        setAvailable(false);
-    }
-
-    public void markTaskApproved() {
-        setAvailable(true);
-        setLastCompleted(truncateDate(new Date()));
-    }
+//
+//    public void markTaskComplete() {
+//        setAvailable(false);
+//    }
+//
+//    public void markTaskApproved() {
+//        setAvailable(true);
+//        setLastCompleted(truncateDate(new Date()));
+//    }
 
     private boolean notCompletedToday() {
         return lastCompleted < truncateDate(new Date());
     }
 
-    public boolean availableForSelection() {
-        return available && notCompletedToday();
-    }
-
-    public boolean pendingApproval() {
-        return !available && notCompletedToday();
-    }
+//    public boolean availableForSelection() {
+//        return available && notCompletedToday();
+//    }
+//
+//    public boolean pendingApproval() {
+//        return !available && notCompletedToday();
+//    }
 
     private static long truncateDate(Date date) {
         Calendar calendar = Calendar.getInstance();
