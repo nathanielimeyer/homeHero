@@ -83,32 +83,6 @@ public class TaskReviewPresenter implements TaskReviewContract.Presenter {
     }
 
     private void processResult(Child child) {
-//        List<Object> items = Observable.fromIterable(child.getTasks().values())
-//                .collect(new Callable<Map<String, List<Task>>>() {
-//                    @Override public Map<String, List<Task>> call() throws Exception {
-//                        return new HashMap<>();
-//                    }
-//                }, new BiConsumer<Map<String, List<Task>>, Task>() {
-//                    @Override public void accept(Map<String, List<Task>> map, Task task) throws Exception {
-//                        String taskStatus = taskStatus(task);
-//                        if (map.containsKey(taskStatus)) {
-//                            map.get(taskStatus).add(task);
-//                        } else {
-//                            map.put(taskStatus, new ArrayList<Task>());
-//                            map.get(taskStatus).add(task);
-//                        }
-//                    }
-//                }).map(new Function<Map<String,List<Task>>, List<Object>>() {
-//                    @Override public List<Object> apply(Map<String, List<Task>> stringListMap) throws Exception {
-//                        List<Object> items = new ArrayList<>();
-//                        for (String key : stringListMap.keySet()) {
-//                            items.add(key);
-//                            items.addAll(stringListMap.get(key));
-//                        }
-//                        return items;
-//                    }
-//                }).blockingGet();
-
         List<Object> items = Observable.fromIterable(child.getTasks().values())
                 .collect(new Callable<Map<String, List<Task>>>() {
                     @Override public Map<String, List<Task>> call() throws Exception {
@@ -136,16 +110,6 @@ public class TaskReviewPresenter implements TaskReviewContract.Presenter {
 
         mvpView.showTasks(items);
         mvpView.hideLoading();
-    }
-
-    private String taskStatus(Task task) {
-        if (task.availableForSelection() || child.getRejectedTasks().contains(task.getId())) {
-            return "Incomplete";
-        } else if (task.pendingApproval()) {
-            return "Pending";
-        } else {
-            return "Complete";
-        }
     }
 
     private void processError(Throwable e) {
