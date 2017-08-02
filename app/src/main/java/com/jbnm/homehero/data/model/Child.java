@@ -125,11 +125,13 @@ public class Child {
     }
 
     public void markTaskApproved(String taskId) {
-        this.tasks.get(taskId).markTaskApproved();
+//        this.tasks.get(taskId).markTaskApproved();
+        this.tasks.get(taskId).approveTask();
         this.totalPoints += 1;
     }
 
     public void markTaskRejected(String taskId) {
+        this.tasks.get(taskId).rejectTask();
         this.rejectedTasks.add(taskId);
     }
 
