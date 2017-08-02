@@ -7,6 +7,6 @@ package com.jbnm.homehero.ui.base;
 public interface BaseMvpView {
     boolean showLoading();
     void hideLoading();
-    boolean showError();
+    boolean showError(String errorMessage);
     void hideError();
 }

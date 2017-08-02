@@ -58,6 +58,7 @@ public class GoalPresenter implements GoalContract.Presenter {
         mvpView = view;
         mContext = context;
         dataManager = new DataManager();
+
     }
 
     @Override

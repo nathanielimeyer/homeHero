@@ -47,21 +47,6 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     @BindView(R.id.goalDescriptionTextView) TextView goalDescriptionTextView;
     public GoalPresenter presenter;
     private Context context = this;
-
-//    List<GoalPresenter.DialogItem> dialogItemList = presenter.buildRewardDialogList();
-//    public static class Item{
-//        public final String text;
-//        public final int icon;
-//        public Item(String text, Integer icon) {
-//            this.text = text;
-//            this.icon = icon;
-//        }
-//        @Override
-//        public String toString() {
-//            return text;
-//        }
-//    }
-//
     ListAdapter adapter;
 
     @Override
