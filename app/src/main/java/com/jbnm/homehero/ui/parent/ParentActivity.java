@@ -83,7 +83,7 @@ public class ParentActivity extends BaseActivity {
         Child child = Child.newInstance();
         List<String> instructions = Arrays.asList("change bed", "vacuum walls");
         for (int i = 0; i<10; i++) {
-            Task task = Task.newInstance("clean your room " + i, "down_arrow", instructions);
+            Task task = Task.newInstance("clean your room " + i, "ic_close_white_24dp", instructions);
             child.addTask(task);
         }
         for (int i =0; i<2; i++) {
