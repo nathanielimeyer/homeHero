@@ -32,7 +32,7 @@ import static android.content.ContentValues.TAG;
 public class GoalPresenter implements GoalContract.Presenter {
     private static final String TAG = "GoalPresenter";
     private GoalContract.MvpView mvpView;
-    private Context mContext;
+//    private Context mContext;
     private Child child;
     private Reward reward;
     private Task task;
@@ -56,14 +56,14 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     public GoalPresenter(GoalContract.MvpView view, Context context) {
         mvpView = view;
-        mContext = context;
+//        mContext = context;
         dataManager = new DataManager();
-
     }
 
     @Override
     public void detach() {
         mvpView = null;
+        disposable.clear();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class GoalPresenter implements GoalContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        processError(e);
                     }
 
                     @Override
@@ -111,7 +111,7 @@ public class GoalPresenter implements GoalContract.Presenter {
         if (child.currentTask() == null) {
             mvpView.taskPickerIntent();
         } else {
-            mvpView.taskProgressIntent();
+            mvpView.taskProgressIntent(child.getId());
         }
     }
 
@@ -126,10 +126,7 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     @Override
     public void setNewRewardAndDecrementPoints(int i) {
-        Log.d(TAG, "total points = " + child.getTotalPoints());
-        child.setTotalPoints(child.getTotalPoints() - child.currentReward().getValue());
-        Log.d(TAG, "total points = " + child.getTotalPoints());
-        Log.d(TAG, "New Reward Key: " + rewards.get(i).getId());
+        child.redeemReward();
         child.setCurrentRewardKey(rewards.get(i).getId());
         disposable.add(dataManager.updateChild(child)
                 .observeOn(AndroidSchedulers.mainThread())

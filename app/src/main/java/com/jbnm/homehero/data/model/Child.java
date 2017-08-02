@@ -29,7 +29,7 @@ public class Child {
 
     public Child(String id) {
         this.id = id;
-        this.totalPoints = 10;
+        this.totalPoints = 0;
     }
 
     public String getId() {

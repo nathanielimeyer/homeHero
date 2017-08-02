@@ -26,6 +26,7 @@ import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Reward;
+import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.taskpicker.TaskPickerActivity;
 import com.jbnm.homehero.ui.taskprogress.TaskProgressActivity;
 
@@ -40,7 +41,7 @@ import static com.jbnm.homehero.R.array.replace_me;
  * Created by nathanielmeyer on 7/18/17.
  */
 
-public class GoalActivity extends AppCompatActivity implements GoalContract.MvpView {
+public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @BindView(R.id.dynamicArcView) DecoView arcView;
     @BindView(R.id.imageView) ImageView rewardImageView;
     @BindView(R.id.taskButton) Button taskButton;
@@ -147,26 +148,6 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     }
 
     @Override
-    public boolean showLoading() {
-        return false;
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public boolean showError(String e) {
-        return false;
-    }
-
-    @Override
-    public void hideError() {
-
-    }
-
-    @Override
     public void showRewardAnimation() {
         Animation pulse = AnimationUtils.loadAnimation(this, R.anim.heart_pulse);
         pulse.setAnimationListener(new Animation.AnimationListener() {
@@ -212,8 +193,9 @@ public class GoalActivity extends AppCompatActivity implements GoalContract.MvpV
     }
 
     @Override
-    public void taskProgressIntent() {
+    public void taskProgressIntent(String childId) {
         Intent intent = new Intent(GoalActivity.this, TaskProgressActivity.class);
+        intent.putExtra("childId", childId);
         startActivity(intent);
     }
 
