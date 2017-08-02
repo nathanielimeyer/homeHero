@@ -107,7 +107,7 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             taskDescriptionTextView.setText(task.getDescription());
             taskLastCompleteTextView.setText(String.format(context.getString(R.string.task_last_completed), getDate(task.getLastCompleted())));
 //            taskReviewIconImage.setImageResource(getTaskIcon(task));
-            if (task.pendingApproval()) {
+            if (task.pending()) {
                 taskApproveButton.setVisibility(View.VISIBLE);
                 taskRejectButton.setVisibility(View.VISIBLE);
             } else {

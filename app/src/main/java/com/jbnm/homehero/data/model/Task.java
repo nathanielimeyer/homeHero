@@ -19,18 +19,20 @@ public class Task {
     private boolean available;
     private long lastCompleted;
 
+    private TaskState state;
+
     public static Task newInstance(String description, String icon, List<String> instructions) {
-        return new Task(FirebasePushIDGenerator.generatePushId(), description, icon, instructions, true);
+        return new Task(FirebasePushIDGenerator.generatePushId(), description, icon, instructions);
     }
 
     public Task() {}
 
-    public Task(String id, String description, String icon, List<String> instructions, boolean available) {
+    public Task(String id, String description, String icon, List<String> instructions) {
         this.id = id;
         this.description = description;
         this.icon = icon;
         this.instructions = instructions;
-        this.available = available;
+        this.state = TaskState.INCOMPLETE;
     }
 
     public String getId() {
@@ -81,6 +83,48 @@ public class Task {
         this.lastCompleted = lastCompleted;
     }
 
+    public TaskState getState() {
+        return state;
+    }
+
+    public void setState(TaskState state) {
+        this.state = state;
+    }
+
+
+
+    public void completeTask() {
+        setState(TaskState.PENDING);
+    }
+
+    public void rejectTask() {
+        setState(TaskState.REJECTED);
+    }
+
+    public void approveTask() {
+        setState(TaskState.INCOMPLETE);
+        setLastCompleted(truncateDate(new Date()));
+    }
+
+    public boolean availableForWheel() {
+        return state == TaskState.INCOMPLETE && notCompletedToday();
+    }
+
+    public boolean pending() {
+        return state == TaskState.PENDING;
+    }
+
+    public TaskStatus taskStatus() {
+        if (state == TaskState.PENDING) {
+            return TaskStatus.PENDING;
+        } else if (state == TaskState.REJECTED) {
+            return TaskStatus.INCOMPLETE;
+        } else if (notCompletedToday()) {
+            return TaskStatus.INCOMPLETE;
+        } else {
+            return TaskStatus.COMPLETE;
+        }
+    }
 
 
     public void markTaskComplete() {
