@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.jbnm.homehero.R;
@@ -17,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class TaskReviewFragment extends BaseFragment implements TaskReviewContract.MvpView {
+public class TaskReviewFragment extends BaseFragment implements TaskReviewContract.MvpView, TaskItemClickListener {
     @BindView(R.id.taskReviewRecyclerView) RecyclerView taskReviewRecyclerView;
 
     private TaskReviewContract.Presenter presenter;
@@ -62,10 +63,22 @@ public class TaskReviewFragment extends BaseFragment implements TaskReviewContra
 
     @Override
     public void showTasks(List<Object> tasks) {
-        taskReviewRecyclerView.setAdapter(new TaskReviewAdapter(tasks));
+        TaskReviewAdapter taskReviewAdapter = new TaskReviewAdapter(tasks);
+        taskReviewAdapter.setTaskItemClickListener(this);
+        taskReviewRecyclerView.setAdapter(taskReviewAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         taskReviewRecyclerView.setLayoutManager(layoutManager);
         taskReviewRecyclerView.setHasFixedSize(true);
         taskReviewRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), layoutManager.getOrientation()));
+    }
+
+    @Override
+    public void onTaskItemApprove(String taskId) {
+        presenter.handleTaskApprove(taskId);
+    }
+
+    @Override
+    public void onTaskItemReject(String taskId) {
+        presenter.handleTaskReject(taskId);
     }
 }

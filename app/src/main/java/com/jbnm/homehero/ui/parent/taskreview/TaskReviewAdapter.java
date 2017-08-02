@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by janek on 8/1/17.
@@ -25,6 +26,7 @@ import butterknife.ButterKnife;
 public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Object> taskItems = new ArrayList<>();
+    private TaskItemClickListener taskItemClickListener;
 
     public TaskReviewAdapter(List<Object> taskItems) {
         this.taskItems = taskItems;
@@ -65,6 +67,10 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    public void setTaskItemClickListener(TaskItemClickListener taskItemClickListener) {
+        this.taskItemClickListener = taskItemClickListener;
+    }
+
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.taskHeaderTextView) TextView taskHeaderTextView;
@@ -88,6 +94,7 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.taskRejectButton) ImageButton taskRejectButton;
 
         private Context context;
+        private Task task;
 
         public TaskViewHolder(View itemView) {
             super(itemView);
@@ -96,6 +103,7 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         public void bindTask(Task task) {
+            this.task = task;
             taskDescriptionTextView.setText(task.getDescription());
             taskLastCompleteTextView.setText(String.format(context.getString(R.string.task_last_completed), getDate(task.getLastCompleted())));
 //            taskReviewIconImage.setImageResource(getTaskIcon(task));
@@ -106,6 +114,16 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 taskApproveButton.setVisibility(View.GONE);
                 taskRejectButton.setVisibility(View.GONE);
             }
+        }
+
+        @OnClick(R.id.taskApproveButton)
+        public void taskApproveClick(){
+            taskItemClickListener.onTaskItemApprove(task.getId());
+        }
+
+        @OnClick(R.id.taskRejectButton)
+        public void taskRejectClick() {
+            taskItemClickListener.onTaskItemReject(task.getId());
         }
 
         private String getDate(long day) {

@@ -59,13 +59,26 @@ public class TaskReviewPresenter implements TaskReviewContract.Presenter {
     }
 
     @Override
-    public void handleTaskMarkedComplete(String taskId) {
-
+    public void handleTaskApprove(String taskId) {
+        child.markTaskApproved(taskId);
+        updateChild();
     }
 
     @Override
-    public void handleTaskMarkedIncomplete(String taskId) {
+    public void handleTaskReject(String taskId) {
+        child.markTaskRejected(taskId);
+        updateChild();
+    }
 
+    private void updateChild() {
+        mvpView.showLoading();
+        disposable.add(dataManager.updateChild(child)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Child>() {
+                    @Override public void onNext(Child child) { processResult(child); }
+                    @Override public void onError(Throwable e) { processError(e); }
+                    @Override public void onComplete() {}
+                }));
     }
 
     private void processResult(Child child) {
@@ -100,10 +113,10 @@ public class TaskReviewPresenter implements TaskReviewContract.Presenter {
     }
 
     private String taskStatus(Task task) {
-        if (task.pendingApproval()) {
-            return "Pending";
-        } else if (task.availableForSelection()) {
+        if (task.availableForSelection() || child.getRejectedTasks().contains(task.getId())) {
             return "Incomplete";
+        } else if (task.pendingApproval()) {
+            return "Pending";
         } else {
             return "Complete";
         }
