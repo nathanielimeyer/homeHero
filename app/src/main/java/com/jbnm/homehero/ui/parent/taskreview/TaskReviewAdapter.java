@@ -1,5 +1,6 @@
 package com.jbnm.homehero.ui.parent.taskreview;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,18 +82,47 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public class TaskViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.taskDescriptionTextView) TextView taskDescriptionTextView;
-        @BindView(R.id.taskStatusTextView) TextView taskStatusTextView;
+        @BindView(R.id.taskLastCompleteTextView) TextView taskLastCompleteTextView;
         @BindView(R.id.taskReviewIconImage) ImageView taskReviewIconImage;
         @BindView(R.id.taskApproveButton) ImageButton taskApproveButton;
         @BindView(R.id.taskRejectButton) ImageButton taskRejectButton;
 
+        private Context context;
+
         public TaskViewHolder(View itemView) {
             super(itemView);
+            context = itemView.getContext();
             ButterKnife.bind(this, itemView);
         }
 
         public void bindTask(Task task) {
             taskDescriptionTextView.setText(task.getDescription());
+            taskLastCompleteTextView.setText(String.format(context.getString(R.string.task_last_completed), getDate(task.getLastCompleted())));
+//            taskReviewIconImage.setImageResource(getTaskIcon(task));
+            if (task.pendingApproval()) {
+                taskApproveButton.setVisibility(View.VISIBLE);
+                taskRejectButton.setVisibility(View.VISIBLE);
+            } else {
+                taskApproveButton.setVisibility(View.GONE);
+                taskRejectButton.setVisibility(View.GONE);
+            }
+        }
+
+        private String getDate(long day) {
+            // process date
+            if (day == 0) {
+                return "never";
+            }
+            return "never";
+        }
+
+        private int getTaskIcon(Task task) {
+            if (task.getIcon() != null) {
+                return context.getResources().getIdentifier(task.getIcon(), "drawable", context.getPackageName());
+            } else {
+                // TODO: add default task icon here
+                return context.getResources().getIdentifier("down_arrow", "drawable", context.getPackageName());
+            }
         }
     }
 }
