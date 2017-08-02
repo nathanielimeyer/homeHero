@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jbnm.homehero.ui.taskprogress.TaskProgressActivity">
+
+    <Button
+        android:id="@+id/taskCompleteButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/task_progress_complete_button_label"
+        app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+        app:layout_constraintTop_toBottomOf="@+id/taskDescriptionTextView"/>
+
+    <TextView
+        android:id="@+id/taskDescriptionTextView"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center_vertical"
+        android:text="Task Title"
+        android:textAlignment="textStart"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/taskInstructionsLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/task_instructions_label"
+        app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+        app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
+
+    <ImageView
+        android:id="@+id/taskIconImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/taskDescriptionTextView"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/contentLeftMarginKeyLIne"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/taskDescriptionTextView"
+        app:srcCompat="@android:drawable/btn_star"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contentLeftMarginKeyLIne"
+        app:layout_constraintGuide_begin="72dp"
+        android:orientation="vertical"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/taskInstructionsRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskInstructionsLabelTextView"/>
+
+    <Button
+        android:id="@+id/goalProgressButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:backgroundTint="@color/label_text_light"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/task_progress_goal_button_label"
+        android:textColor="@color/label_text_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/taskCompleteButton"
+        app:layout_constraintStart_toEndOf="@+id/taskCompleteButton"
+        app:layout_constraintTop_toTopOf="@+id/taskCompleteButton"/>
+</android.support.constraint.ConstraintLayout>

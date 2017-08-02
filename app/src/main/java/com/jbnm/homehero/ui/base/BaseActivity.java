@@ -2,6 +2,7 @@ package com.jbnm.homehero.ui.base;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -60,7 +61,9 @@ public class BaseActivity extends AppCompatActivity implements BaseMvpView {
     }
 
     @Override
-    public boolean showError() {
+    public boolean showError(String errorMessage) {
+        Snackbar errorSnackbar = Snackbar.make(contentFrame, errorMessage, Snackbar.LENGTH_LONG);
+        errorSnackbar.show();
         return false;
     }
 

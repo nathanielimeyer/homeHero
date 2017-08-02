@@ -7,4 +7,8 @@
     <string name="task_get_started">Get Started</string>
     <string name="task_select_result">Your Task: %s</string>
     <string name="goal_picker_title">New Goal Picker</string>
+    <string name="task_progress_complete_button_label">Task Complete</string>
+    <string name="task_progress_goal_button_label">View Goal</string>
+    <string name="task_instructions_label">Task Instructions</string>
+    <string name="childId_intent_key">childId</string>
 </resources>
