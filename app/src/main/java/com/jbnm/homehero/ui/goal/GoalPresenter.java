@@ -103,7 +103,7 @@ public class GoalPresenter implements GoalContract.Presenter {
     @Override
     public void taskButtonClicked() {
         if (child.currentTask() == null) {
-            mvpView.taskPickerIntent();
+            mvpView.taskPickerIntent(child.getId());
         } else {
             mvpView.taskProgressIntent(child.getId());
         }

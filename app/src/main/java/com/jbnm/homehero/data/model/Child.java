@@ -117,7 +117,7 @@ public class Child {
     public int calculatePendingPoints() {
         int pendingPoints = 0;
         for(Task task : this.tasks.values()) {
-            if (task.pendingApproval()) {
+            if (task.pending()) {
                 pendingPoints += 1;
             }
         }
@@ -125,12 +125,17 @@ public class Child {
     }
 
     public void markTaskApproved(String taskId) {
-        this.tasks.get(taskId).markTaskApproved();
+        this.tasks.get(taskId).approveTask();
         this.totalPoints += 1;
     }
 
     public void markTaskRejected(String taskId) {
-        this.rejectedTasks.add(taskId);
+        this.tasks.get(taskId).rejectTask();
+        if (this.currentTaskKey == null) {
+            this.currentTaskKey = taskId;
+        } else {
+            this.rejectedTasks.add(taskId);
+        }
     }
 
     public void redeemReward() {

@@ -47,7 +47,7 @@ public class TaskProgressPresenter implements TaskProgressContract.Presenter {
     @Override
     public void handleTaskCompleteClick() {
         if (child.getCurrentTaskKey() != null) {
-            child.currentTask().markTaskComplete();
+            child.currentTask().completeTask();
         }
         if (child.getRejectedTasks().size() > 0) {
             child.setCurrentTaskKey(child.getRejectedTasks().remove(0));
@@ -67,12 +67,12 @@ public class TaskProgressPresenter implements TaskProgressContract.Presenter {
 
     @Override
     public void handleGoalProgressClick() {
-        mvpView.goalProgressIntent();
+        mvpView.goalProgressIntent(child.getId());
     }
 
     private void processResult(Child child) {
         if (child.getCurrentTaskKey() == null) {
-            mvpView.goalProgressIntent();
+            mvpView.goalProgressIntent(child.getId());
         } else {
             mvpView.showTask(child.currentTask());
         }
