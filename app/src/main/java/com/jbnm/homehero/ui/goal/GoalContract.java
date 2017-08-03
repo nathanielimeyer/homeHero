@@ -29,7 +29,7 @@ public class GoalContract {
         void showRewardAnimation();
         void hideTaskButton();
         void showTaskButton();
-        void taskPickerIntent();
+        void taskPickerIntent(String childId);
         void taskProgressIntent(String childId);
         void setGoalDescription(String description);
         void setGoalImage(String rewardImage);

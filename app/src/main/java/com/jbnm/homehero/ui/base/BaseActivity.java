@@ -2,14 +2,20 @@ package com.jbnm.homehero.ui.base;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.jbnm.homehero.Constants;
+import com.jbnm.homehero.MainActivity;
 import com.jbnm.homehero.R;
+import com.jbnm.homehero.ui.parent.ParentActivity;
 
 public class BaseActivity extends AppCompatActivity implements BaseMvpView {
 
@@ -30,6 +36,28 @@ public class BaseActivity extends AppCompatActivity implements BaseMvpView {
         contentFrame = rootView.findViewById(R.id.contentFrame);
         getLayoutInflater().inflate(layoutResID, contentFrame, true);
         super.setContentView(rootView);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (this instanceof ParentActivity) {
+            getMenuInflater().inflate(R.menu.parent, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.child, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_parent_item) {
+            startActivity(ParentActivity.createIntent(this, Constants.CHILDID));
+            return true;
+        } else if(item.getItemId() == R.id.menu_child_item) {
+            startActivity(new Intent(BaseActivity.this, MainActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

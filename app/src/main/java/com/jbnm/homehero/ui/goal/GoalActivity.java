@@ -24,6 +24,7 @@ import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.ui.base.BaseActivity;
@@ -50,6 +51,12 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     private Context context = this;
     ListAdapter adapter;
 
+    public static Intent createIntent(Context context, String childId) {
+        Intent intent = new Intent(context, GoalActivity.class);
+        intent.putExtra(Constants.CHILD_INTENT_KEY, childId);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -57,7 +64,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
         setContentView(R.layout.activity_goal);
         ButterKnife.bind(this);
 
-        String childId = getIntent().getStringExtra(getString(R.string.childId_intent_key));
+        String childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
 
         presenter = new GoalPresenter(this, this);
         presenter.loadData(childId);
@@ -187,16 +194,13 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     }
 
     @Override
-    public void taskPickerIntent() {
-        Intent intent = new Intent(GoalActivity.this, TaskPickerActivity.class);
-        startActivity(intent);
+    public void taskPickerIntent(String childId) {
+        startActivity(TaskPickerActivity.createIntent(this, childId));
     }
 
     @Override
     public void taskProgressIntent(String childId) {
-        Intent intent = new Intent(GoalActivity.this, TaskProgressActivity.class);
-        intent.putExtra("childId", childId);
-        startActivity(intent);
+        startActivity(TaskProgressActivity.createIntent(this, childId));
     }
 
     @Override

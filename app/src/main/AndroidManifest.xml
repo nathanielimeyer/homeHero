@@ -22,6 +22,11 @@
         <activity android:name=".ui.goal.GoalActivity"></activity>
         <activity android:name=".ui.base.BaseActivity"></activity>
         <activity android:name=".ui.taskprogress.TaskProgressActivity"></activity>
+        <activity
+            android:name=".ui.parent.ParentActivity"
+            android:label="@string/title_activity_parent"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name=".ui.taskEdit.TaskEditorActivity"></activity>
     </application>
 
