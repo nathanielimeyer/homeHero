@@ -16,7 +16,7 @@ class TaskPickerContract {
         fun showSelectedTask(task: Task)
         fun showTasksCompleted(tasksCompleted: Int)
         fun taskProgressIntent(childId: String)
-        fun goalProgressIntent()
+        fun goalProgressIntent(childId: String)
         fun showTutorial()
         fun hideTutorial()
     }

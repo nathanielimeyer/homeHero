@@ -34,9 +34,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.buttonGoal)
     public void goalButton() {
-        Intent intent = new Intent(MainActivity.this, GoalActivity.class);
-        intent.putExtra("childId", "-Kq5YlmM3saCunGh6Jr_");
-        startActivity(intent);
+        startActivity(GoalActivity.createIntent(this, Constants.CHILDID));
     }
 
     @OnClick(R.id.buttonEditTask)

@@ -83,15 +83,11 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
         tasksCompletedTextView.text = String.format(getString(R.string.tasks_completed), tasksCompleted)
     }
 
-    override fun goalProgressIntent() {
-        val intent: Intent = Intent(this, GoalActivity::class.java)
-        startActivity(intent)
+    override fun goalProgressIntent(childId: String) {
+        startActivity(GoalActivity.createIntent(this, childId));
     }
 
     override fun taskProgressIntent(childId: String) {
-//        val intent: Intent = Intent(this, TaskProgressActivity::class.java)
-//        intent.putExtra(getString(R.string.childId_intent_key), childId)
-//        startActivity(intent)
         startActivity(TaskProgressActivity.createIntent(this, childId))
     }
 
