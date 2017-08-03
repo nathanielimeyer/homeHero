@@ -57,7 +57,7 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView, val childId: 
     }
 
     override fun handleGoalButtonClick() {
-        mvpView.goalProgressIntent()
+        mvpView.goalProgressIntent(child.id)
     }
 
     override fun handleTaskButtonClick() {

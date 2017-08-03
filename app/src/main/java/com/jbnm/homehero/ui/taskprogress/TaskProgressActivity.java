@@ -96,8 +96,7 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
     }
 
     @Override
-    public void goalProgressIntent() {
-        Intent intent = new Intent(TaskProgressActivity.this, GoalActivity.class);
-        startActivity(intent);
+    public void goalProgressIntent(String childId) {
+        startActivity(GoalActivity.createIntent(this, childId));
     }
 }
