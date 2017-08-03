@@ -1,5 +1,6 @@
 package com.jbnm.homehero.ui.taskprogress;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.ui.base.BaseActivity;
@@ -32,12 +34,18 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
 
     private TaskProgressContract.Presenter presenter;
 
+    public static Intent createIntent(Context context, String childId) {
+        Intent intent = new Intent(context, TaskProgressActivity.class);
+        intent.putExtra(Constants.CHILD_INTENT_KEY, childId);
+        return intent;
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_progress);
         ButterKnife.bind(this);
 
-        String childId = getIntent().getStringExtra(getString(R.string.childId_intent_key));
+        String childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
 
         presenter = new TaskProgressPresenter(this);
         presenter.loadTask(childId);

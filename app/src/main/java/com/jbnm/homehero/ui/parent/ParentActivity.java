@@ -1,5 +1,7 @@
 package com.jbnm.homehero.ui.parent;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
 
@@ -10,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Parent;
@@ -37,16 +40,24 @@ public class ParentActivity extends BaseActivity {
 
     private ParentPagerAdapter parentPagerAdapter;
 
+    public static Intent createIntent(Context context, String childId) {
+        Intent intent = new Intent(context, ParentActivity.class);
+        intent.putExtra(Constants.CHILD_INTENT_KEY, childId);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent);
         ButterKnife.bind(this);
 
+        String childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
+
         setSupportActionBar(toolbar);
 
         parentPagerAdapter = new ParentPagerAdapter(getSupportFragmentManager());
-        parentPagerAdapter.addFragment(TaskReviewFragment.newInstance());
+        parentPagerAdapter.addFragment(TaskReviewFragment.newInstance(childId));
         parentPagerAdapter.addFragment(SettingsFragment.newInstance());
 
         viewPager.setAdapter(parentPagerAdapter);

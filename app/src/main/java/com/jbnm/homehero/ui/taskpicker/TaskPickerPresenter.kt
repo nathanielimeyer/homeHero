@@ -6,13 +6,10 @@ import com.jbnm.homehero.data.remote.DataManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 
-class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView) : TaskPickerContract.Presenter {
+class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView, val childId: String) : TaskPickerContract.Presenter {
     val dataManager: DataManager = DataManager()
     val disposable: CompositeDisposable = CompositeDisposable()
 
-    // Temporary, will be passed in to from activity or retrieved based on logged in user
-    val childId = "-KqZYJOtnw-96-kxmWZC"
-//    val childId = "-Kq5YlmM3saCunGh6Jr_"
     lateinit var child: Child
     init {
         mvpView.showLoading()

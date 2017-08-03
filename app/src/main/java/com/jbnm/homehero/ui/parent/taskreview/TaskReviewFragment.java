@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.ui.base.BaseFragment;
@@ -26,8 +27,11 @@ public class TaskReviewFragment extends BaseFragment implements TaskReviewContra
 
     public TaskReviewFragment() {}
 
-    public static TaskReviewFragment newInstance() {
+    public static TaskReviewFragment newInstance(String childId) {
         TaskReviewFragment fragment = new TaskReviewFragment();
+        Bundle args = new Bundle();
+        args.putString(Constants.CHILD_INTENT_KEY, childId);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -35,8 +39,10 @@ public class TaskReviewFragment extends BaseFragment implements TaskReviewContra
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
+        String childId = getArguments().getString(Constants.CHILD_INTENT_KEY);
+
         presenter = new TaskReviewPresenter(this);
-        presenter.loadTasks("-KqZYJOtnw-96-kxmWZC");
+        presenter.loadTasks(childId);
     }
 
     @Override

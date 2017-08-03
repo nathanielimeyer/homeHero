@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.MainActivity;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.parent.ParentActivity;
@@ -50,7 +51,7 @@ public class BaseActivity extends AppCompatActivity implements BaseMvpView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_parent_item) {
-            startActivity(new Intent(BaseActivity.this, ParentActivity.class));
+            startActivity(ParentActivity.createIntent(this, Constants.CHILDID));
             return true;
         } else if(item.getItemId() == R.id.menu_child_item) {
             startActivity(new Intent(BaseActivity.this, MainActivity.class));
