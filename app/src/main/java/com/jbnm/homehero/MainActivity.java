@@ -39,7 +39,6 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.buttonTask)
     public void taskButton() {
-        Intent intent = new Intent(MainActivity.this, TaskPickerActivity.class);
-        startActivity(intent);
+        startActivity(TaskPickerActivity.createIntent(this, Constants.CHILDID));
     }
 }

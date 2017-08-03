@@ -4,10 +4,12 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.jbnm.homehero.Constants
 import com.jbnm.homehero.R
 import com.jbnm.homehero.data.model.Task
 import com.jbnm.homehero.ui.base.BaseActivity
@@ -19,6 +21,14 @@ import kotlinx.android.synthetic.main.task_picker_result.*
 
 class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
 
+    companion object {
+        @JvmStatic fun createIntent(context: Context, childId: String) : Intent {
+            val intent: Intent = Intent(context, TaskPickerActivity::class.java)
+            intent.putExtra(Constants.CHILD_INTENT_KEY, childId)
+            return intent
+        }
+    }
+
     lateinit var presenter: TaskPickerContract.Presenter
     lateinit var tutorialAnimation: ObjectAnimator
 
@@ -26,7 +36,9 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_picker)
 
-        presenter = TaskPickerPresenter(this)
+        val childId: String = intent.getStringExtra(Constants.CHILD_INTENT_KEY)
+
+        presenter = TaskPickerPresenter(this, childId)
         result.visibility = View.GONE
 
         taskSelector.setOnTaskSelectListener { presenter.taskSelected(it) }
@@ -77,9 +89,10 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
     }
 
     override fun taskProgressIntent(childId: String) {
-        val intent: Intent = Intent(this, TaskProgressActivity::class.java)
-        intent.putExtra(getString(R.string.childId_intent_key), childId)
-        startActivity(intent)
+//        val intent: Intent = Intent(this, TaskProgressActivity::class.java)
+//        intent.putExtra(getString(R.string.childId_intent_key), childId)
+//        startActivity(intent)
+        startActivity(TaskProgressActivity.createIntent(this, childId))
     }
 
     override fun showTutorial() {
