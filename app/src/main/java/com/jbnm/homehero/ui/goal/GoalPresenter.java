@@ -25,14 +25,9 @@ import io.reactivex.observers.DisposableObserver;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by nathanielmeyer on 7/18/17.
- */
-
 public class GoalPresenter implements GoalContract.Presenter {
     private static final String TAG = "GoalPresenter";
     private GoalContract.MvpView mvpView;
-//    private Context mContext;
     private Child child;
     private Reward reward;
     private Task task;
@@ -56,7 +51,6 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     public GoalPresenter(GoalContract.MvpView view, Context context) {
         mvpView = view;
-//        mContext = context;
         dataManager = new DataManager();
     }
 
@@ -67,8 +61,8 @@ public class GoalPresenter implements GoalContract.Presenter {
     }
 
     @Override
-    public void loadData() {
-        disposable.add(dataManager.getChild("-Kq5YlmM3saCunGh6Jr_")
+    public void loadData(String childId) {
+        disposable.add(dataManager.getChild(childId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Child>() {
                     @Override
@@ -87,7 +81,7 @@ public class GoalPresenter implements GoalContract.Presenter {
                 }));
     }
 
-//    @Override
+    @Override
     public void populateAllTheThings() {
         rewards = new ArrayList(child.getRewards().values());
         mvpView.setGoalDescription(child.currentReward().getDescription());
@@ -140,11 +134,11 @@ public class GoalPresenter implements GoalContract.Presenter {
                 }));
     }
 
-    @Override
-    public ListAdapter goalPickerListAdapter() {
-        return null;
-    }
-
+//    @Override
+//    public ListAdapter goalPickerListAdapter() {
+//        return null;
+//    }
+//
     @Override
     public void rewardAnimationEnded() {
         mvpView.showGoalPickerDialog();
@@ -153,10 +147,6 @@ public class GoalPresenter implements GoalContract.Presenter {
     @Override
     public List buildRewardDialogList() {
         List<DialogItem> dialogItems = new ArrayList<>();
-
-//        dialogItems.add(new DialogItem("Disneyland", android.R.drawable.ic_menu_add));
-//        dialogItems.add(new DialogItem("Camping", android.R.drawable.ic_menu_delete));
-//        dialogItems.add(new DialogItem("Laser Tag", android.R.drawable.ic_menu_add));
 
         for (Reward reward : rewards) {
             Log.d(TAG, "Description = " + reward.getDescription());
