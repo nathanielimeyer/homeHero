@@ -28,7 +28,7 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.buttonEditTask)
     public void editTaskButton() {
         Intent intent = new Intent(MainActivity.this, TaskEditorActivity.class);
-        intent.putExtra("childId", "-Kq5YlmM3saCunGh6Jr_");
+        intent.putExtra(Constants.CHILD_INTENT_KEY, Constants.CHILDID);
         startActivity(intent);
     }
 

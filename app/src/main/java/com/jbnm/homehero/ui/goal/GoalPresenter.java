@@ -49,7 +49,7 @@ public class GoalPresenter implements GoalContract.Presenter {
         }
     }
 
-    public GoalPresenter(GoalContract.MvpView view, Context context) {
+    public GoalPresenter(GoalContract.MvpView view) {
         mvpView = view;
         dataManager = new DataManager();
     }
