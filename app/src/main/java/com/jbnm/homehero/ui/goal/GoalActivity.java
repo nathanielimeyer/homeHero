@@ -57,8 +57,10 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
         setContentView(R.layout.activity_goal);
         ButterKnife.bind(this);
 
+        String childId = getIntent().getStringExtra(getString(R.string.childId_intent_key));
+
         presenter = new GoalPresenter(this, this);
-        presenter.loadData();
+        presenter.loadData(childId);
 
         taskButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,13 +139,11 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
         arcView.addEvent(new DecoEvent.Builder(approvedPoints)
                 .setIndex(series2Index)
                 .setDuration(1250)
-//                .setDelay(30000)
                 .build());
 
         arcView.addEvent(new DecoEvent.Builder(approvedPoints + pendingPoints)
                 .setIndex(series1Index)
                 .setDuration(1500)
-//                .setDelay(30000)
                 .build());
     }
 

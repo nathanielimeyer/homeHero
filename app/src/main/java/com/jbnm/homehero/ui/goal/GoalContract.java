@@ -14,14 +14,15 @@ import java.util.List;
 
 public class GoalContract {
     interface Presenter extends BasePresenter {
-        void loadData();
+        void loadData(String childId);
         void checkProgress();
         void taskButtonClicked();
         void determineTaskButtonStatus();
         void setNewRewardAndDecrementPoints(int i);
-        ListAdapter goalPickerListAdapter();
+//        ListAdapter goalPickerListAdapter();
         void rewardAnimationEnded();
         List buildRewardDialogList();
+        void populateAllTheThings();
     }
     interface MvpView extends BaseMvpView {
         void showProgress(String description, int rewardValue, String rewardImage, int approvedPoints, int pendingPoints);
