@@ -66,7 +66,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
 
         String childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
 
-        presenter = new GoalPresenter(this, this);
+        presenter = new GoalPresenter(this);
         presenter.loadData(childId);
 
         taskButton.setOnClickListener(new View.OnClickListener() {
