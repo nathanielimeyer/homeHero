@@ -11,6 +11,7 @@ import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.data.remote.DataManager;
 import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.goal.GoalActivity;
+import com.jbnm.homehero.ui.taskEdit.TaskEditorActivity;
 import com.jbnm.homehero.ui.taskpicker.TaskPickerActivity;
 
 import java.util.Arrays;
@@ -34,8 +35,17 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.buttonGoal)
     public void goalButton() {
         Intent intent = new Intent(MainActivity.this, GoalActivity.class);
+        intent.putExtra("childId", "-Kq5YlmM3saCunGh6Jr_");
         startActivity(intent);
     }
+
+    @OnClick(R.id.buttonEditTask)
+    public void editTaskButton() {
+        Intent intent = new Intent(MainActivity.this, TaskEditorActivity.class);
+        intent.putExtra("childId", "-Kq5YlmM3saCunGh6Jr_");
+        startActivity(intent);
+    }
+
 
     @OnClick(R.id.buttonTask)
     public void taskButton() {
