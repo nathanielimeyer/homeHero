@@ -84,11 +84,15 @@ public class GoalPresenter implements GoalContract.Presenter {
     @Override
     public void populateAllTheThings() {
         rewards = new ArrayList(child.getRewards().values());
-        mvpView.setGoalDescription(child.currentReward().getDescription());
-        mvpView.setGoalImage(child.currentReward().getRewardImage());
-        checkProgress();
-        determineTaskButtonStatus();
         mvpView.buildGoalPickerDialog();
+        if (child.getCurrentRewardKey() == null) {
+            mvpView.showGoalPickerDialog();
+        } else {
+            mvpView.setGoalDescription(child.currentReward().getDescription());
+            mvpView.setGoalImage(child.currentReward().getRewardImage());
+            checkProgress();
+            determineTaskButtonStatus();
+        }
     }
     @Override
     public void checkProgress() {
