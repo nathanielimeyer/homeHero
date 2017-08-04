@@ -36,6 +36,13 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
 
     }
 
+    public void updateTaskData() {
+        String description = descriptionEditText.getText().toString().trim();
+
+//        presenter.saveChildData(description, icon, instructions);
+        presenter.saveChildData(description);
+    }
+
     @Override
     public void setDescription(String description) {
         if (description != null && !description.isEmpty()) {
