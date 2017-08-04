@@ -24,6 +24,7 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
     companion object {
         @JvmStatic fun createIntent(context: Context, childId: String) : Intent {
             val intent: Intent = Intent(context, TaskPickerActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
             intent.putExtra(Constants.CHILD_INTENT_KEY, childId)
             return intent
         }
