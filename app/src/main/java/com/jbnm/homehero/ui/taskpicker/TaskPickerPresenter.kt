@@ -15,21 +15,21 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView, val childId: 
         mvpView.showLoading()
 
         disposable.add(dataManager.getChild(childId)
+                .doOnNext { child = it }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ processResult(it) },
+                .subscribe({ processTasks(it.tasks.values.toList()) },
                         { processError(it) }))
     }
 
-    fun processResult(childResult: Child) {
-        child = childResult
-        processTasks(child.tasks.values.toList())
-    }
-
     fun processTasks(tasks: List<Task>) {
-        mvpView.addTasks(tasks)
-        checkTutorialViewed()
-        mvpView.hideLoading()
-        mvpView.showTasksCompleted(tasks.filter { !it.availableForSelection() }.size)
+        if (tasks.filter { it.availableForSelection() }.isEmpty()) {
+            mvpView.goalProgressIntent(childId)
+        } else {
+            mvpView.addTasks(tasks)
+            checkTutorialViewed()
+            mvpView.hideLoading()
+            mvpView.showTasksCompleted(tasks.filter { !it.availableForSelection() }.size)
+        }
     }
 
     fun processError(error: Throwable) {
