@@ -33,8 +33,11 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
     }
 
     @Override
-    public void saveChildData() {
-
+//    public void saveChildData(String description, String icon, List<String> instructions) {
+    public void saveChildData(String description) {
+        taskToEdit.setDescription(description);
+//        taskToEdit.setIcon(icon);
+//        taskToEdit.setInstructions(instructions);
     }
 
     @Override

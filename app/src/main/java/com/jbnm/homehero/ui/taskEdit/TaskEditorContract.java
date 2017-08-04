@@ -11,7 +11,8 @@ import java.util.List;
 
 public class TaskEditorContract {
     interface Presenter extends BasePresenter {
-        void saveChildData();
+//        void saveChildData(String description, String icon, List<String> instructions);
+        void saveChildData(String description);
         void loadChildAndTask(String childId, String taskId);
     }
     interface MvpView extends BaseMvpView {
