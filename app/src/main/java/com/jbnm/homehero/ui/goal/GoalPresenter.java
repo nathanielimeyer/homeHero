@@ -133,12 +133,6 @@ public class GoalPresenter implements GoalContract.Presenter {
                     @Override public void onComplete() {}
                 }));
     }
-
-//    @Override
-//    public ListAdapter goalPickerListAdapter() {
-//        return null;
-//    }
-//
     @Override
     public void rewardAnimationEnded() {
         mvpView.showGoalPickerDialog();
