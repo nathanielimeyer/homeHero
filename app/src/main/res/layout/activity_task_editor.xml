@@ -28,5 +28,15 @@
             android:visibility="visible"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_changes"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true" />
+
     </LinearLayout>
 </RelativeLayout>
