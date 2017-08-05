@@ -29,7 +29,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                presenter.handleLoginButtonClick();
+                presenter.handleLoginButtonClick(emailEditText.getText().toString().trim()
+                        , passwordEditText.getText().toString().trim());
             }
         });
     }

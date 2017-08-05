@@ -12,7 +12,7 @@ import io.reactivex.Observable;
 public class LoginContract {
     interface Presenter extends BasePresenter {
         void init();
-        void handleLoginButtonClick();
+        void handleLoginButtonClick(String email, String password);
     }
     interface MvpView extends BaseMvpView {
         void enableLoginButton();
