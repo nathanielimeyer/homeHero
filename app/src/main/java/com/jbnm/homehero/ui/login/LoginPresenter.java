@@ -1,6 +1,12 @@
 package com.jbnm.homehero.ui.login;
 
+import android.support.annotation.NonNull;
 import android.util.Patterns;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
@@ -14,9 +20,11 @@ import io.reactivex.observers.DisposableObserver;
 public class LoginPresenter implements LoginContract.Presenter {
     private LoginContract.MvpView mvpView;
     private CompositeDisposable disposable = new CompositeDisposable();
+    private FirebaseAuth auth;
 
     public LoginPresenter(LoginContract.MvpView mvpView) {
         this.mvpView = mvpView;
+        auth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -50,8 +58,16 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void handleLoginButtonClick() {
-
+    public void handleLoginButtonClick(String email, String password) {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    
+                } else {
+                    mvpView.showError("Login failed. Please try again.");
+                }
+            }
+        });
     }
 
     private boolean validateEmail(String email) {
