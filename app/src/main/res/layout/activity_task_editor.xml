@@ -14,5 +14,19 @@
             android:id="@+id/edit_text_description"
             android:inputType="text" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/taskInstructionsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_changes"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true" />
     </LinearLayout>
 </RelativeLayout>

@@ -25,5 +25,6 @@
 
     <string name="parent_menu_child_item">Child</string>
     <string name="child_menu_parent_item">Parent</string>
+    <string name="save_changes">Save Changes</string>
 
 </resources>

@@ -38,6 +38,15 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
         taskToEdit.setDescription(description);
 //        taskToEdit.setIcon(icon);
 //        taskToEdit.setInstructions(instructions);
+        disposable.add(dataManager.updateChild(child)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Child>() {
+                    @Override public void onNext(Child childResult ) {
+                        child = childResult;
+                    }
+                    @Override public void onError(Throwable e) { processError(e); }
+                    @Override public void onComplete() {}
+                }));
     }
 
     @Override
@@ -72,6 +81,7 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
                 }
             }
             mvpView.setDescription(taskToEdit.getDescription());
+            mvpView.setInstructions(taskToEdit.getInstructions());
         }
         mvpView.hideLoading();
     }
