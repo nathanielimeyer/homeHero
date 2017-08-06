@@ -28,6 +28,7 @@
 
     <string name="valid_email_error">Please enter a valid email</string>
     <string name="valid_password_error">Password must be at least 6 characters</string>
+    <string name="valid_confirm_error">Passwords do not match</string>
     <string name="hint_email_input">Email Address</string>
     <string name="hint_password_input">Password</string>
     <string name="hint_password_confirm_input">Confirm Password</string>
