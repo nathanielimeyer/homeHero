@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "21912947507-s7pi6t9n9u7m5ttjqn31sfk0ui2fr4bg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jbnm.homehero",
+            "certificate_hash": "7ec00c081f6be01f2010a186228441be9dd2a4b6"
+          }
+        },
+        {
           "client_id": "21912947507-6jjddlfvgj6l4pk3odpkv2hl2epnbnnq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

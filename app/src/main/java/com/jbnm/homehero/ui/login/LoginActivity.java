@@ -1,5 +1,7 @@
 package com.jbnm.homehero.ui.login;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +19,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
     @BindView(R.id.loginEmailEditText) EditText emailEditText;
     @BindView(R.id.loginPasswordEditText) EditText passwordEditText;
     @BindView(R.id.loginButton) Button loginButton;
+    @BindView(R.id.signUpLinkButton) Button signUpLinkButton;
     private LoginContract.Presenter presenter;
+
+    public static Intent createIntent(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
             @Override public void onClick(View view) {
                 presenter.handleLoginButtonClick(emailEditText.getText().toString().trim()
                         , passwordEditText.getText().toString().trim());
+            }
+        });
+
+        signUpLinkButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                presenter.handleSignUpLinkClick();
             }
         });
     }
@@ -79,5 +93,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
     @Override
     public void hidePasswordError() {
         passwordEditText.setError(null);
+    }
+
+    @Override
+    public void signUpIntent() {
+
     }
 }

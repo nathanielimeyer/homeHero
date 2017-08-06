@@ -28,5 +28,12 @@
 
     <string name="valid_email_error">Please enter a valid email</string>
     <string name="valid_password_error">Password must be at least 6 characters</string>
+    <string name="hint_email_input">Email Address</string>
+    <string name="hint_password_input">Password</string>
+    <string name="hint_password_confirm_input">Confirm Password</string>
+    <string name="button_login">Login</string>
+    <string name="button_sign_up">Sign Up</string>
+    <string name="link_login_to_sign_up">Don\'t have an account?</string>
+    <string name="link_sign_up_to_login">Already a member?</string>
 
 </resources>
