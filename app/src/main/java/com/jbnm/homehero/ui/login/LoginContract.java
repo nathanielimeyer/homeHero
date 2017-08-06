@@ -13,6 +13,7 @@ public class LoginContract {
     interface Presenter extends BasePresenter {
         void init();
         void handleLoginButtonClick(String email, String password);
+        void handleSignUpLinkClick();
     }
     interface MvpView extends BaseMvpView {
         void enableLoginButton();
@@ -23,5 +24,6 @@ public class LoginContract {
         void hideEmailError();
         void showPasswordError();
         void hidePasswordError();
+        void signUpIntent();
     }
 }

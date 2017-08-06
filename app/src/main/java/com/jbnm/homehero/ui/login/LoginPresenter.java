@@ -62,12 +62,17 @@ public class LoginPresenter implements LoginContract.Presenter {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    
+
                 } else {
                     mvpView.showError("Login failed. Please try again.");
                 }
             }
         });
+    }
+
+    @Override
+    public void handleSignUpLinkClick() {
+        mvpView.signUpIntent();
     }
 
     private boolean validateEmail(String email) {
@@ -91,6 +96,8 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     private void processError(Throwable e) {
-
+        mvpView.hideLoading();
+        e.printStackTrace();
+        mvpView.showError(e.getMessage());
     }
 }
