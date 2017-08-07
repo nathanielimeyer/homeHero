@@ -28,5 +28,7 @@
     <string name="save_changes">Save Changes</string>
     <string name="cancel_changes">Cancel</string>
     <string name="delete_step">X</string>
+    <string name="add_step_text">Add a step</string>
+    <string name="add_step">+</string>
 
 </resources>

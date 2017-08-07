@@ -1,33 +1,21 @@
 package com.jbnm.homehero.ui.taskEdit;
 
 import java.util.List;
-
-/**
- * Created by nathanielmeyer on 8/5/17.
- */
-
-
-        import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.jbnm.homehero.R;
+import java.util.List;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-        import com.jbnm.homehero.R;
-
-        import java.util.List;
-
-        import butterknife.BindView;
-        import butterknife.ButterKnife;
-
-/**
- * Created by janek on 7/31/17.
- */
 
 public class TaskEditorInstructionsAdapter extends RecyclerView.Adapter<TaskEditorInstructionsAdapter.TaskEditorInstructionsViewHolder> {
     private static final String TAG = "Task Editor Adapter";
@@ -40,7 +28,11 @@ public class TaskEditorInstructionsAdapter extends RecyclerView.Adapter<TaskEdit
     @Override
     public TaskEditorInstructionsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_editor_instruction_list_item, parent, false);
-        TaskEditorInstructionsViewHolder viewHolder = new TaskEditorInstructionsViewHolder(view, new MyCustomEditTextListener(), new DeleteButtonOnClickListener());
+        TaskEditorInstructionsViewHolder viewHolder = new TaskEditorInstructionsViewHolder(
+                view,
+                new MyCustomEditTextListener(),
+                new DeleteButtonOnClickListener(),
+                new AddButtonOnClickListener());
         return viewHolder;
     }
 
@@ -58,32 +50,41 @@ public class TaskEditorInstructionsAdapter extends RecyclerView.Adapter<TaskEdit
         @BindView(R.id.stepNumberTextView) TextView stepNumberTextView;
         @BindView(R.id.stepDescriptionEditText) EditText stepDescriptionEditText;
         @BindView(R.id.stepDeleteButton) Button stepDeleteButton;
+        @BindView(R.id.addStepButton) Button addStepButton;
         public MyCustomEditTextListener myCustomEditTextListener;
         public DeleteButtonOnClickListener deleteButtonOnClickListener;
+        public AddButtonOnClickListener addButtonOnClickListener;
 
         public TaskEditorInstructionsViewHolder(View itemView,
                                                 MyCustomEditTextListener myCustomEditTextListener,
-                                                DeleteButtonOnClickListener deleteButtonOnClickListener) {
+                                                DeleteButtonOnClickListener deleteButtonOnClickListener,
+                                                AddButtonOnClickListener addButtonOnClickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.stepDescriptionEditText = (EditText) itemView.findViewById(R.id.stepDescriptionEditText);
             this.myCustomEditTextListener = myCustomEditTextListener;
             this.stepDescriptionEditText.addTextChangedListener(myCustomEditTextListener);
+
             this.stepDeleteButton = (Button) itemView.findViewById(R.id.stepDeleteButton);
             this.deleteButtonOnClickListener = deleteButtonOnClickListener;
             this.stepDeleteButton.setOnClickListener(deleteButtonOnClickListener);
+
+            this.addStepButton = (Button) itemView.findViewById(R.id.addStepButton);
+            this.addButtonOnClickListener = addButtonOnClickListener;
+            this.addStepButton.setOnClickListener(addButtonOnClickListener);
+
         }
 
         public void bindStep(String step, int position) {
             stepNumberTextView.setText(String.valueOf(position + 1));
             myCustomEditTextListener.updatePosition(position);
-            if (step != null && !step.isEmpty()) {
+            if (step != null && !step.isEmpty() && !step.equals("")) {
                 stepDescriptionEditText.setText(step);
             } else {
                 stepDescriptionEditText.setHint("Tap to edit");
             }
             deleteButtonOnClickListener.updatePosition(position);
-
+            addButtonOnClickListener.updatePosition(position);
         }
     }
 
@@ -102,12 +103,10 @@ public class TaskEditorInstructionsAdapter extends RecyclerView.Adapter<TaskEdit
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             instructions.set(position, charSequence.toString());
             Log.d(TAG, "Position = " + position);
-
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
-
         }
     }
 
@@ -120,10 +119,23 @@ public class TaskEditorInstructionsAdapter extends RecyclerView.Adapter<TaskEdit
 
         @Override
         public void onClick(View view) {
-            Log.d(TAG, "Position = " + position);
             instructions.remove(position);
             notifyDataSetChanged();
         }
+    }
 
+    private class AddButtonOnClickListener implements View.OnClickListener {
+        private int position;
+
+        public void updatePosition(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View view) {
+//            Log.d(TAG, "Position = " + position);
+            instructions.add(position, "");
+            notifyDataSetChanged();
+        }
     }
 }
