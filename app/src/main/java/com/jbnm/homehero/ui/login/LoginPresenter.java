@@ -1,5 +1,6 @@
 package com.jbnm.homehero.ui.login;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.Patterns;
 
@@ -8,10 +9,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.data.model.Child;
+import com.jbnm.homehero.data.remote.DataManager;
 import com.jbnm.homehero.data.remote.FirebaseAuthService;
 
 import org.reactivestreams.Subscriber;
 
+import io.reactivex.Maybe;
+import io.reactivex.MaybeSource;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,10 +35,15 @@ import io.reactivex.subscribers.ResourceSubscriber;
 public class LoginPresenter implements LoginContract.Presenter {
     private LoginContract.MvpView mvpView;
     private CompositeDisposable disposable = new CompositeDisposable();
+    private DataManager dataManager;
     private FirebaseAuthService authService;
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     public LoginPresenter(LoginContract.MvpView mvpView) {
         this.mvpView = mvpView;
+        dataManager = new DataManager();
+        auth = FirebaseAuth.getInstance();
         authService = FirebaseAuthService.getInstance();
     }
 
@@ -67,28 +76,16 @@ public class LoginPresenter implements LoginContract.Presenter {
             @Override public void onError(Throwable e) { processError(e); }
             @Override public void onComplete() {}
         }));
-        disposable.add(authService.getAuthState()
-                .filter(new Predicate<FirebaseAuth>() {
-                    @Override public boolean test(FirebaseAuth firebaseAuth) throws Exception {
-                        return firebaseAuth.getCurrentUser() != null;
-                    }
-                })
-                .map(new Function<FirebaseAuth, String>() {
-                    @Override public String apply(FirebaseAuth firebaseAuth) throws Exception {
-                        return firebaseAuth.getCurrentUser().getUid();
-                    }
-                })
-                .distinctUntilChanged()
-                .flatMap(new Function<String, ObservableSource<Child>>() {
-                    @Override public ObservableSource<Child> apply(String userId) throws Exception {
-                        return authService.getChild(userId);
-                    }
-                })
-                .subscribeWith(new DisposableObserver<Child>() {
-                    @Override public void onNext(Child child) { determineUserStatus(child); }
-                    @Override public void onError(Throwable e) { processError(e); }
-                    @Override public void onComplete() {}
-                }));
+
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    processAuthState(user.getUid());
+                }
+            }
+        };
     }
 
     @Override
@@ -102,25 +99,23 @@ public class LoginPresenter implements LoginContract.Presenter {
                     @Override public void onError(Throwable e) { processError(e); }
                     @Override public void onComplete() {}
                 }));
-//        disposable.add(authService.loginAndGetChild(email, password)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(new ResourceSubscriber<Child>() {
-//                    @Override public void onNext(Child child) { determineUserStatus(child);}
-//                    @Override public void onError(Throwable t) { processError(t); }
-//                    @Override public void onComplete() {}
-//                }));
-//        disposable.add(authService.login(email, password).subscribeWith(new DisposableMaybeObserver<AuthResult>() {
-//            @Override public void onSuccess(AuthResult authResult) {
-//
-//            }
-//            @Override public void onError(Throwable e) { processError(e); }
-//            @Override public void onComplete() {}
-//        }));
     }
 
     @Override
     public void handleSignUpLinkClick() {
         mvpView.signUpIntent();
+    }
+
+    @Override
+    public void addAuthListener() {
+        auth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void removeAuthListener() {
+        if (authStateListener != null) {
+            auth.removeAuthStateListener(authStateListener);
+        }
     }
 
     private boolean validateEmail(String email) {
@@ -143,11 +138,23 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
     }
 
+    private void processAuthState(String userId) {
+        disposable.add(dataManager.getChildByParentId(userId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Child>() {
+                    @Override public void onNext(Child child) { determineUserStatus(child); }
+                    @Override public void onError(Throwable e) { processError(e); }
+                    @Override public void onComplete() {}
+                }));
+    }
+
     private void determineUserStatus(Child child) {
         Log.d("test", child.getId());
         if (child.getTasks().keySet().size() < Constants.MIN_TASK_COUNT) {
+            Log.d("test", "not enough tasks");
             // navigate to modify task list
         } else {
+            Log.d("test", "enough tasks");
             // navigate to goal progress
         }
     }

@@ -19,6 +19,7 @@ import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
+import io.reactivex.MaybeSource;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
@@ -49,14 +50,14 @@ public class FirebaseAuthService {
         return RxFirebaseAuth.signInWithEmailAndPassword(auth, email, password);
     }
 
-    public Observable<Child> loginAndGetChild(String email, String password) {
-        return RxFirebaseAuth.signInWithEmailAndPassword(auth, email, password)
-                .flatMapObservable(new Function<AuthResult, ObservableSource<Child>>() {
-                    @Override public ObservableSource<Child> apply(AuthResult authResult) throws Exception {
-                        return getChild(authResult.getUser().getUid());
-                    }
-                });
-    }
+//    public Observable<Child> loginAndGetChild(String email, String password) {
+//        return RxFirebaseAuth.signInWithEmailAndPassword(auth, email, password)
+//                .flatMapObservable(new Function<AuthResult, ObservableSource<Child>>() {
+//                    @Override public ObservableSource<Child> apply(AuthResult authResult) throws Exception {
+//                        return getChild(authResult.getUser().getUid());
+//                    }
+//                });
+//    }
 
     public Observable<Child> getChild(String parentId) {
         return RxFirebaseDatabase.observeValueEvent(rootRef.child("parents").child(parentId), Parent.class)
@@ -65,6 +66,15 @@ public class FirebaseAuthService {
                         return RxFirebaseDatabase.observeValueEvent(rootRef.child("children").child(parent.getChild()), Child.class);
                     }
                 }).toObservable();
+    }
+
+    public Flowable<Child> getFlowChild(String parentId) {
+        return RxFirebaseDatabase.observeValueEvent(rootRef.child("parents").child(parentId), Parent.class)
+                .flatMap(new Function<Parent, Publisher<Child>>() {
+                    @Override public Publisher<Child> apply(Parent parent) throws Exception {
+                        return RxFirebaseDatabase.observeValueEvent(rootRef.child("children").child(parent.getChild()), Child.class);
+                    }
+                });
     }
 
     public void logout() {
@@ -81,15 +91,6 @@ public class FirebaseAuthService {
                     @Override
                     public CompletableSource apply(AuthResult authResult) throws Exception {
                         return RxFirebaseDatabase.updateChildren(FirebaseDatabase.getInstance().getReference(), createNewUser(authResult.getUser()));
-                    }
-                });
-    }
-
-    public Observable<Child> createUserAndGetChild(String email, String password) {
-        return RxFirebaseAuth.createUserWithEmailAndPassword(auth, email, password)
-                .flatMapObservable(new Function<AuthResult, ObservableSource<Child>>() {
-                    @Override public ObservableSource<Child> apply(AuthResult authResult) throws Exception {
-                        return getChild(authResult.getUser().getUid());
                     }
                 });
     }
