@@ -26,6 +26,6 @@ public class LoginContract {
         void hidePasswordError();
         void signUpIntent();
         void goalProgressIntent(String childId);
-        void parentTaskListIntent(String childId);
+        void parentIntent(String childId);
     }
 }

@@ -160,4 +160,9 @@ public class GoalPresenter implements GoalContract.Presenter {
         e.printStackTrace();
         mvpView.showError(e.getMessage());
     }
+
+    @Override
+    public void handleParentNavButtonClick() {
+        mvpView.parentIntent(child.getId());
+    }
 }

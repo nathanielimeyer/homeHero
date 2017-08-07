@@ -11,8 +11,10 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.goal.GoalActivity;
+import com.jbnm.homehero.ui.parent.ParentActivity;
 import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 import com.jbnm.homehero.ui.signup.SignUpActivity;
+import com.jbnm.homehero.util.SharedPrefManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +37,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        presenter = new LoginPresenter(this);
+        presenter = new LoginPresenter(this, SharedPrefManager.getInstance(this));
         presenter.init();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +111,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
     }
 
     @Override
-    public void parentTaskListIntent(String childId) {
-        startActivity(ParentTaskListActivity.createIntent(this, childId));
+    public void parentIntent(String childId) {
+        startActivity(ParentActivity.createIntent(this, childId));
     }
 }

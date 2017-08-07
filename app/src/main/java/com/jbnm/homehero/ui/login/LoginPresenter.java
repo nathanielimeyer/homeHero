@@ -9,6 +9,7 @@ import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.remote.DataManager;
 import com.jbnm.homehero.data.remote.FirebaseAuthService;
+import com.jbnm.homehero.util.SharedPrefManager;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -25,10 +26,12 @@ public class LoginPresenter implements LoginContract.Presenter {
     private LoginContract.MvpView mvpView;
     private CompositeDisposable disposable = new CompositeDisposable();
     private DataManager dataManager;
+    private SharedPrefManager sharedPrefManager;
     private FirebaseAuthService authService;
 
-    public LoginPresenter(LoginContract.MvpView mvpView) {
+    public LoginPresenter(LoginContract.MvpView mvpView, SharedPrefManager sharedPrefManager) {
         this.mvpView = mvpView;
+        this.sharedPrefManager = sharedPrefManager;
         dataManager = new DataManager();
         authService = FirebaseAuthService.getInstance();
     }
@@ -129,14 +132,12 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     private void determineUserStatus(Child child) {
         mvpView.hideLoading();
-        if (child.getTasks().keySet().size() < Constants.MIN_TASK_COUNT) {
-            // navigate to modify task list
-            mvpView.parentTaskListIntent(child.getId());
-        } else if (child.getRewards().keySet().size() < Constants.MIN_REWARD_COUNT) {
-            // navigate to modify goal list
-        } else {
-            // navigate to goal progress
+        sharedPrefManager.setTasksCreated(child.getTasks().keySet().size() > Constants.MIN_TASK_COUNT);
+        sharedPrefManager.setGoalsCreated(child.getRewards().keySet().size() > Constants.MIN_REWARD_COUNT);
+        if (sharedPrefManager.getTasksCreated() && sharedPrefManager.getGoalsCreated()) {
             mvpView.goalProgressIntent(child.getId());
+        } else {
+            mvpView.parentIntent(child.getId());
         }
     }
 
