@@ -1,7 +1,5 @@
 package com.jbnm.homehero.ui.login;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.util.Patterns;
 
 import com.google.firebase.auth.AuthResult;
@@ -12,21 +10,12 @@ import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.remote.DataManager;
 import com.jbnm.homehero.data.remote.FirebaseAuthService;
 
-import org.reactivestreams.Subscriber;
-
-import io.reactivex.Maybe;
-import io.reactivex.MaybeSource;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
-import io.reactivex.subscribers.ResourceSubscriber;
 
 /**
  * Created by janek on 8/5/17.
@@ -37,14 +26,12 @@ public class LoginPresenter implements LoginContract.Presenter {
     private CompositeDisposable disposable = new CompositeDisposable();
     private DataManager dataManager;
     private FirebaseAuthService authService;
-    private FirebaseAuth auth;
-    private FirebaseAuth.AuthStateListener authStateListener;
 
     public LoginPresenter(LoginContract.MvpView mvpView) {
         this.mvpView = mvpView;
         dataManager = new DataManager();
-        auth = FirebaseAuth.getInstance();
         authService = FirebaseAuthService.getInstance();
+//        authService.logout();
     }
 
     @Override
@@ -78,27 +65,29 @@ public class LoginPresenter implements LoginContract.Presenter {
         }));
 
         mvpView.showLoading();
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    processAuthState(user.getUid());
-                } else {
-                    mvpView.hideLoading();
-                }
-            }
-        };
+        disposable.add(authService.getAuthState()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<FirebaseAuth>() {
+                    @Override public void onNext(FirebaseAuth firebaseAuth) {
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        if (user != null) {
+                            processAuthState(user.getUid());
+                        } else {
+                            mvpView.hideLoading();
+                        }
+                    }
+                    @Override public void onError(Throwable e) { processError(e); }
+                    @Override public void onComplete() {}
+                }));
     }
 
     @Override
     public void handleLoginButtonClick(String email, String password) {
+        mvpView.showLoading();
         disposable.add(authService.login(email, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableMaybeObserver<AuthResult>() {
-                    @Override public void onSuccess(AuthResult authResult) {
-
-                    }
+                    @Override public void onSuccess(AuthResult authResult) {}
                     @Override public void onError(Throwable e) { processError(e); }
                     @Override public void onComplete() {}
                 }));
@@ -107,18 +96,6 @@ public class LoginPresenter implements LoginContract.Presenter {
     @Override
     public void handleSignUpLinkClick() {
         mvpView.signUpIntent();
-    }
-
-    @Override
-    public void addAuthListener() {
-        auth.addAuthStateListener(authStateListener);
-    }
-
-    @Override
-    public void removeAuthListener() {
-        if (authStateListener != null) {
-            auth.removeAuthStateListener(authStateListener);
-        }
     }
 
     private boolean validateEmail(String email) {

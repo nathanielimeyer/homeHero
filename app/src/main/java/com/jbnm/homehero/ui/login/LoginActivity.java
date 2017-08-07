@@ -53,18 +53,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        presenter.addAuthListener();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        presenter.removeAuthListener();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.detach();
