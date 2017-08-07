@@ -1,10 +1,12 @@
 package com.jbnm.homehero.ui.taskEdit;
 
+import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.data.remote.DataManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -17,6 +19,7 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
     private DataManager dataManager = new DataManager();
 
     private TaskEditorContract.MvpView mvpView;
+    private List<String> icons = new ArrayList<>(Arrays.asList("ic_add_a_photo_black_24dp", "ic_close_white_24dp"));
     private Child child;
     private List<Task> tasks;
     private List<String> instructions;
@@ -51,6 +54,7 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
     @Override
     public void loadChildAndTask(String childId, final String taskId) {
         mvpView.showLoading();
+        mvpView.buildIconPickerDialog();
         disposable.add(dataManager.getChild(childId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<Child>() {
@@ -69,6 +73,17 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
     public void addStepsButtonClicked() {
         instructions.add("");
         mvpView.setInstructions(instructions);
+    }
+
+    @Override
+    public void setTaskIcon(int i) {
+        taskToEdit.setIcon(getIconList().get(i));
+        mvpView.loadIcon(taskToEdit.getIcon());
+    }
+
+    @Override
+    public List<String> getIconList() {
+        return icons;
     }
 
     private void processError(Throwable e) {
@@ -92,11 +107,14 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
             child.addTask(taskToEdit);
         }
         mvpView.setDescription(taskToEdit.getDescription());
+        if (taskToEdit.getIcon() != null) {
+            mvpView.loadIcon(taskToEdit.getIcon());
+        } else {
+            mvpView.loadIcon("ic_add_a_photo_black_24dp");
+        }
         instructions = taskToEdit.getInstructions();
         mvpView.setInstructions(instructions);
 
         mvpView.hideLoading();
     }
-
 }
-
