@@ -19,6 +19,7 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
     private TaskEditorContract.MvpView mvpView;
     private Child child;
     private List<Task> tasks;
+    private List<String> instructions;
     private Task taskToEdit;
 
     public TaskEditorPresenter(TaskEditorContract.MvpView view) {
@@ -27,7 +28,7 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
 
     @Override
     public void detach() {
-
+        disposable.clear();
     }
 
     @Override
@@ -64,11 +65,12 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
                 }));
     }
 
-//    @Override
-//    public void addStepsButtonClicked() {
-//        instructions
-//    }
-//
+    @Override
+    public void addStepsButtonClicked() {
+        instructions.add("");
+        mvpView.setInstructions(instructions);
+    }
+
     private void processError(Throwable e) {
         mvpView.hideLoading();
         e.printStackTrace();
@@ -83,9 +85,16 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
                     taskToEdit = task;
                 }
             }
-            mvpView.setDescription(taskToEdit.getDescription());
-            mvpView.setInstructions(taskToEdit.getInstructions());
+        } else {
+            instructions = new ArrayList<>();
+            instructions.add("");
+            taskToEdit = Task.newInstance("", "", instructions);
+            child.addTask(taskToEdit);
         }
+        mvpView.setDescription(taskToEdit.getDescription());
+        instructions = taskToEdit.getInstructions();
+        mvpView.setInstructions(instructions);
+
         mvpView.hideLoading();
     }
 

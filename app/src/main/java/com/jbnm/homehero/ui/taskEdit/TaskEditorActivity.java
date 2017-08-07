@@ -26,7 +26,7 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
     @BindView(R.id.edit_text_description) EditText descriptionEditText;
     @BindView(R.id.saveButton) Button saveButton;
     @BindView(R.id.taskInstructionsRecyclerView) RecyclerView taskInstructionsRecyclerView;
-//    @BindView(R.id.addStepsButton) Button addStepsButton;
+    @BindView(R.id.addStepsButton) Button addStepsButton;
     @BindView(R.id.cancelButton) Button cancelButton;
     private List<EditText> instructionTexts = new ArrayList<>();
 
@@ -40,8 +40,10 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
         ButterKnife.bind(this);
 
         String childId = getIntent().getStringExtra("childId");
+
 //        String taskId = getIntent().getStringExtra("taskId");
         String taskId = Constants.TASKID;
+//        String taskId = "newTask";
 
         presenter = new TaskEditorPresenter(this);
         presenter.loadChildAndTask(childId, taskId);
@@ -53,12 +55,12 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
             }
         });
 
-//        addStepsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                presenter.addStepsButtonClicked();
-//            }
-//        });
+        addStepsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.addStepsButtonClicked();
+            }
+        });
 
 
     }
