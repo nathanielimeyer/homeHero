@@ -9,17 +9,53 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/taskEditorTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/task_editor_screen_title"
+            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+            app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
+
+        <TextView
+            android:id="@+id/taskDescriptionLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/task_description"
+            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+            app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_text_description"
             android:inputType="text" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_image_label"
+            android:text="@string/edit_task_image_text"/>
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/task_image_view"
             app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
+
+        <TextView
+            android:id="@+id/taskInstructionsLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/task_instructions_label"
+            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+            app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/taskInstructionsRecyclerView"

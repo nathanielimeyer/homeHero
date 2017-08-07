@@ -32,5 +32,8 @@
     <string name="add_step">+</string>
     <string name="add_a_step">Add a step</string>
     <string name="icon_picker_title">Pick a task icon</string>
+    <string name="task_description">Task Description</string>
+    <string name="task_editor_screen_title">Add or Edit a Task</string>
+    <string name="edit_task_image_text">Click to change image</string>
 
 </resources>
