@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseFragment;
+import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -58,8 +59,8 @@ public class SettingsFragment extends BaseFragment implements SettingsContract.M
 
     @Override
     public void taskEditIntent() {
-//        Intent intent = new Intent(getContext(), TaskEditActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(getContext(), ParentTaskListActivity.class);
+        startActivity(intent);
     }
 
     @Override

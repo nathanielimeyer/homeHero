@@ -1,8 +1,5 @@
 package com.jbnm.homehero.ui.goal;
 
-import android.content.Context;
-import android.widget.ListAdapter;
-
 import com.jbnm.homehero.ui.base.BaseMvpView;
 import com.jbnm.homehero.ui.base.BasePresenter;
 
@@ -19,7 +16,6 @@ public class GoalContract {
         void taskButtonClicked();
         void determineTaskButtonStatus();
         void setNewRewardAndDecrementPoints(int i);
-//        ListAdapter goalPickerListAdapter();
         void rewardAnimationEnded();
         List buildRewardDialogList();
         void populateAllTheThings();
