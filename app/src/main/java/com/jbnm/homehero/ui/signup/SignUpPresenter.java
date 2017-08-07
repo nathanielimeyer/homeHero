@@ -1,17 +1,7 @@
 package com.jbnm.homehero.ui.signup;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.util.Patterns;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.jbnm.homehero.Constants;
-import com.jbnm.homehero.data.model.Child;
-import com.jbnm.homehero.data.model.Parent;
 import com.jbnm.homehero.data.remote.FirebaseAuthService;
 
 import io.reactivex.Observable;
@@ -21,7 +11,6 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function3;
 import io.reactivex.observers.DisposableObserver;
-import io.reactivex.subscribers.ResourceSubscriber;
 
 /**
  * Created by janek on 8/5/17.
@@ -30,12 +19,10 @@ import io.reactivex.subscribers.ResourceSubscriber;
 public class SignUpPresenter implements SignUpContract.Presenter {
     private SignUpContract.MvpView mvpView;
     private CompositeDisposable disposable = new CompositeDisposable();
-//    private FirebaseAuth auth;
     private FirebaseAuthService authService;
 
     public SignUpPresenter(SignUpContract.MvpView mvpView) {
         this.mvpView = mvpView;
-//        auth = FirebaseAuth.getInstance();
         authService = FirebaseAuthService.getInstance();
     }
 
@@ -74,22 +61,6 @@ public class SignUpPresenter implements SignUpContract.Presenter {
 
     @Override
     public void handleSignUpButtonClick(String email, String password) {
-//        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override public void onComplete(@NonNull Task<AuthResult> task) {
-//                if (task.isSuccessful()) {
-//                    processNewUser(task.getResult().getUser());
-//                } else {
-//                    mvpView.showError("Registration failed. Please try again.");
-//                }
-//            }
-//        });
-//        disposable.add(authService.createUserAndGetChild(email, password)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(new DisposableObserver<Child>() {
-//                    @Override public void onNext(Child child) { determineUserStatus(child); }
-//                    @Override public void onError(Throwable t) { processError(t); }
-//                    @Override public void onComplete() {}
-//                }));
         mvpView.showLoading();
         disposable.add(authService.createUser(email, password)
                 .observeOn(AndroidSchedulers.mainThread())

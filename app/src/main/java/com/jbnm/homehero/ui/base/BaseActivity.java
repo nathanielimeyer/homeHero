@@ -63,6 +63,7 @@ public class BaseActivity extends AppCompatActivity implements BaseMvpView {
     @Override
     public boolean showLoading() {
         contentFrame.setVisibility(View.GONE);
+        progressBar.setAlpha(1f);
         progressBar.setVisibility(View.VISIBLE);
         return false;
     }
