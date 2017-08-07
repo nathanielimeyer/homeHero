@@ -1,6 +1,5 @@
 package com.jbnm.homehero.ui.taskEdit;
 
-
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.data.remote.DataManager;
@@ -21,7 +20,6 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
     private Child child;
     private List<Task> tasks;
     private Task taskToEdit;
-
 
     public TaskEditorPresenter(TaskEditorContract.MvpView view) {
         mvpView = view;
@@ -66,6 +64,11 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
                 }));
     }
 
+//    @Override
+//    public void addStepsButtonClicked() {
+//        instructions
+//    }
+//
     private void processError(Throwable e) {
         mvpView.hideLoading();
         e.printStackTrace();

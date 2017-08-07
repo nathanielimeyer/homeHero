@@ -26,6 +26,8 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
     @BindView(R.id.edit_text_description) EditText descriptionEditText;
     @BindView(R.id.saveButton) Button saveButton;
     @BindView(R.id.taskInstructionsRecyclerView) RecyclerView taskInstructionsRecyclerView;
+//    @BindView(R.id.addStepsButton) Button addStepsButton;
+    @BindView(R.id.cancelButton) Button cancelButton;
     private List<EditText> instructionTexts = new ArrayList<>();
 
 
@@ -50,6 +52,13 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
                 updateTaskData();
             }
         });
+
+//        addStepsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                presenter.addStepsButtonClicked();
+//            }
+//        });
 
 
     }
