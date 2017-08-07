@@ -4,4 +4,8 @@
         <item>"Camping trip"</item>
         <item>"Movie night"</item>
     </string-array>
+    <!--<string-array name="icons_array">-->
+        <!--<item>"ic_add_a_photo_black_24dp"</item>-->
+        <!--<item>"ic_add_a_photo_black_24dp"</item>-->
+    <!--</string-array>-->
 </resources>
