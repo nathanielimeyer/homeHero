@@ -39,28 +39,6 @@ public class BaseActivity extends AppCompatActivity implements BaseMvpView {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (this instanceof ParentActivity) {
-            getMenuInflater().inflate(R.menu.parent, menu);
-        } else {
-            getMenuInflater().inflate(R.menu.child, menu);
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_parent_item) {
-            startActivity(ParentActivity.createIntent(this, Constants.CHILDID));
-            return true;
-        } else if(item.getItemId() == R.id.menu_child_item) {
-            startActivity(new Intent(BaseActivity.this, MainActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public boolean showLoading() {
         contentFrame.setVisibility(View.GONE);
         progressBar.setAlpha(1f);
