@@ -46,6 +46,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
 
     @Override
     public void init() {
+        mvpView.disableSignUpButton();
         disposable.add(Observable.combineLatest(
                 mvpView.getEmailText(),
                 mvpView.getPasswordText(),
@@ -89,11 +90,13 @@ public class SignUpPresenter implements SignUpContract.Presenter {
 //                    @Override public void onError(Throwable t) { processError(t); }
 //                    @Override public void onComplete() {}
 //                }));
+        mvpView.showLoading();
         disposable.add(authService.createUser(email, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action() {
                     @Override public void run() throws Exception {
                         mvpView.loginIntent();
+                        mvpView.hideLoading();
                     }
                 }, new Consumer<Throwable>() {
                     @Override public void accept(Throwable throwable) throws Exception {
@@ -134,20 +137,6 @@ public class SignUpPresenter implements SignUpContract.Presenter {
         } else {
             mvpView.showConfirmError();
             return false;
-        }
-    }
-
-//    private void processNewUser(FirebaseUser user) {
-//        Parent newParent = new Parent(user.getUid(), user.getEmail());
-//        Child newChild = Child.newInstance();
-//
-//    }
-
-    private void determineUserStatus(Child child) {
-        if (child.getTasks().keySet().size() < Constants.MIN_TASK_COUNT) {
-            // navigate to modify task list
-        } else {
-            // navigate to goal progress
         }
     }
 

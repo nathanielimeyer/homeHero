@@ -10,6 +10,8 @@ import android.widget.EditText;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseActivity;
+import com.jbnm.homehero.ui.goal.GoalActivity;
+import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 import com.jbnm.homehero.ui.signup.SignUpActivity;
 
 import butterknife.BindView;
@@ -111,5 +113,15 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
     @Override
     public void signUpIntent() {
         startActivity(SignUpActivity.createIntent(this));
+    }
+
+    @Override
+    public void goalProgressIntent(String childId) {
+        startActivity(GoalActivity.createIntent(this, childId));
+    }
+
+    @Override
+    public void parentTaskListIntent(String childId) {
+        startActivity(ParentTaskListActivity.createIntent(this, childId));
     }
 }

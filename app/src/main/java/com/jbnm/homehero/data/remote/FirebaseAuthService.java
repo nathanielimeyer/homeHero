@@ -50,15 +50,6 @@ public class FirebaseAuthService {
         return RxFirebaseAuth.signInWithEmailAndPassword(auth, email, password);
     }
 
-//    public Observable<Child> loginAndGetChild(String email, String password) {
-//        return RxFirebaseAuth.signInWithEmailAndPassword(auth, email, password)
-//                .flatMapObservable(new Function<AuthResult, ObservableSource<Child>>() {
-//                    @Override public ObservableSource<Child> apply(AuthResult authResult) throws Exception {
-//                        return getChild(authResult.getUser().getUid());
-//                    }
-//                });
-//    }
-
     public Observable<Child> getChild(String parentId) {
         return RxFirebaseDatabase.observeValueEvent(rootRef.child("parents").child(parentId), Parent.class)
                 .flatMap(new Function<Parent, Publisher<Child>>() {

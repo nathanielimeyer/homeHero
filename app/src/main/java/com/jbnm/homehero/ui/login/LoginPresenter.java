@@ -77,12 +77,15 @@ public class LoginPresenter implements LoginContract.Presenter {
             @Override public void onComplete() {}
         }));
 
+        mvpView.showLoading();
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     processAuthState(user.getUid());
+                } else {
+                    mvpView.hideLoading();
                 }
             }
         };
@@ -149,13 +152,13 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     private void determineUserStatus(Child child) {
-        Log.d("test", child.getId());
+        mvpView.hideLoading();
         if (child.getTasks().keySet().size() < Constants.MIN_TASK_COUNT) {
-            Log.d("test", "not enough tasks");
             // navigate to modify task list
+            mvpView.parentTaskListIntent(child.getId());
         } else {
-            Log.d("test", "enough tasks");
             // navigate to goal progress
+            mvpView.goalProgressIntent(child.getId());
         }
     }
 
