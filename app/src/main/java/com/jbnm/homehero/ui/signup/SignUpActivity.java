@@ -35,10 +35,11 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.MvpVi
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
         presenter = new SignUpPresenter(this);
+        presenter.init();
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                presenter.handleSignUpButtonClick();
+                presenter.handleSignUpButtonClick(emailEditText.getText().toString().trim(), passwordEditText.getText().toString().trim());
             }
         });
 

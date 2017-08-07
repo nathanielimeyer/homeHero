@@ -12,7 +12,7 @@ import io.reactivex.Observable;
 public class SignUpContract {
     interface Presenter extends BasePresenter {
         void init();
-        void handleSignUpButtonClick();
+        void handleSignUpButtonClick(String email, String password);
         void handleLoginLinkClick();
     }
     interface MvpView extends BaseMvpView {

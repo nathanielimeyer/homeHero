@@ -3,6 +3,7 @@ package com.jbnm.homehero.ui.base;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,21 +13,44 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.MainActivity;
 import com.jbnm.homehero.R;
+import com.jbnm.homehero.data.model.Parent;
+import com.jbnm.homehero.data.remote.DataManager;
+import com.jbnm.homehero.ui.login.LoginActivity;
 import com.jbnm.homehero.ui.parent.ParentActivity;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import okhttp3.ResponseBody;
 
 public class BaseActivity extends AppCompatActivity implements BaseMvpView {
 
     private ProgressBar progressBar;
     private FrameLayout contentFrame;
     private long animationDuration;
+    private BasePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         animationDuration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
+        presenter = new BasePresenterImpl(this);
+        presenter.setupAuth();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.addAuthListener();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.removeAuthListener();
     }
 
     @Override
@@ -98,5 +122,35 @@ public class BaseActivity extends AppCompatActivity implements BaseMvpView {
     @Override
     public void hideError() {
 
+    }
+
+    private void proccessAuthState(FirebaseAuth firebaseAuth) {
+        if (firebaseAuth.getCurrentUser() == null) {
+            startActivity(LoginActivity.createIntent(this));
+        } else {
+//            DataManager dataManager = new DataManager();
+//            dataManager.getParent(firebaseAuth.getCurrentUser().getUid())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribeWith(new DisposableObserver<Parent>() {
+//                        @Override
+//                        public void onNext(Parent parent) {
+//                            if (parent == null) {
+//                                Log.d("test", "no parent");
+//                            } else {
+//                                Log.d("test", "parent");
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//                            showError(e.getMessage());
+//                        }
+//
+//                        @Override
+//                        public void onComplete() {
+//                            Log.d("test", "complete");
+//                        }
+//                    });
+        }
     }
 }

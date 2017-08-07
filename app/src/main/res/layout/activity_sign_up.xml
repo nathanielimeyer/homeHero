@@ -58,7 +58,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Button"
+        android:text="@string/button_sign_up"
         app:layout_constraintEnd_toEndOf="@+id/signUpConfirmEditText"
         app:layout_constraintStart_toStartOf="@+id/signUpConfirmEditText"
         app:layout_constraintTop_toBottomOf="@+id/signUpConfirmEditText"/>
