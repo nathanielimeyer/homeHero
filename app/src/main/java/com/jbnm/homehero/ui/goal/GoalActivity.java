@@ -66,7 +66,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
 
         String childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
 
-        presenter = new GoalPresenter(this, this);
+        presenter = new GoalPresenter(this);
         presenter.loadData(childId);
 
         taskButton.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +96,9 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
                 //Put the image on the TextView
 
                 tv.setCompoundDrawablesWithIntrinsicBounds(dialogItems[position].image, 0, 0, 0);
+
+//                Change dialogItems image type to String in presenter if you use this
+//                tv.setCompoundDrawablesWithIntrinsicBounds((getResources().getIdentifier(dialogItems[position].image, "drawable", getPackageName())), 0, 0, 0);
 
                 //Add margin between image and text (support various screen densities)
                 int dp5 = (int) (5 * getResources().getDisplayMetrics().density + 0.5f);

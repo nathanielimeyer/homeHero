@@ -39,6 +39,7 @@
         </activity>
         <activity android:name=".ui.signup.SignUpActivity">
         </activity>
+        <activity android:name=".ui.parent.taskList.ParentTaskListActivity"></activity>
     </application>
 
 </manifest>
