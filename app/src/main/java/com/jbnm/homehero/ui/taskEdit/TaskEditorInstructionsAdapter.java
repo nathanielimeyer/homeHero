@@ -92,7 +92,7 @@ public class TaskEditorInstructionsAdapter extends RecyclerView.Adapter<TaskEdit
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             instructions.set(position, charSequence.toString());
-            Log.d(TAG, "Position = " + position);
+            Log.d(TAG, "Position = " + position + charSequence.toString());
         }
 
         @Override

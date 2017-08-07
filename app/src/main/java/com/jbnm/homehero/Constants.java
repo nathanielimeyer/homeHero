@@ -5,6 +5,8 @@ package com.jbnm.homehero;
  */
 
 public class Constants {
+    public static final String TASK_INTENT_KEY = "taskId";
+
     private Constants() {}
 
     public static final String CHILD_INTENT_KEY = "childId";

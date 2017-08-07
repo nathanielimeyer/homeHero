@@ -28,6 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".ui.taskEdit.TaskEditorActivity"></activity>
+        <activity android:name=".ui.parent.taskList.ParentTaskListActivity"></activity>
     </application>
 
 </manifest>

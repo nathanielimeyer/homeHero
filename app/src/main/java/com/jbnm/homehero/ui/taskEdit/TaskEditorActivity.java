@@ -3,6 +3,7 @@ package com.jbnm.homehero.ui.taskEdit;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.goal.GoalPresenter;
+import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 
 import java.util.List;
 
@@ -39,6 +41,13 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
 
 
     private TaskEditorContract.Presenter presenter;
+
+    public static Intent createIntent(Context context, String childId, String taskId) {
+        Intent intent = new Intent(context, TaskEditorActivity.class);
+        intent.putExtra(Constants.CHILD_INTENT_KEY, childId);
+        intent.putExtra(Constants.TASK_INTENT_KEY, taskId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +74,12 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
             @Override
             public void onClick(View view) {
                 showIconPickerDialog();
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.cancelButtonClicked();
             }
         });
 
@@ -150,5 +165,10 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
         taskInstructionsRecyclerView.setHasFixedSize(true);
         taskInstructionsRecyclerView.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
 
+    }
+
+    @Override
+    public void parentTaskListIntent(String childId) {
+        startActivity(ParentTaskListActivity.createIntent(this, childId));
     }
 }
