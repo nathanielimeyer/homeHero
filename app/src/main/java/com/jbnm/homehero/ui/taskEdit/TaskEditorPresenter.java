@@ -1,9 +1,12 @@
 package com.jbnm.homehero.ui.taskEdit;
 
+import android.content.Intent;
+
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.data.remote.DataManager;
+import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +52,7 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
                     @Override public void onError(Throwable e) { processError(e); }
                     @Override public void onComplete() {}
                 }));
+        mvpView.parentTaskListIntent(child.getId());
     }
 
     @Override
@@ -84,6 +88,11 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
     @Override
     public List<String> getIconList() {
         return icons;
+    }
+
+    @Override
+    public void cancelButtonClicked() {
+        mvpView.parentTaskListIntent(child.getId());
     }
 
     private void processError(Throwable e) {

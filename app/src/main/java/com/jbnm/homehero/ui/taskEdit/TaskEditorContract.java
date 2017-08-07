@@ -18,11 +18,15 @@ public class TaskEditorContract {
         void setTaskIcon(int i);
 
         List<String> getIconList();
+
+        void cancelButtonClicked();
     }
     interface MvpView extends BaseMvpView {
         void setDescription(String description);
         void loadIcon(String icon);
         void setInstructions(List<String> instructions);
         void buildIconPickerDialog();
-    }
+        void parentTaskListIntent(String childId);
+
+        }
 }
