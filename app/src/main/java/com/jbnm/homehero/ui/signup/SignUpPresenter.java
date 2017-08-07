@@ -17,6 +17,8 @@ import com.jbnm.homehero.data.remote.FirebaseAuthService;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function3;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.subscribers.ResourceSubscriber;
@@ -80,12 +82,23 @@ public class SignUpPresenter implements SignUpContract.Presenter {
 //                }
 //            }
 //        });
-        disposable.add(authService.createUserAndGetChild(email, password)
+//        disposable.add(authService.createUserAndGetChild(email, password)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeWith(new DisposableObserver<Child>() {
+//                    @Override public void onNext(Child child) { determineUserStatus(child); }
+//                    @Override public void onError(Throwable t) { processError(t); }
+//                    @Override public void onComplete() {}
+//                }));
+        disposable.add(authService.createUser(email, password)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<Child>() {
-                    @Override public void onNext(Child child) { determineUserStatus(child); }
-                    @Override public void onError(Throwable t) { processError(t); }
-                    @Override public void onComplete() {}
+                .subscribe(new Action() {
+                    @Override public void run() throws Exception {
+                        mvpView.loginIntent();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override public void accept(Throwable throwable) throws Exception {
+                        processError(throwable);
+                    }
                 }));
     }
 

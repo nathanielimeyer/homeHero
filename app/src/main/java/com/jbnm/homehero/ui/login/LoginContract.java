@@ -14,6 +14,8 @@ public class LoginContract {
         void init();
         void handleLoginButtonClick(String email, String password);
         void handleSignUpLinkClick();
+        void addAuthListener();
+        void removeAuthListener();
     }
     interface MvpView extends BaseMvpView {
         void enableLoginButton();

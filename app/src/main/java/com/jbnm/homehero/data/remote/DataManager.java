@@ -32,6 +32,14 @@ public class DataManager {
         return firebaseService.saveParent(parent.getId(), parent);
     }
 
+    public Observable<Child> getChildByParentId(String id) {
+        return firebaseService.getParentById(id).flatMap(new Function<Parent, ObservableSource<Child>>() {
+            @Override public ObservableSource<Child> apply(Parent parent) throws Exception {
+                return firebaseService.getChildById(parent.getChild());
+            }
+        });
+    }
+
     public Observable<Parent> getParent() {
         return firebaseService.getParentById(parentId);
     }
