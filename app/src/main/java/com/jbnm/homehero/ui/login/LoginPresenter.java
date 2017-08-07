@@ -31,7 +31,6 @@ public class LoginPresenter implements LoginContract.Presenter {
         this.mvpView = mvpView;
         dataManager = new DataManager();
         authService = FirebaseAuthService.getInstance();
-//        authService.logout();
     }
 
     @Override
@@ -133,6 +132,8 @@ public class LoginPresenter implements LoginContract.Presenter {
         if (child.getTasks().keySet().size() < Constants.MIN_TASK_COUNT) {
             // navigate to modify task list
             mvpView.parentTaskListIntent(child.getId());
+        } else if (child.getRewards().keySet().size() < Constants.MIN_REWARD_COUNT) {
+            // navigate to modify goal list
         } else {
             // navigate to goal progress
             mvpView.goalProgressIntent(child.getId());
