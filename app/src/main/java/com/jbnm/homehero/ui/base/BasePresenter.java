@@ -6,4 +6,7 @@ package com.jbnm.homehero.ui.base;
 
 public interface BasePresenter {
     void detach();
+    void setupAuth();
+    void addAuthListener();
+    void removeAuthListener();
 }

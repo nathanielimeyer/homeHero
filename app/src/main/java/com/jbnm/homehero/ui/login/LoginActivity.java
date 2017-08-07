@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseActivity;
+import com.jbnm.homehero.ui.signup.SignUpActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,6 +98,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
 
     @Override
     public void signUpIntent() {
-
+        startActivity(SignUpActivity.createIntent(this));
     }
 }

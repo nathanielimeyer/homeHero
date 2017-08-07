@@ -29,7 +29,7 @@ public class DataManager {
     }
 
     public Observable<Parent> saveParent(Parent parent) {
-        return firebaseService.saveParent(parentId, parent);
+        return firebaseService.saveParent(parent.getId(), parent);
     }
 
     public Observable<Parent> getParent() {
