@@ -11,11 +11,13 @@ public class ParentContract {
     interface Presenter extends BasePresenter {
         void init(String childId);
         void handleChildNavButtonClick();
+        void handleLogoutButtonClick();
     }
     interface  MvpView extends BaseMvpView {
         void setUpViewPager(String childId);
         void taskListIntent(String childId);
         void goalListIntent(String childId);
         void goalIntent(String childId);
+        void loginIntent();
     }
 }

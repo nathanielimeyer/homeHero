@@ -1,5 +1,6 @@
 package com.jbnm.homehero.ui.parent;
 
+import com.jbnm.homehero.data.remote.FirebaseAuthService;
 import com.jbnm.homehero.util.SharedPrefManager;
 
 /**
@@ -37,5 +38,11 @@ public class ParentPresenter implements ParentContract.Presenter {
     @Override
     public void handleChildNavButtonClick() {
         mvpView.goalIntent(childId);
+    }
+
+    @Override
+    public void handleLogoutButtonClick() {
+        FirebaseAuthService.getInstance().logout();
+        mvpView.loginIntent();
     }
 }

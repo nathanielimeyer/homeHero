@@ -18,6 +18,7 @@ import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.goal.GoalActivity;
+import com.jbnm.homehero.ui.login.LoginActivity;
 import com.jbnm.homehero.ui.parent.settings.SettingsFragment;
 import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 import com.jbnm.homehero.ui.parent.taskreview.TaskReviewFragment;
@@ -54,14 +55,6 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
         presenter.init(childId);
 
         setSupportActionBar(toolbar);
-
-//        parentPagerAdapter = new ParentPagerAdapter(getSupportFragmentManager());
-//        parentPagerAdapter.addFragment(TaskReviewFragment.newInstance(childId));
-//        parentPagerAdapter.addFragment(SettingsFragment.newInstance());
-//
-//        viewPager.setAdapter(parentPagerAdapter);
-//        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-//        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
     }
 
     @Override
@@ -78,8 +71,11 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_child_item) {
+        if (item.getItemId() == R.id.menu_parent_childNav_item) {
             presenter.handleChildNavButtonClick();
+            return true;
+        } else if (item.getItemId() == R.id.menu_parent_logout_item) {
+            presenter.handleLogoutButtonClick();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -98,7 +94,7 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
 
     @Override
     public void taskListIntent(String childId) {
-        Log.d("test", "taskList");
+        startActivity(ParentTaskListActivity.createIntent(this, childId));
     }
 
     @Override
@@ -109,6 +105,11 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
     @Override
     public void goalIntent(String childId) {
         startActivity(GoalActivity.createIntent(this, childId));
+    }
+
+    @Override
+    public void loginIntent() {
+        startActivity(LoginActivity.createIntent(this));
     }
 
     public class ParentPagerAdapter extends FragmentPagerAdapter {
