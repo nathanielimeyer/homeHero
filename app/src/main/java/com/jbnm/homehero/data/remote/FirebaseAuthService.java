@@ -8,8 +8,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Parent;
 
-import org.reactivestreams.Publisher;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,11 +15,8 @@ import durdinapps.rxfirebase2.RxFirebaseAuth;
 import durdinapps.rxfirebase2.RxFirebaseDatabase;
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
-import io.reactivex.Flowable;
 import io.reactivex.Maybe;
-import io.reactivex.MaybeSource;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
 /**
