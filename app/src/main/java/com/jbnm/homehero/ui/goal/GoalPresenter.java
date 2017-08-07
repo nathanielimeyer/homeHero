@@ -49,7 +49,7 @@ public class GoalPresenter implements GoalContract.Presenter {
         }
     }
 
-    public GoalPresenter(GoalContract.MvpView view, Context context) {
+    public GoalPresenter(GoalContract.MvpView view) {
         mvpView = view;
         dataManager = new DataManager();
     }
@@ -137,12 +137,6 @@ public class GoalPresenter implements GoalContract.Presenter {
                     @Override public void onComplete() {}
                 }));
     }
-
-//    @Override
-//    public ListAdapter goalPickerListAdapter() {
-//        return null;
-//    }
-//
     @Override
     public void rewardAnimationEnded() {
         mvpView.showGoalPickerDialog();
