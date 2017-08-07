@@ -88,7 +88,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_parent_item) {
+        if (item.getItemId() == R.id.menu_child_parentNav_item) {
             presenter.handleParentNavButtonClick();
             return true;
         }

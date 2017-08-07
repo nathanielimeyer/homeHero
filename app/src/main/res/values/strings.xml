@@ -46,5 +46,6 @@
     <string name="button_sign_up">Sign Up</string>
     <string name="link_login_to_sign_up">Don\'t have an account?</string>
     <string name="link_sign_up_to_login">Already a member?</string>
+    <string name="parent_menu_logout_item">Logout</string>
 
 </resources>
