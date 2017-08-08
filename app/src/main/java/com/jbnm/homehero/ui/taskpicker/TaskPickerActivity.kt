@@ -51,11 +51,6 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
         presenter.detach()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
     override fun onBackPressed() {
         presenter.handleGoalButtonClick()
     }

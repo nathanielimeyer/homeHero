@@ -70,12 +70,6 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
-    @Override
     public void onBackPressed() {
         presenter.handleGoalProgressClick();
     }
