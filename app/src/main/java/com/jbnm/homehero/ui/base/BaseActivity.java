@@ -2,20 +2,14 @@ package com.jbnm.homehero.ui.base;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.jbnm.homehero.Constants;
-import com.jbnm.homehero.MainActivity;
 import com.jbnm.homehero.R;
-import com.jbnm.homehero.ui.parent.ParentActivity;
 
 public class BaseActivity extends AppCompatActivity implements BaseMvpView {
 
