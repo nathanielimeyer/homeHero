@@ -1,5 +1,6 @@
 package com.jbnm.homehero.ui.parent;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.data.remote.FirebaseAuthService;
 import com.jbnm.homehero.util.SharedPrefManager;
 
@@ -20,6 +21,7 @@ public class ParentPresenter implements ParentContract.Presenter {
     @Override
     public void init(String childId) {
         this.childId = childId;
+        mvpView.setToolbarTitle(Constants.PARENT_TITLE);
 //        if (!sharedPrefManager.getTasksCreated()) {
 //            mvpView.taskListIntent(childId);
 //        } else if (!sharedPrefManager.getGoalsCreated()) {

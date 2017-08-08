@@ -106,11 +106,18 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
     @Override
     public void goalIntent(String childId) {
         startActivity(GoalActivity.createIntent(this, childId));
+        finish();
     }
 
     @Override
     public void loginIntent() {
         startActivity(LoginActivity.createIntent(this));
+        finish();
+    }
+
+    @Override
+    public void setToolbarTitle(String title) {
+        toolbar.setTitle(title);
     }
 
     public class ParentPagerAdapter extends FragmentPagerAdapter {
