@@ -20,13 +20,13 @@ public class ParentPresenter implements ParentContract.Presenter {
     @Override
     public void init(String childId) {
         this.childId = childId;
-        if (!sharedPrefManager.getTasksCreated()) {
-            mvpView.taskListIntent(childId);
-        } else if (!sharedPrefManager.getGoalsCreated()) {
-            mvpView.goalListIntent(childId);
-        } else {
+//        if (!sharedPrefManager.getTasksCreated()) {
+//            mvpView.taskListIntent(childId);
+//        } else if (!sharedPrefManager.getGoalsCreated()) {
+//            mvpView.goalListIntent(childId);
+//        } else {
             mvpView.setUpViewPager(childId);
-        }
+//        }
     }
 
     @Override
