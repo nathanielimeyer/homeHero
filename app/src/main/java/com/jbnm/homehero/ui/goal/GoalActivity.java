@@ -229,6 +229,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @Override
     public void parentIntent(String childId) {
         startActivity(ParentActivity.createIntent(this, childId));
+        finish();
     }
 
     @Override
