@@ -33,6 +33,12 @@ public class BaseActivity extends AppCompatActivity implements BaseMvpView {
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     public boolean showLoading() {
         contentFrame.setVisibility(View.GONE);
         progressBar.setAlpha(1f);
