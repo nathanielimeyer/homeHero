@@ -87,8 +87,7 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
         if (task.getIcon() != null) {
             return getResources().getIdentifier(task.getIcon(), "drawable", getPackageName());
         } else {
-            // TODO: add default task icon here
-            return getResources().getIdentifier("down_arrow", "drawable", getPackageName());
+            return getResources().getIdentifier(Constants.DEFAULT_CHORE_ICON, "drawable", getPackageName());
         }
     }
 
