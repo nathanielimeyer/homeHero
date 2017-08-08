@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">HomeHero</string>
+
+    <!--Goal Progress-->
     <string name="goalImageDescription">goal image</string>
     <string name="taskButtonText">Get more points</string>
     <string name="goalDescriptionText">Goal Description</string>
     <string name="goal_picker_title">New Goal Picker</string>
+
+    <!--Task Progress-->
     <string name="task_progress_complete_button_label">Complete Task</string>
     <string name="task_progress_goal_button_label">View Goal</string>
     <string name="task_instructions_label">Task Instructions</string>
-    <string name="task_last_completed">Last Completed: %s</string>
-    <string name="task_last_completed_days">%d days</string>
 
     <!--Task Picker-->
     <string name="tasks_completed">Tasks Completed: %d</string>
@@ -16,18 +18,32 @@
     <string name="task_select_result">Your Task: %s</string>
     <string name="task_picker_button_goal">See Goal Progress</string>
 
-    <string name="parent_settings_manage_tasks_button">Manage Tasks</string>
-    <string name="parent_settings_manage_rewards_button">Manage Rewards</string>
-
-    <string name="childId_intent_key">childId</string>
-
+    <!--Parent-->
     <string name="title_activity_parent">ParentActivity</string>
     <string name="tab_text_1">Task Review</string>
     <string name="tab_text_2">Settings</string>
-    <string name="action_settings">Settings</string>
+    <string name="task_last_completed">Last Completed: %s</string>
+    <string name="task_last_completed_days">%d days ago</string>
+    <string name="parent_settings_manage_tasks_button">Manage Tasks</string>
+    <string name="parent_settings_manage_rewards_button">Manage Rewards</string>
 
+    <!--Menu-->
     <string name="parent_menu_child_item">Child</string>
     <string name="child_menu_parent_item">Parent</string>
+    <string name="parent_menu_logout_item">Logout</string>
+
+    <!--Login/Sign up-->
+    <string name="valid_email_error">Please enter a valid email</string>
+    <string name="valid_password_error">Password must be at least 6 characters</string>
+    <string name="valid_confirm_error">Passwords do not match</string>
+    <string name="hint_email_input">Email Address</string>
+    <string name="hint_password_input">Password</string>
+    <string name="hint_password_confirm_input">Confirm Password</string>
+    <string name="button_login">Login</string>
+    <string name="button_sign_up">Sign Up</string>
+    <string name="link_login_to_sign_up">Don\'t have an account?</string>
+    <string name="link_sign_up_to_login">Already a member?</string>
+
     <string name="save_changes">Done</string>
     <string name="cancel_changes">Cancel</string>
     <string name="delete_step">X</string>
@@ -39,16 +55,5 @@
     <string name="task_editor_screen_title">Add or Edit a Task</string>
     <string name="edit_task_image_text">Click to change image</string>
 
-    <string name="valid_email_error">Please enter a valid email</string>
-    <string name="valid_password_error">Password must be at least 6 characters</string>
-    <string name="valid_confirm_error">Passwords do not match</string>
-    <string name="hint_email_input">Email Address</string>
-    <string name="hint_password_input">Password</string>
-    <string name="hint_password_confirm_input">Confirm Password</string>
-    <string name="button_login">Login</string>
-    <string name="button_sign_up">Sign Up</string>
-    <string name="link_login_to_sign_up">Don\'t have an account?</string>
-    <string name="link_sign_up_to_login">Already a member?</string>
-    <string name="parent_menu_logout_item">Logout</string>
 
 </resources>
