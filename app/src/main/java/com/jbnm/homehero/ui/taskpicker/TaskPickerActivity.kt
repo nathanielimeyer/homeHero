@@ -49,6 +49,8 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.detach()
+        taskSelector.setOnTaskSelectListener(null)
+        taskSelector.setOnSpinStartListener(null)
     }
 
     override fun onBackPressed() {
