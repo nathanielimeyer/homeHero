@@ -222,6 +222,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @Override
     public void taskProgressIntent(String childId) {
         startActivity(TaskProgressActivity.createIntent(this, childId));
+        finish();
     }
 
     @Override

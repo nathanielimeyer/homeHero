@@ -72,4 +72,9 @@ public class BaseActivity extends AppCompatActivity implements BaseMvpView {
     public void hideError() {
 
     }
+
+    @Override
+    public void setToolbarTitle(String title) {
+        setTitle(title);
+    }
 }
