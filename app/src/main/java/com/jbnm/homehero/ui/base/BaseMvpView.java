@@ -9,4 +9,5 @@ public interface BaseMvpView {
     void hideLoading();
     boolean showError(String errorMessage);
     void hideError();
+    void setToolbarTitle(String title);
 }

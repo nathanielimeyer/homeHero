@@ -70,6 +70,17 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        presenter.handleGoalProgressClick();
+    }
+
+    @Override
     public void showTask(Task task) {
         if (task != null) {
             taskIconImageView.setImageResource(getTaskIcon(task));
@@ -98,5 +109,6 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
     @Override
     public void goalProgressIntent(String childId) {
         startActivity(GoalActivity.createIntent(this, childId));
+        finish();
     }
 }
