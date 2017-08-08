@@ -64,6 +64,14 @@ public class TaskWheel extends View {
         init(context);
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        gestureDetector = null;
+        onTaskSelectListener = null;
+        onSpinStartListener = null;
+    }
+
     private void init(Context context) {
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.STROKE);
