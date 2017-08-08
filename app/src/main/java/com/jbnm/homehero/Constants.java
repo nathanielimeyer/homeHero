@@ -23,6 +23,8 @@ public class Constants {
     public static final String PARENT_TASK_EDIT_TITLE = "Edit Task";
     public static final String PARENT_GOAL_EDIT_TITLE = "Edit Goal";
 
+    public static final String DEFAULT_CHORE_ICON = "chore_broom";
+
     // Temporary until auth is set up
     // used in base activity and main activity
     public static final String CHILDID = "-KqZYJOtnw-96-kxmWZC";
