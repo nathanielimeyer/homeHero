@@ -114,5 +114,6 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.MvpVi
     @Override
     public void loginIntent() {
         startActivity(LoginActivity.createIntent(this));
+        finish();
     }
 }

@@ -94,7 +94,8 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
 
     @Override
     public void taskListIntent(String childId) {
-        startActivity(ParentTaskListActivity.createIntent(this, childId));
+//        startActivity(ParentTaskListActivity.createIntent(this, childId));
+        Log.d("test", "taskList");
     }
 
     @Override
