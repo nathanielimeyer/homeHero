@@ -103,6 +103,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
     @Override
     public void signUpIntent() {
         startActivity(SignUpActivity.createIntent(this));
+        finish();
     }
 
     @Override
