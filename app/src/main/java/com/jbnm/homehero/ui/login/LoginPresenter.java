@@ -12,11 +12,16 @@ import com.jbnm.homehero.data.remote.FirebaseAuthService;
 import com.jbnm.homehero.util.SharedPrefManager;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by janek on 8/5/17.
@@ -68,16 +73,32 @@ public class LoginPresenter implements LoginContract.Presenter {
 
         mvpView.showLoading();
         disposable.add(authService.getAuthState()
+                .subscribeOn(Schedulers.io())
+                .distinctUntilChanged(new Function<FirebaseAuth, Object>() {
+                    @Override public Object apply(FirebaseAuth firebaseAuth) throws Exception {
+                        return firebaseAuth.getCurrentUser();
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<FirebaseAuth>() {
-                    @Override public void onNext(FirebaseAuth firebaseAuth) {
-                        FirebaseUser user = firebaseAuth.getCurrentUser();
-                        if (user != null) {
-                            processAuthState(user.getUid());
-                        } else {
+                .doOnNext(new Consumer<FirebaseAuth>() {
+                    @Override public void accept(FirebaseAuth firebaseAuth) throws Exception {
+                        if (firebaseAuth.getCurrentUser() == null) {
                             mvpView.hideLoading();
                         }
                     }
+                })
+                .flatMap(new Function<FirebaseAuth, ObservableSource<Child>>() {
+                    @Override public ObservableSource<Child> apply(FirebaseAuth firebaseAuth) throws Exception {
+                        if (firebaseAuth.getCurrentUser() != null) {
+                            return dataManager.getChildByParentId(firebaseAuth.getCurrentUser().getUid());
+                        } else {
+                            return Observable.empty();
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Child>() {
+                    @Override public void onNext(Child child) { determineUserStatus(child); }
                     @Override public void onError(Throwable e) { processError(e); }
                     @Override public void onComplete() {}
                 }));
@@ -87,6 +108,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     public void handleLoginButtonClick(String email, String password) {
         mvpView.showLoading();
         disposable.add(authService.login(email, password)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableMaybeObserver<AuthResult>() {
                     @Override public void onSuccess(AuthResult authResult) {}
@@ -118,16 +140,6 @@ public class LoginPresenter implements LoginContract.Presenter {
             mvpView.showPasswordError();
             return false;
         }
-    }
-
-    private void processAuthState(String userId) {
-        disposable.add(dataManager.getChildByParentId(userId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<Child>() {
-                    @Override public void onNext(Child child) { determineUserStatus(child); }
-                    @Override public void onError(Throwable e) { processError(e); }
-                    @Override public void onComplete() {}
-                }));
     }
 
     private void determineUserStatus(Child child) {

@@ -108,10 +108,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.MvpView
     @Override
     public void goalProgressIntent(String childId) {
         startActivity(GoalActivity.createIntent(this, childId));
+        finish();
     }
 
     @Override
     public void parentIntent(String childId) {
         startActivity(ParentActivity.createIntent(this, childId));
+        finish();
     }
 }
