@@ -1,5 +1,6 @@
 package com.jbnm.homehero.ui.taskpicker
 
+import com.jbnm.homehero.Constants
 import com.jbnm.homehero.data.model.Child
 import com.jbnm.homehero.data.model.Task
 import com.jbnm.homehero.data.remote.DataManager
@@ -13,7 +14,7 @@ class TaskPickerPresenter(val mvpView: TaskPickerContract.MvpView, val childId: 
     lateinit var child: Child
     init {
         mvpView.showLoading()
-
+        mvpView.setToolbarTitle(Constants.TASK_PICKER_TITLE)
         disposable.add(dataManager.getChild(childId)
                 .doOnNext { child = it }
                 .observeOn(AndroidSchedulers.mainThread())

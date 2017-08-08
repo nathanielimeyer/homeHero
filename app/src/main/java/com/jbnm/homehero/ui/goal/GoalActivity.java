@@ -217,6 +217,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @Override
     public void taskPickerIntent(String childId) {
         startActivity(TaskPickerActivity.createIntent(this, childId));
+        finish();
     }
 
     @Override
