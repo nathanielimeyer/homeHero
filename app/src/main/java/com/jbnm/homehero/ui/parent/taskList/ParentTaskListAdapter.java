@@ -1,6 +1,8 @@
 package com.jbnm.homehero.ui.parent.taskList;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.content.Context;
 import android.view.View;
@@ -26,6 +28,7 @@ import butterknife.OnClick;
 class ParentTaskListAdapter extends RecyclerView.Adapter<ParentTaskListAdapter.ParentTaskListViewHolder> {
     private List<Task> tasks = new ArrayList<>();
     private ParentTaskClickListener parentTaskClickListener;
+    private Context context;
 
     public ParentTaskListAdapter(List<Task> tasks) {
         this.tasks = tasks;
@@ -40,7 +43,7 @@ class ParentTaskListAdapter extends RecyclerView.Adapter<ParentTaskListAdapter.P
 
     @Override
     public void onBindViewHolder(ParentTaskListViewHolder holder, int position) {
-        holder.bindTask((Task) tasks.get(position), position);
+        holder.bindTask(tasks.get(position), position);
     }
 
     @Override
@@ -62,18 +65,21 @@ class ParentTaskListAdapter extends RecyclerView.Adapter<ParentTaskListAdapter.P
         @BindView(R.id.taskDeleteButton)
         ImageButton taskDeleteButton;
 
-        private Context context;
         private Task task;
+
 
         public ParentTaskListViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
+
             ButterKnife.bind(this, itemView);
         }
 
         public void bindTask(Task task, int position) {
             this.task = task;
-            taskImage.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
+            if (task.getIcon() != null && !task.getIcon().equals("")) {
+                taskImage.setImageResource(context.getResources().getIdentifier(task.getIcon(), "drawable", context.getPackageName()));
+            }
             taskDescriptionTextView.setText(task.getDescription());
             taskEditButton.setVisibility(View.VISIBLE);
         }
@@ -88,5 +94,4 @@ class ParentTaskListAdapter extends RecyclerView.Adapter<ParentTaskListAdapter.P
             parentTaskClickListener.onDeleteTask(task);
         }
     }
-
 }
