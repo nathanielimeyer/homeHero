@@ -1,6 +1,23 @@
 package com.jbnm.homehero.ui.parent.taskList;
 
-import com.jbnm.homehero.ui.taskEdit.TaskEditorContract;
+import com.jbnm.homehero.data.model.Child;
+import com.jbnm.homehero.data.model.Task;
+import com.jbnm.homehero.data.model.TaskStatus;
+import com.jbnm.homehero.data.remote.DataManager;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.BiConsumer;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableObserver;
 
 /**
  * Created by nathanielmeyer on 8/7/17.
@@ -8,26 +25,68 @@ import com.jbnm.homehero.ui.taskEdit.TaskEditorContract;
 
 public class ParentTaskListPresenter implements ParentTaskListContract.Presenter {
     private ParentTaskListContract.MvpView mvpView;
+    private CompositeDisposable disposable = new CompositeDisposable();
+    private DataManager dataManager = new DataManager();
+    private Child child;
 
-    public ParentTaskListPresenter(ParentTaskListContract.MvpView view) { mvpView = view; }
+    public ParentTaskListPresenter(ParentTaskListContract.MvpView view) { this.mvpView = view; }
 
     @Override
     public void detach() {
-
+        disposable.clear();
     }
 
     @Override
-    public void loadChild(String childId) {
+    public void loadTasks(String childId) {
+        mvpView.showLoading();
+        disposable.add(dataManager.getChild(childId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Consumer<Child>() {
+                    @Override
+                    public void accept(Child childResult) throws Exception {
+                        child = childResult;
+                    }
+                }).subscribeWith(new DisposableObserver<Child>() {
+                    @Override public void onNext(Child child) { processResult(child); }
+                    @Override public void onError(Throwable e) { processError(e); }
+                    @Override public void onComplete() {}
+                }));
+    }
 
+    private void processError(Throwable e) {
+        mvpView.hideLoading();
+        e.printStackTrace();
+        mvpView.showError(e.getMessage());
+    }
+
+    private void processResult(Child child) {
+        List<Task> items = new ArrayList<>(child.getTasks().values());
+        mvpView.listTasks(items);
+        mvpView.hideLoading();
     }
 
     @Override
     public void saveChild() {
-
+        mvpView.showLoading();
+        disposable.add(dataManager.updateChild(child)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<Child>() {
+                    @Override public void onNext(Child child) { processResult(child); }
+                    @Override public void onError(Throwable e) { processError(e); }
+                    @Override public void onComplete() {}
+                }));
     }
 
     @Override
-    public void deleteTaskButtonClicked() {
+    public void addTaskButtonClicked() {
+        mvpView.addTaskIntent(child.getId());
+    }
+
+    public void saveTasks(List<Task> tasks) {
+        Map<String, Task> taskMap = new HashMap<>();
+        for (Task task : tasks) taskMap.put(task.getId(), task);
+        child.setTasks(taskMap);
+        saveChild();
 
     }
 }

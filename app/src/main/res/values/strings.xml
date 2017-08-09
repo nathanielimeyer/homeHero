@@ -54,6 +54,9 @@
     <string name="task_description">Task Description</string>
     <string name="task_editor_screen_title">Add or Edit a Task</string>
     <string name="edit_task_image_text">Click to change image</string>
+    <string name="manage_tasks_title">Manage Tasks</string>
+    <string name="add_task">Add Task</string>
+    <string name="back_to_settings_button_text">Back</string>
 
 
 </resources>

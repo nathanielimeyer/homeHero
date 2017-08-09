@@ -1,5 +1,6 @@
 package com.jbnm.homehero.ui.parent.taskList;
 
+import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.ui.base.BaseMvpView;
 import com.jbnm.homehero.ui.base.BasePresenter;
 
@@ -11,13 +12,13 @@ import java.util.List;
 
 public class ParentTaskListContract {
     interface Presenter extends BasePresenter {
-        void loadChild(String childId);
+        void loadTasks(String childId);
         void saveChild();
-        void deleteTaskButtonClicked();
-    }
+        void addTaskButtonClicked();
+        void saveTasks(List<Task> tasks);
+        }
     interface MvpView extends BaseMvpView {
-        void setDescriptions(List<String> descriptions);
-        void loadIcons(List<String> icons);
-
+        void listTasks(List<Task> tasks);
+        void addTaskIntent(String childId);
     }
 }
