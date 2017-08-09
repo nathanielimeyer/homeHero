@@ -115,7 +115,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
 
                 tv.setCompoundDrawablesWithIntrinsicBounds(dialogItems[position].image, 0, 0, 0);
 
-//                Change dialogItems image type to String in presenter if you use this
+//               setCompoundDrawablesWithIntrinsicBounds Change dialogItems image type to String in presenter if you use this
 //                tv.setCompoundDrawablesWithIntrinsicBounds((getResources().getIdentifier(dialogItems[position].image, "drawable", getPackageName())), 0, 0, 0);
 
                 //Add margin between image and text (support various screen densities)
