@@ -74,9 +74,6 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
         if (item.getItemId() == R.id.menu_parent_childNav_item) {
             presenter.handleChildNavButtonClick();
             return true;
-        } else if (item.getItemId() == R.id.menu_parent_logout_item) {
-            presenter.handleLogoutButtonClick();
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -85,7 +82,7 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
     public void setUpViewPager(String childId) {
         parentPagerAdapter = new ParentPagerAdapter(getSupportFragmentManager());
         parentPagerAdapter.addFragment(TaskReviewFragment.newInstance(childId));
-        parentPagerAdapter.addFragment(SettingsFragment.newInstance());
+        parentPagerAdapter.addFragment(SettingsFragment.newInstance(childId));
 
         viewPager.setAdapter(parentPagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -94,8 +91,7 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
 
     @Override
     public void taskListIntent(String childId) {
-//        startActivity(ParentTaskListActivity.createIntent(this, childId));
-        Log.d("test", "taskList");
+        startActivity(ParentTaskListActivity.createIntent(this, childId));
     }
 
     @Override
@@ -106,12 +102,6 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
     @Override
     public void goalIntent(String childId) {
         startActivity(GoalActivity.createIntent(this, childId));
-        finish();
-    }
-
-    @Override
-    public void loginIntent() {
-        startActivity(LoginActivity.createIntent(this));
         finish();
     }
 

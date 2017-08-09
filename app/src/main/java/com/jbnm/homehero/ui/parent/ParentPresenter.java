@@ -22,13 +22,13 @@ public class ParentPresenter implements ParentContract.Presenter {
     public void init(String childId) {
         this.childId = childId;
         mvpView.setToolbarTitle(Constants.PARENT_TITLE);
-//        if (!sharedPrefManager.getTasksCreated()) {
-//            mvpView.taskListIntent(childId);
+        if (!sharedPrefManager.getTasksCreated()) {
+            mvpView.taskListIntent(childId);
 //        } else if (!sharedPrefManager.getGoalsCreated()) {
 //            mvpView.goalListIntent(childId);
-//        } else {
+        } else {
             mvpView.setUpViewPager(childId);
-//        }
+        }
     }
 
     @Override
@@ -42,9 +42,4 @@ public class ParentPresenter implements ParentContract.Presenter {
         mvpView.goalIntent(childId);
     }
 
-    @Override
-    public void handleLogoutButtonClick() {
-        FirebaseAuthService.getInstance().logout();
-        mvpView.loginIntent();
-    }
 }

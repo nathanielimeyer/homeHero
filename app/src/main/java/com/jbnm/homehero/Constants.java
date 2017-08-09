@@ -8,6 +8,7 @@ public class Constants {
     private Constants() {}
 
     public static final String TASK_INTENT_KEY = "taskId";
+    public static final String TASK_NEW_INTENT_VALUE = "newTask";
     public static final String CHILD_INTENT_KEY = "childId";
     public static final int MIN_TASK_COUNT = 2;
     public static final int MAX_TASK_COUNT = 10;
@@ -21,6 +22,7 @@ public class Constants {
     public static final String PARENT_TASK_LIST_TITLE = "Manage Tasks";
     public static final String PARENT_GOAL_LIST_TITLE = "Manage Goals";
     public static final String PARENT_TASK_EDIT_TITLE = "Edit Task";
+    public static final String PARENT_TASK_NEW_TITLE = "New Task";
     public static final String PARENT_GOAL_EDIT_TITLE = "Edit Goal";
 
     public static final String DEFAULT_CHORE_ICON = "chore_broom";
