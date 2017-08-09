@@ -4,90 +4,114 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/edit_text_description"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:hint="@string/task_description"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@id/task_image_view"/>
 
-        <TextView
-            android:id="@+id/taskEditorTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/task_editor_screen_title"
-            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
-            app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
+    <ImageView
+        android:id="@+id/task_image_view"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:padding="4dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/ic_add_a_photo_black_24dp"/>
 
-        <TextView
-            android:id="@+id/taskDescriptionLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/task_description"
-            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
-            app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_text_description"
-            android:inputType="text" />
+        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/taskEditorTitleTextView"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="48dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginTop="8dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="center_vertical"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="@string/task_editor_screen_title"&ndash;&gt;-->
+            <!--&lt;!&ndash;app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"&ndash;&gt;-->
+            <!--&lt;!&ndash;app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>&ndash;&gt;-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_image_label"
-            android:text="@string/edit_task_image_text"/>
+        <!--<TextView-->
+            <!--android:id="@+id/taskDescriptionLabelTextView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="@string/task_description"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>-->
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/task_image_view"
-            app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/edit_text_description"-->
+            <!--android:inputType="text" />-->
 
-        <TextView
-            android:id="@+id/taskInstructionsLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/task_instructions_label"
-            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
-            app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/edit_image_label"-->
+            <!--android:text="@string/edit_task_image_text"/>-->
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/taskInstructionsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/task_image_view"-->
+            <!--app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />-->
 
-        <Button
-            android:id="@+id/addStepsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_a_step"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true" />
+        <!--<TextView-->
+            <!--android:id="@+id/taskInstructionsLabelTextView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="@string/task_instructions_label"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>-->
 
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save_changes"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true" />
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/taskInstructionsRecyclerView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel_changes"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true" />
+        <!--<Button-->
+            <!--android:id="@+id/addStepsButton"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/add_a_step"-->
+            <!--android:visibility="visible"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_alignParentBottom="true" />-->
 
-    </LinearLayout>
+        <!--&lt;!&ndash;<Button&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/saveButton"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="@string/save_changes"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:visibility="visible"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_centerHorizontal="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_alignParentBottom="true" />&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<Button&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/cancelButton"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="@string/cancel_changes"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:visibility="visible"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_centerHorizontal="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_alignParentBottom="true" />&ndash;&gt;-->
+
+    <!--</LinearLayout>-->
 </RelativeLayout>

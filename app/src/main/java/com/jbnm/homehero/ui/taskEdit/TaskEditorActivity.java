@@ -9,6 +9,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -89,6 +91,24 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
                 presenter.addStepsButtonClicked();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.task_edit, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_task_edit_save) {
+            presenter.saveChildData(descriptionEditText.getText().toString().trim());
+            return true;
+        } else if (item.getItemId() == R.id.menu_task_edit_cancel) {
+            presenter.cancelButtonClicked();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
