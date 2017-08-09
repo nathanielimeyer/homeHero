@@ -40,7 +40,7 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value=".ui.parent.ParentActivity"/>
         </activity>
-
+        <activity android:name=".ui.parent.rewardList.ParentRewardListActivity"></activity>
         <activity android:name=".ui.taskEdit.TaskEditorActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value=".ui.parent.taskList.ParentTaskListActivity"/>
@@ -53,10 +53,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.signup.SignUpActivity"
                   android:theme="@style/AppTheme.NoActionBar"/>
-
     </application>
 
 </manifest>
