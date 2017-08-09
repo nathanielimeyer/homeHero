@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -28,6 +30,7 @@ import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.ui.base.BaseActivity;
+import com.jbnm.homehero.ui.parent.ParentActivity;
 import com.jbnm.homehero.ui.taskpicker.TaskPickerActivity;
 import com.jbnm.homehero.ui.taskprogress.TaskProgressActivity;
 
@@ -75,6 +78,21 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
                 presenter.taskButtonClicked();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.child, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_child_parentNav_item) {
+            presenter.handleParentNavButtonClick();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -199,11 +217,19 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @Override
     public void taskPickerIntent(String childId) {
         startActivity(TaskPickerActivity.createIntent(this, childId));
+        finish();
     }
 
     @Override
     public void taskProgressIntent(String childId) {
         startActivity(TaskProgressActivity.createIntent(this, childId));
+        finish();
+    }
+
+    @Override
+    public void parentIntent(String childId) {
+        startActivity(ParentActivity.createIntent(this, childId));
+        finish();
     }
 
     @Override
