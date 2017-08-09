@@ -147,13 +147,13 @@ public class Child {
     }
 
     public boolean allTasksCompleted() {
-//      for (Task task : tasks) {
-//          if (task.isAvailable()) {
-//              return false;
-//          }
-//      }
-      return false;
-  }
+        for (Task task : tasks.values()) {
+            if (task.taskStatus() == TaskStatus.INCOMPLETE) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public void fulfillReward(String rewardId) {
         this.pendingRewards.remove(rewardId);

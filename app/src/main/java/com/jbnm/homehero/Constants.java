@@ -15,6 +15,9 @@ public class Constants {
     public static final int MIN_REWARD_COUNT = 2;
     public static final int MAX_REWARD_COUNT = 6;
 
+    public static final String GOAL_PROGRESS_TASK_SELECT = "Get more points";
+    public static final String GOAL_PROGRESS_TASK_PROGRESS = "Finish your task";
+
     public static final String TASK_PROGRESS_TITLE = "Task Progress";
     public static final String TASK_PICKER_TITLE = "Task Picker";
     public static final String GOAL_PROGRESS_TITLE = "Goal Progress";
