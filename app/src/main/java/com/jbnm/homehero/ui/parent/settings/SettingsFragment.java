@@ -1,17 +1,13 @@
 package com.jbnm.homehero.ui.parent.settings;
 
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseFragment;
+import com.jbnm.homehero.ui.login.LoginActivity;
 import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 
 import butterknife.ButterKnife;
@@ -21,12 +17,14 @@ import butterknife.Unbinder;
 public class SettingsFragment extends BaseFragment implements SettingsContract.MvpView {
     private SettingsContract.Presenter presenter;
     private Unbinder unbinder;
-    String childId;
 
     public SettingsFragment() {}
 
-    public static SettingsFragment newInstance() {
+    public static SettingsFragment newInstance(String childId) {
         SettingsFragment fragment = new SettingsFragment();
+        Bundle args = new Bundle();
+        args.putString(Constants.CHILD_INTENT_KEY, childId);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -34,7 +32,9 @@ public class SettingsFragment extends BaseFragment implements SettingsContract.M
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
-        presenter = new SettingsPresenter(this);
+        String childId = getArguments().getString(Constants.CHILD_INTENT_KEY);
+
+        presenter = new SettingsPresenter(this, childId);
     }
 
     @Override
@@ -59,14 +59,26 @@ public class SettingsFragment extends BaseFragment implements SettingsContract.M
         presenter.handleRewardEditButtonClick();
     }
 
-    @Override
-    public void taskEditIntent() {
-        startActivity(ParentTaskListActivity.createIntent(getContext(), Constants.CHILDID));
+    @OnClick(R.id.logoutButton)
+    public void logoutButtonClick() {
+        presenter.handleLogoutButtonClick();
     }
 
     @Override
-    public void rewardEditIntent() {
+    public void taskEditIntent(String childId) {
+        startActivity(ParentTaskListActivity.createIntent(getContext(), childId));
+    }
+
+    @Override
+    public void rewardEditIntent(String childId) {
 //        Intent intent = new Intent(getContext(), RewardEditActivity.class);
 //        startActivity(intent);
+    }
+
+
+    @Override
+    public void loginIntent() {
+        startActivity(LoginActivity.createIntent(getContext()));
+        getActivity().finish();
     }
 }

@@ -2,6 +2,7 @@ package com.jbnm.homehero.ui.taskEdit;
 
 import android.content.Intent;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Task;
@@ -57,6 +58,11 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
 
     @Override
     public void loadChildAndTask(String childId, final String taskId) {
+        if (taskId.equals(Constants.TASK_NEW_INTENT_VALUE)) {
+            mvpView.setToolbarTitle(Constants.PARENT_TASK_NEW_TITLE);
+        } else {
+            mvpView.setToolbarTitle(Constants.PARENT_TASK_EDIT_TITLE);
+        }
         mvpView.showLoading();
         mvpView.buildIconPickerDialog();
         disposable.add(dataManager.getChild(childId)
@@ -102,7 +108,7 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
     }
 
     private void processResult(Child child, String taskId) {
-        if (!taskId.equals("newTask")) {
+        if (!taskId.equals(Constants.TASK_NEW_INTENT_VALUE)) {
             tasks = new ArrayList(child.getTasks().values());
             for (Task task : tasks) {
                 if (task.getId().equals(taskId)) {

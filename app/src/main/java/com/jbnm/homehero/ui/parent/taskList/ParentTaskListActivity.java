@@ -13,7 +13,9 @@ import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.ui.base.BaseActivity;
+import com.jbnm.homehero.ui.parent.ParentActivity;
 import com.jbnm.homehero.ui.taskEdit.TaskEditorActivity;
+import com.jbnm.homehero.util.SharedPrefManager;
 
 import java.util.List;
 
@@ -47,9 +49,9 @@ public class ParentTaskListActivity extends BaseActivity implements ParentTaskLi
         setContentView(R.layout.activity_parent_task_list);
         ButterKnife.bind(this);
 
-        childId = getIntent().getStringExtra("childId");
+        childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
 
-        presenter = new ParentTaskListPresenter(this);
+        presenter = new ParentTaskListPresenter(this, SharedPrefManager.getInstance(this));
         presenter.loadTasks(childId);
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +70,17 @@ public class ParentTaskListActivity extends BaseActivity implements ParentTaskLi
     }
 
     @Override
+    public void onBackPressed() {
+        presenter.handleBackButtonPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detach();
+    }
+
+    @Override
     public void listTasks(List<Task> tasks) {
         this.tasks = tasks;
         ParentTaskListAdapter parentTaskListAdapter = new ParentTaskListAdapter(tasks);
@@ -81,13 +94,18 @@ public class ParentTaskListActivity extends BaseActivity implements ParentTaskLi
 
     @Override
     public void addTaskIntent(String childId) {
-        startActivity(TaskEditorActivity.createIntent(this, childId, "newTask"));
+        startActivity(TaskEditorActivity.createIntent(this, childId, Constants.TASK_NEW_INTENT_VALUE));
     }
 
     @Override
     public void onEditTask(String taskId) {
-
         startActivity(TaskEditorActivity.createIntent(this, childId, taskId));
+    }
+
+    @Override
+    public void parentIntent(String childId) {
+        startActivity(ParentActivity.createIntent(this, childId));
+        finish();
     }
 
     @Override

@@ -70,6 +70,11 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
     }
 
     @Override
+    public void onBackPressed() {
+        presenter.handleGoalProgressClick();
+    }
+
+    @Override
     public void showTask(Task task) {
         if (task != null) {
             taskIconImageView.setImageResource(getTaskIcon(task));
@@ -82,8 +87,7 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
         if (task.getIcon() != null) {
             return getResources().getIdentifier(task.getIcon(), "drawable", getPackageName());
         } else {
-            // TODO: add default task icon here
-            return getResources().getIdentifier("down_arrow", "drawable", getPackageName());
+            return getResources().getIdentifier(Constants.DEFAULT_CHORE_ICON, "drawable", getPackageName());
         }
     }
 
@@ -98,5 +102,6 @@ public class TaskProgressActivity extends BaseActivity implements TaskProgressCo
     @Override
     public void goalProgressIntent(String childId) {
         startActivity(GoalActivity.createIntent(this, childId));
+        finish();
     }
 }
