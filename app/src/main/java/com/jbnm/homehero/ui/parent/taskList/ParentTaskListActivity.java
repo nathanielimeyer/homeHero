@@ -80,10 +80,6 @@ public class ParentTaskListActivity extends BaseActivity implements ParentTaskLi
     }
 
     @Override
-    public void editTaskIntent(String childId, String taskId) {
-    }
-
-    @Override
     public void addTaskIntent(String childId) {
         startActivity(TaskEditorActivity.createIntent(this, childId, "newTask"));
     }
