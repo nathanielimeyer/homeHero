@@ -34,11 +34,8 @@ import butterknife.ButterKnife;
 public class TaskEditorActivity extends BaseActivity implements TaskEditorContract.MvpView {
     @BindView(R.id.edit_text_description) EditText descriptionEditText;
     @BindView(R.id.task_image_view) ImageView task_image_view;
-//    @BindView(R.id.saveButton) Button saveButton;
     @BindView(R.id.taskInstructionsRecyclerView) RecyclerView taskInstructionsRecyclerView;
-    @BindView(R.id.addStepsButton)
-    FloatingActionButton addStepsButton;
-//    @BindView(R.id.cancelButton) Button cancelButton;
+    @BindView(R.id.addStepsButton) FloatingActionButton addStepsButton;
 
     private Context context = this;
     ListAdapter adapter;
@@ -68,24 +65,12 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
         presenter = new TaskEditorPresenter(this);
         presenter.loadChildAndTask(childId, taskId);
 
-//        saveButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                updateTaskData();
-//            }
-//        });
         task_image_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showIconPickerDialog();
             }
         });
-//        cancelButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                presenter.cancelButtonClicked();
-//            }
-//        });
 
         addStepsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +80,12 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
         });
 
         taskInstructionsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_INDICATOR_TOP) {
+                    addStepsButton.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
             @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0 && addStepsButton.isShown()) {
                     addStepsButton.hide();
@@ -180,8 +171,6 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
     public void setDescription(String description) {
         if (description != null && !description.isEmpty()) {
             descriptionEditText.setText(description);
-        } else {
-            descriptionEditText.setHint("Tap to edit");
         }
     }
 
