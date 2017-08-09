@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseFragment;
 import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
@@ -20,6 +21,7 @@ import butterknife.Unbinder;
 public class SettingsFragment extends BaseFragment implements SettingsContract.MvpView {
     private SettingsContract.Presenter presenter;
     private Unbinder unbinder;
+    String childId;
 
     public SettingsFragment() {}
 
@@ -59,8 +61,7 @@ public class SettingsFragment extends BaseFragment implements SettingsContract.M
 
     @Override
     public void taskEditIntent() {
-        Intent intent = new Intent(getContext(), ParentTaskListActivity.class);
-        startActivity(intent);
+        startActivity(ParentTaskListActivity.createIntent(getContext(), Constants.CHILDID));
     }
 
     @Override
