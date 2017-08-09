@@ -73,4 +73,9 @@ public abstract class BaseFragment extends Fragment implements BaseMvpView {
     public void hideError() {
 
     }
+
+    @Override
+    public void setToolbarTitle(String title) {
+
+    }
 }

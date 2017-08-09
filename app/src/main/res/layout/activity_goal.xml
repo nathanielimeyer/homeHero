@@ -11,9 +11,13 @@
         android:id="@+id/goalDescriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:text="@string/goalDescriptionText" />
+        android:text="@string/goalDescriptionText"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:textStyle="bold"/>
 
     <com.hookedonplay.decoviewlib.DecoView
         android:layout_width="match_parent"
@@ -32,10 +36,8 @@
 
     <Button
         android:id="@+id/taskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/buttonWide"
         android:text="@string/taskButtonText"
-        android:visibility="visible"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true" />
 

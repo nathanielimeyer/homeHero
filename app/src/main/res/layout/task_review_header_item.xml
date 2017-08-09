@@ -11,5 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="72dp"
         android:layout_marginRight="16dp"
-        android:text="TextView"/>
+        android:text="TextView"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
 </LinearLayout>

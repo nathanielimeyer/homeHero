@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jbnm.homehero.ui.login.LoginActivity">
+
+    <EditText
+        android:id="@+id/loginEmailEditText"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/hint_email_input"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintVertical_bias="0.3"/>
+
+    <EditText
+        android:id="@+id/loginPasswordEditText"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="@string/hint_password_input"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/loginEmailEditText"
+        app:layout_constraintStart_toStartOf="@+id/loginEmailEditText"
+        app:layout_constraintTop_toBottomOf="@+id/loginEmailEditText"/>
+
+    <Button
+        android:id="@+id/loginButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/button_login"
+        app:layout_constraintEnd_toEndOf="@+id/loginPasswordEditText"
+        app:layout_constraintStart_toStartOf="@+id/loginPasswordEditText"
+        app:layout_constraintTop_toBottomOf="@+id/loginPasswordEditText"/>
+
+    <Button
+        android:id="@+id/signUpLinkButton"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/link_login_to_sign_up"
+        app:layout_constraintEnd_toEndOf="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintStart_toStartOf="@+id/loginButton"
+        android:layout_marginStart="16dp"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -11,9 +11,11 @@ public class SettingsContract {
     interface Presenter extends BasePresenter {
         void handleTaskEditButtonClick();
         void handleRewardEditButtonClick();
+        void handleLogoutButtonClick();
     }
     interface MvpView extends BaseMvpView {
-        void taskEditIntent();
-        void rewardEditIntent();
+        void taskEditIntent(String childId);
+        void rewardEditIntent(String childId);
+        void loginIntent();
     }
 }

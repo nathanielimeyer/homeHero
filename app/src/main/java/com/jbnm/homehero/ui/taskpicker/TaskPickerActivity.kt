@@ -49,6 +49,12 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.detach()
+        taskSelector.setOnTaskSelectListener(null)
+        taskSelector.setOnSpinStartListener(null)
+    }
+
+    override fun onBackPressed() {
+        presenter.handleGoalButtonClick()
     }
 
     override fun addTasks(tasks: List<Task>) {
@@ -85,11 +91,13 @@ class TaskPickerActivity : BaseActivity(), TaskPickerContract.MvpView {
     }
 
     override fun goalProgressIntent(childId: String) {
-        startActivity(GoalActivity.createIntent(this, childId));
+        startActivity(GoalActivity.createIntent(this, childId))
+        finish()
     }
 
     override fun taskProgressIntent(childId: String) {
         startActivity(TaskProgressActivity.createIntent(this, childId))
+        finish()
     }
 
     override fun showTutorial() {

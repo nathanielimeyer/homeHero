@@ -1,9 +1,11 @@
 package com.jbnm.homehero.ui.parent.taskList;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.data.model.TaskStatus;
 import com.jbnm.homehero.data.remote.DataManager;
+import com.jbnm.homehero.util.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,9 +29,13 @@ public class ParentTaskListPresenter implements ParentTaskListContract.Presenter
     private ParentTaskListContract.MvpView mvpView;
     private CompositeDisposable disposable = new CompositeDisposable();
     private DataManager dataManager = new DataManager();
+    private SharedPrefManager sharedPrefManager;
     private Child child;
 
-    public ParentTaskListPresenter(ParentTaskListContract.MvpView view) { this.mvpView = view; }
+    public ParentTaskListPresenter(ParentTaskListContract.MvpView view, SharedPrefManager sharedPrefManager) {
+        this.mvpView = view;
+        this.sharedPrefManager = sharedPrefManager;
+    }
 
     @Override
     public void detach() {
@@ -38,6 +44,7 @@ public class ParentTaskListPresenter implements ParentTaskListContract.Presenter
 
     @Override
     public void loadTasks(String childId) {
+        mvpView.setToolbarTitle(Constants.PARENT_TASK_LIST_TITLE);
         mvpView.showLoading();
         disposable.add(dataManager.getChild(childId)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -60,9 +67,15 @@ public class ParentTaskListPresenter implements ParentTaskListContract.Presenter
     }
 
     private void processResult(Child child) {
+        updateSharedPrefs(child);
         List<Task> items = new ArrayList<>(child.getTasks().values());
         mvpView.listTasks(items);
         mvpView.hideLoading();
+    }
+
+    private void updateSharedPrefs(Child child) {
+        sharedPrefManager.setTasksCreated(child.getTasks().keySet().size() > Constants.MIN_TASK_COUNT);
+        sharedPrefManager.setGoalsCreated(child.getRewards().keySet().size() > Constants.MIN_REWARD_COUNT);
     }
 
     @Override
@@ -88,5 +101,10 @@ public class ParentTaskListPresenter implements ParentTaskListContract.Presenter
         child.setTasks(taskMap);
         saveChild();
 
+    }
+
+    @Override
+    public void handleBackButtonPressed() {
+        mvpView.parentIntent(child.getId());
     }
 }
