@@ -3,6 +3,7 @@ package com.jbnm.homehero.ui.parent.taskList;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,8 +30,7 @@ import butterknife.OnClick;
 
 public class ParentTaskListActivity extends BaseActivity implements ParentTaskListContract.MvpView, ParentTaskClickListener {
     @BindView(R.id.taskListRecyclerView) RecyclerView taskListRecyclerView;
-    @BindView(R.id.addTaskButton) Button addTaskButton;
-    @BindView(R.id.buttonBackToSettings) Button backButton;
+    @BindView(R.id.addTaskButton) FloatingActionButton addTaskButton;
 
     List<Task> tasks;
     String childId;
@@ -61,10 +61,20 @@ public class ParentTaskListActivity extends BaseActivity implements ParentTaskLi
             }
         });
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        taskListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+               if (newState == RecyclerView.SCROLL_INDICATOR_TOP) {
+                    addTaskButton.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
 
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && addTaskButton.isShown()) {
+                    addTaskButton.hide();
+                } else if (dy < 0 && !addTaskButton.isShown()) {
+                    addTaskButton.show();
+                }
             }
         });
     }

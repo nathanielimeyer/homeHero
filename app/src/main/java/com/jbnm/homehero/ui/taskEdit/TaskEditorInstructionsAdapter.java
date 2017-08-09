@@ -70,8 +70,6 @@ public class TaskEditorInstructionsAdapter extends RecyclerView.Adapter<TaskEdit
             myCustomEditTextListener.updatePosition(position);
             if (step != null && !step.isEmpty() && !step.equals("")) {
                 stepDescriptionEditText.setText(step);
-            } else {
-                stepDescriptionEditText.setHint("Tap to edit");
             }
             deleteButtonOnClickListener.updatePosition(position);
         }
