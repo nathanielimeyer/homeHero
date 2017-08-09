@@ -15,7 +15,7 @@ public class ParentContract {
     interface  MvpView extends BaseMvpView {
         void setUpViewPager(String childId);
         void taskListIntent(String childId);
-        void goalListIntent(String childId);
+        void rewardListIntent(String childId);
         void goalIntent(String childId);
     }
 }
