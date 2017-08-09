@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,10 +34,11 @@ import butterknife.ButterKnife;
 public class TaskEditorActivity extends BaseActivity implements TaskEditorContract.MvpView {
     @BindView(R.id.edit_text_description) EditText descriptionEditText;
     @BindView(R.id.task_image_view) ImageView task_image_view;
-    @BindView(R.id.saveButton) Button saveButton;
+//    @BindView(R.id.saveButton) Button saveButton;
     @BindView(R.id.taskInstructionsRecyclerView) RecyclerView taskInstructionsRecyclerView;
-    @BindView(R.id.addStepsButton) Button addStepsButton;
-    @BindView(R.id.cancelButton) Button cancelButton;
+    @BindView(R.id.addStepsButton)
+    FloatingActionButton addStepsButton;
+//    @BindView(R.id.cancelButton) Button cancelButton;
 
     private Context context = this;
     ListAdapter adapter;
@@ -66,29 +68,39 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
         presenter = new TaskEditorPresenter(this);
         presenter.loadChildAndTask(childId, taskId);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateTaskData();
-            }
-        });
+//        saveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateTaskData();
+//            }
+//        });
         task_image_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showIconPickerDialog();
             }
         });
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.cancelButtonClicked();
-            }
-        });
+//        cancelButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                presenter.cancelButtonClicked();
+//            }
+//        });
 
         addStepsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 presenter.addStepsButtonClicked();
+            }
+        });
+
+        taskInstructionsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && addStepsButton.isShown()) {
+                    addStepsButton.hide();
+                } else if (dy < 0 && !addStepsButton.isShown()) {
+                    addStepsButton.show();
+                }
             }
         });
     }
