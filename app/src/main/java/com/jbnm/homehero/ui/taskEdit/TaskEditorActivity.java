@@ -57,9 +57,9 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
         setContentView(R.layout.activity_task_editor);
         ButterKnife.bind(this);
 
-        String childId = getIntent().getStringExtra("childId");
+        String childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
 
-        String taskId = getIntent().getStringExtra("taskId");
+        String taskId = getIntent().getStringExtra(Constants.TASK_INTENT_KEY);
 
         presenter = new TaskEditorPresenter(this);
         presenter.loadChildAndTask(childId, taskId);
@@ -89,6 +89,12 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
                 presenter.addStepsButtonClicked();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detach();
     }
 
     public void showIconPickerDialog() {
@@ -164,5 +170,6 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
     @Override
     public void parentTaskListIntent(String childId) {
         startActivity(ParentTaskListActivity.createIntent(this, childId));
+        finish();
     }
 }

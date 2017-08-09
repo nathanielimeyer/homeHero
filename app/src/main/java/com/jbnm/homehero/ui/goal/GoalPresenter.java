@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Reward;
@@ -62,6 +63,8 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     @Override
     public void loadData(String childId) {
+        mvpView.showLoading();
+        mvpView.setToolbarTitle(Constants.GOAL_PROGRESS_TITLE);
         disposable.add(dataManager.getChild(childId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<Child>() {
@@ -83,6 +86,7 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     @Override
     public void populateAllTheThings() {
+        mvpView.hideLoading();
         rewards = new ArrayList(child.getRewards().values());
         mvpView.buildGoalPickerDialog();
         if (child.getCurrentRewardKey() == null) {
@@ -159,5 +163,10 @@ public class GoalPresenter implements GoalContract.Presenter {
         mvpView.hideLoading();
         e.printStackTrace();
         mvpView.showError(e.getMessage());
+    }
+
+    @Override
+    public void handleParentNavButtonClick() {
+        mvpView.parentIntent(child.getId());
     }
 }

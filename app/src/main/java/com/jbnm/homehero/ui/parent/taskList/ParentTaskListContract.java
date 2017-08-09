@@ -16,9 +16,11 @@ public class ParentTaskListContract {
         void saveChild();
         void addTaskButtonClicked();
         void saveTasks(List<Task> tasks);
+        void handleBackButtonPressed();
         }
     interface MvpView extends BaseMvpView {
         void listTasks(List<Task> tasks);
         void addTaskIntent(String childId);
+        void parentIntent(String childId);
     }
 }

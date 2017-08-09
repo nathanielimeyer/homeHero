@@ -27,6 +27,7 @@ public class TaskWheel extends View {
     private static final int MIN_ROTATION_TIME = 500;
     private static final int ROTATION_TIME = 250;
 
+    private Paint outlinePaint;
     private Paint textPaint;
     private Paint disabledTextPaint;
     private PathMeasure pathMeasure;
@@ -63,15 +64,30 @@ public class TaskWheel extends View {
         init(context);
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        gestureDetector = null;
+        onTaskSelectListener = null;
+        onSpinStartListener = null;
+    }
+
     private void init(Context context) {
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setStyle(Paint.Style.STROKE);
         textPaint.setTextAlign(Paint.Align.CENTER);
 
+        outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        outlinePaint.setStyle(Paint.Style.STROKE);
+        outlinePaint.setColor(Color.WHITE);
+        outlinePaint.setStrokeWidth(2f);
+
         disabledTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         disabledTextPaint.setStyle(Paint.Style.STROKE);
         disabledTextPaint.setTextAlign(Paint.Align.CENTER);
         disabledTextPaint.setColor(Color.BLACK);
+        disabledTextPaint.setAlpha(90);
+
         gestureDetector = new GestureDetector(TaskWheel.this.getContext(), new GestureListener());
         pathMeasure = new PathMeasure();
         TypedArray colorResources = context.getResources().obtainTypedArray(R.array.colorTaskWheel);
@@ -133,6 +149,7 @@ public class TaskWheel extends View {
     protected void onDraw(Canvas canvas) {
         for (TaskWheelItem taskWheelItem : taskWheelItems) {
             canvas.drawPath(taskWheelItem.arcPath, taskWheelItem.taskPaint);
+            canvas.drawPath(taskWheelItem.arcPath, outlinePaint);
 
             pathMeasure.setPath(taskWheelItem.textPath, false);
             float pathLength = pathMeasure.getLength();
@@ -184,7 +201,6 @@ public class TaskWheel extends View {
         taskArcPath.moveTo(startX, startY);
         taskArcPath.lineTo(centerX, centerY);
         taskArcPath.lineTo(endX, endY);
-        taskArcPath.close();
         return taskArcPath;
     }
 
@@ -206,6 +222,7 @@ public class TaskWheel extends View {
 
         if (!task.availableForSelection()) {
             paint.setColor(disabledTaskColor);
+            paint.setAlpha(100);
         } else if (index >= taskColors.length) {
             paint.setColor(taskColors[index - taskColors.length]);
         } else {

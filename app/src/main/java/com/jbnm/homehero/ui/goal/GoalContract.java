@@ -19,6 +19,7 @@ public class GoalContract {
         void rewardAnimationEnded();
         List buildRewardDialogList();
         void populateAllTheThings();
+        void handleParentNavButtonClick();
     }
     interface MvpView extends BaseMvpView {
         void showProgress(String description, int rewardValue, String rewardImage, int approvedPoints, int pendingPoints);
@@ -27,6 +28,7 @@ public class GoalContract {
         void showTaskButton();
         void taskPickerIntent(String childId);
         void taskProgressIntent(String childId);
+        void parentIntent(String childId);
         void setGoalDescription(String description);
         void setGoalImage(String rewardImage);
         void showGoalPickerDialog();

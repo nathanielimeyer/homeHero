@@ -3,33 +3,49 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context="com.jbnm.homehero.ui.parent.settings.SettingsFragment">
+                                             tools:context="com.jbnm.homehero.ui.parent.settings.SettingsFragment"
+                                             tools:layout_editor_absoluteY="81dp"
+                                             tools:layout_editor_absoluteX="0dp">
 
     <!-- TODO: Update blank fragment layout -->
 
     <Button
         android:id="@+id/manageTaskButton"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/buttonWide"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:text="@string/parent_settings_manage_tasks_button"
-        app:layout_constraintEnd_toStartOf="@+id/manageRewardButton"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/logoutButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_marginStart="16dp"/>
 
     <Button
         android:id="@+id/manageRewardButton"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/buttonWide"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:text="@string/parent_settings_manage_rewards_button"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/manageTaskButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/manageTaskButton"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"/>
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/buttonWide"
+        android:text="@string/parent_menu_logout_item"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintHorizontal_bias="0.98"/>
 </android.support.constraint.ConstraintLayout>

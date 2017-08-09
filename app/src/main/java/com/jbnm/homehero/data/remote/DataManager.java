@@ -29,7 +29,15 @@ public class DataManager {
     }
 
     public Observable<Parent> saveParent(Parent parent) {
-        return firebaseService.saveParent(parentId, parent);
+        return firebaseService.saveParent(parent.getId(), parent);
+    }
+
+    public Observable<Child> getChildByParentId(String id) {
+        return firebaseService.getParentById(id).flatMap(new Function<Parent, ObservableSource<Child>>() {
+            @Override public ObservableSource<Child> apply(Parent parent) throws Exception {
+                return firebaseService.getChildById(parent.getChild());
+            }
+        });
     }
 
     public Observable<Parent> getParent() {

@@ -1,5 +1,6 @@
 package com.jbnm.homehero.ui.taskprogress;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.remote.DataManager;
 
@@ -30,6 +31,7 @@ public class TaskProgressPresenter implements TaskProgressContract.Presenter {
     @Override
     public void loadTask(String childId) {
         mvpView.showLoading();
+        mvpView.setToolbarTitle(Constants.TASK_PROGRESS_TITLE);
         disposable.add(dataManager.getChild(childId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<Child>() {

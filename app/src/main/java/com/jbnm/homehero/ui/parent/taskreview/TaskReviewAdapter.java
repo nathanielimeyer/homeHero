@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.util.DateUtil;
@@ -108,7 +109,7 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             this.task = task;
             taskDescriptionTextView.setText(task.getDescription());
             taskLastCompleteTextView.setText(String.format(context.getString(R.string.task_last_completed), getDate(task.getLastCompleted())));
-//            taskReviewIconImage.setImageResource(getTaskIcon(task));
+            taskReviewIconImage.setImageResource(getTaskIcon(task));
             if (task.pending()) {
                 taskApproveButton.setVisibility(View.VISIBLE);
                 taskRejectButton.setVisibility(View.VISIBLE);
@@ -146,8 +147,7 @@ public class TaskReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             if (task.getIcon() != null) {
                 return context.getResources().getIdentifier(task.getIcon(), "drawable", context.getPackageName());
             } else {
-                // TODO: add default task icon here
-                return context.getResources().getIdentifier("ic_close_white_24dp", "drawable", context.getPackageName());
+                return context.getResources().getIdentifier(Constants.DEFAULT_CHORE_ICON, "drawable", context.getPackageName());
             }
         }
     }
