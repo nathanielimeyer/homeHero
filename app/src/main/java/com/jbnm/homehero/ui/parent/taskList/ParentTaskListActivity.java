@@ -70,7 +70,7 @@ public class ParentTaskListActivity extends BaseActivity implements ParentTaskLi
     @Override
     public void listTasks(List<Task> tasks) {
         this.tasks = tasks;
-        ParentTaskListAdapter parentTaskListAdapter = new ParentTaskListAdapter(tasks);
+        ParentTaskListAdapter parentTaskListAdapter = new ParentTaskListAdapter(tasks, context);
         parentTaskListAdapter.setParentTaskClickListener(this);
         taskListRecyclerView.setAdapter(parentTaskListAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

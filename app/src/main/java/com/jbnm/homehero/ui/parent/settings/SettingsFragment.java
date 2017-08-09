@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseFragment;
+import com.jbnm.homehero.ui.parent.rewardList.ParentRewardListActivity;
 import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 
 import butterknife.ButterKnife;
@@ -66,7 +67,6 @@ public class SettingsFragment extends BaseFragment implements SettingsContract.M
 
     @Override
     public void rewardEditIntent() {
-//        Intent intent = new Intent(getContext(), RewardEditActivity.class);
-//        startActivity(intent);
+        startActivity(ParentRewardListActivity.createIntent(getContext(), Constants.CHILDID));
     }
 }
