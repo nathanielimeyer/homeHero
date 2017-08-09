@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -20,7 +21,6 @@ import android.widget.TextView;
 import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseActivity;
-import com.jbnm.homehero.ui.goal.GoalPresenter;
 import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 
 import java.util.List;
@@ -44,6 +44,8 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
 
     public static Intent createIntent(Context context, String childId, String taskId) {
         Intent intent = new Intent(context, TaskEditorActivity.class);
+        Log.d("TaskEditorActivityInten", "TaskId = " + taskId);
+
         intent.putExtra(Constants.CHILD_INTENT_KEY, childId);
         intent.putExtra(Constants.TASK_INTENT_KEY, taskId);
         return intent;
@@ -57,9 +59,7 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
 
         String childId = getIntent().getStringExtra("childId");
 
-//        String taskId = getIntent().getStringExtra("taskId");
-        String taskId = Constants.TASKID;
-//        String taskId = "newTask";
+        String taskId = getIntent().getStringExtra("taskId");
 
         presenter = new TaskEditorPresenter(this);
         presenter.loadChildAndTask(childId, taskId);
@@ -92,9 +92,6 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
     }
 
     public void showIconPickerDialog() {
-//        List<String> dialogItemList = presenter.getIconList();
-//        final String[] dialogItems = new String[dialogItemList.size()];
-//        dialogItemList.toArray(dialogItems);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.icon_picker_title)
@@ -138,8 +135,6 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
 
     public void updateTaskData() {
         String description = descriptionEditText.getText().toString().trim();
-
-        //        presenter.saveChildData(description, icon, instructions);
         presenter.saveChildData(description);
     }
 
@@ -164,7 +159,6 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
         taskInstructionsRecyclerView.setLayoutManager(layoutManager);
         taskInstructionsRecyclerView.setHasFixedSize(true);
         taskInstructionsRecyclerView.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
-
     }
 
     @Override
