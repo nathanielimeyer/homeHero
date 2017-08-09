@@ -6,8 +6,5 @@
         android:id="@+id/menu_parent_childNav_item"
         android:title="@string/parent_menu_child_item"
         app:showAsAction="always"/>
-    <item
-        android:id="@+id/menu_parent_logout_item"
-        android:title="@string/parent_menu_logout_item"/>
 
 </menu>
