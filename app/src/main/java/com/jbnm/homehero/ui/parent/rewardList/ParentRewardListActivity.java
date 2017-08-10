@@ -61,7 +61,7 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
 
         rewardListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_INDICATOR_TOP) {
+                if (newState == RecyclerView.SCROLL_INDICATOR_TOP && addRewardButton.isEnabled()) {
                     addRewardButton.show();
                 }
                 super.onScrollStateChanged(recyclerView, newState);
@@ -70,7 +70,7 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
             @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0 && addRewardButton.isShown()) {
                     addRewardButton.hide();
-                } else if (dy < 0 && !addRewardButton.isShown()) {
+                } else if (dy < 0 && !addRewardButton.isShown() && addRewardButton.isEnabled()) {
                     addRewardButton.show();
                 }
             }
@@ -120,5 +120,15 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
     public void onDeleteReward(Reward reward) {
         rewards.remove(reward);
         presenter.saveRewards(rewards);
+    }
+
+    @Override
+    public void setAddRewardButtonEnabled(boolean enabled) {
+        addRewardButton.setEnabled(enabled);
+        if (enabled) {
+            addRewardButton.setVisibility(View.VISIBLE);
+        } else {
+            addRewardButton.setVisibility(View.GONE);
+        }
     }
 }

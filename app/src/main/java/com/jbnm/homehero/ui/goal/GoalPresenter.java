@@ -89,13 +89,14 @@ public class GoalPresenter implements GoalContract.Presenter {
         mvpView.hideLoading();
         rewards = new ArrayList(child.getRewards().values());
         mvpView.buildGoalPickerDialog();
+        determineTaskButtonStatus();
         if (child.getCurrentRewardKey() == null) {
             mvpView.showGoalPickerDialog();
         } else {
             mvpView.setGoalDescription(child.currentReward().getDescription());
             mvpView.setGoalImage(child.currentReward().getRewardImage());
             checkProgress();
-            determineTaskButtonStatus();
+            mvpView.setGoalProgressLabel(child.currentReward().getValue() - child.getTotalPoints());
         }
     }
     @Override
@@ -121,8 +122,16 @@ public class GoalPresenter implements GoalContract.Presenter {
     public void determineTaskButtonStatus() {
         if (child.allTasksCompleted()) {
             mvpView.hideTaskButton();
+            mvpView.showNoTasksAvailable();
         } else {
             mvpView.showTaskButton();
+            mvpView.hideNoTasksAvailable();
+        }
+
+        if (child.currentTask() == null) {
+            mvpView.setTaskButtonText(Constants.GOAL_PROGRESS_TASK_SELECT);
+        } else {
+            mvpView.setTaskButtonText(Constants.GOAL_PROGRESS_TASK_PROGRESS);
         }
     }
 
