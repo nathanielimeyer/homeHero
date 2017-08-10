@@ -115,4 +115,13 @@ public class ParentTaskListPresenter implements ParentTaskListContract.Presenter
     public void handleBackButtonPressed() {
         mvpView.parentIntent(child.getId());
     }
+
+    @Override
+    public void checkAndNullCurrentTask(String taskId) {
+        if(child.getCurrentTaskKey() != null) {
+            if(child.getCurrentTaskKey().equals(taskId)) {
+                child.setCurrentTaskKey(null);
+            }
+        }
+    }
 }
