@@ -72,6 +72,7 @@
     <string name="new_reward_dialog_title">Add a reward</string>
     <string name="reward_editor_screen_title">Add new reward</string>
     <string name="reward_icon_picker_title">Pick a reward icon</string>
+    <string name="edit_reward_value_text">Assign a value</string>
 
 
 </resources>

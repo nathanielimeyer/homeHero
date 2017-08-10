@@ -38,4 +38,19 @@
         android:layout_marginBottom="16dp"
         app:srcCompat="@drawable/ic_add_a_photo_black_24dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:id="@+id/edit_value_label"
+        android:text="@string/edit_reward_value_text"/>
+
+    <Spinner
+        android:id="@+id/reward_value_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        />
+
 </LinearLayout>
