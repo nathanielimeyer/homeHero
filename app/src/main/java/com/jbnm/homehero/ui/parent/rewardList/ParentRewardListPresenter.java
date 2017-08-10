@@ -87,12 +87,7 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
     }
 
     @Override
-    public void addNewReward(String description, int value, String rewardImage) {
-//        Reward reward = Reward.newInstance(description, value, rewardImage);
-//        rewards.add(reward);
-//        mvpView.listRewards(rewards);
-
-    }
+    public void addRewardButtonClicked() { mvpView.addRewardIntent(child.getId()); }
 
     public void saveRewards(List<Reward> rewards) {
         Map<String, Reward> rewardMap = new HashMap<>();

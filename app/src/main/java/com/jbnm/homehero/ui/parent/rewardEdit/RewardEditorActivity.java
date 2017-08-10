@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -27,12 +29,9 @@ import butterknife.ButterKnife;
 public class RewardEditorActivity extends BaseActivity implements RewardEditorContract.MvpView {
     @BindView(R.id.edit_text_description) EditText descriptionEditText;
     @BindView(R.id.reward_image_view) ImageView reward_image_view;
-    @BindView(R.id.saveButton) Button saveButton;
-    @BindView(R.id.cancelButton) Button cancelButton;
 
     private Context context = this;
     ListAdapter adapter;
-
 
     private RewardEditorContract.Presenter presenter;
 
@@ -56,25 +55,31 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
         presenter = new RewardEditorPresenter(this);
         presenter.loadChildAndReward(childId, rewardId);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateRewardData();
-            }
-        });
         reward_image_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showIconPickerDialog();
             }
         });
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.cancelButtonClicked();
-            }
-        });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.reward_edit, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_reward_edit_save) {
+            presenter.saveChildData(descriptionEditText.getText().toString().trim());
+            return true;
+        } else if (item.getItemId() == R.id.menu_reward_edit_cancel) {
+            presenter.cancelButtonClicked();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -86,7 +91,7 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
     public void showIconPickerDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.icon_picker_title)
+        builder.setTitle(R.string.reward_icon_picker_title)
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

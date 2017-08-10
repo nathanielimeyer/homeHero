@@ -19,7 +19,7 @@ public class RewardEditorPresenter implements RewardEditorContract.Presenter {
     private DataManager dataManager = new DataManager();
 
     private RewardEditorContract.MvpView mvpView;
-    private List<String> icons = new ArrayList<>(Arrays.asList("goal_ball", "goal_beach", "goal_car", "goal_controller", "chore_vacuum"));
+    private List<String> icons = new ArrayList<>(Arrays.asList("goal_ball", "goal_beach", "goal_car", "goal_controller", "goal_dice", "goal_drums", "goal_gun", "goal_kite", "goal_legos"));
     private Child child;
     private List<Reward> rewards;
     private Reward rewardToEdit;
@@ -44,6 +44,7 @@ public class RewardEditorPresenter implements RewardEditorContract.Presenter {
                 .subscribeWith(new DisposableObserver<Child>() {
                     @Override public void onNext(Child childResult ) {
                         child = childResult;
+                        mvpView.parentRewardListIntent(child.getId());
                     }
                     @Override public void onError(Throwable e) { processError(e); }
                     @Override public void onComplete() {}

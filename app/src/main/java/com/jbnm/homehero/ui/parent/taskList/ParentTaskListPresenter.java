@@ -31,6 +31,7 @@ public class ParentTaskListPresenter implements ParentTaskListContract.Presenter
     private DataManager dataManager = new DataManager();
     private SharedPrefManager sharedPrefManager;
     private Child child;
+    private List<Task> tasks;
 
     public ParentTaskListPresenter(ParentTaskListContract.MvpView view, SharedPrefManager sharedPrefManager) {
         this.mvpView = view;
