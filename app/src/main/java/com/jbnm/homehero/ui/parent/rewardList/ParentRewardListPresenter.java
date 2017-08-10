@@ -108,4 +108,13 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
     public void handleBackButtonPressed() {
         mvpView.parentIntent(child.getId());
     }
+
+    @Override
+    public void checkAndNullCurrentReward(String rewardId) {
+        if(child.getCurrentRewardKey() != null) {
+            if(child.getCurrentRewardKey().equals(rewardId)) {
+                child.setCurrentRewardKey(null);
+            }
+        }
+    }
 }

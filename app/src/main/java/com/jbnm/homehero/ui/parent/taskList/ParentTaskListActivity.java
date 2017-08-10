@@ -119,6 +119,7 @@ public class ParentTaskListActivity extends BaseActivity implements ParentTaskLi
 
     @Override
     public void onDeleteTask(Task task) {
+        presenter.checkAndNullCurrentTask(task.getId());
         tasks.remove(task);
         presenter.saveTasks(tasks);
     }

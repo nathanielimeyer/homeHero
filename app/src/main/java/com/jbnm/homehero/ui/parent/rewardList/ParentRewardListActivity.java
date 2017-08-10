@@ -118,6 +118,7 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
 
     @Override
     public void onDeleteReward(Reward reward) {
+        presenter.checkAndNullCurrentReward(reward.getId());
         rewards.remove(reward);
         presenter.saveRewards(rewards);
     }
