@@ -21,6 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:hint="@string/add_a_step"
+        android:inputType="text"
+        android:lines="1"
+        android:maxLines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <ImageView
