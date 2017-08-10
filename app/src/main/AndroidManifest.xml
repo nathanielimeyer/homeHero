@@ -42,11 +42,15 @@
         </activity>
         <activity android:name=".ui.parent.rewardList.ParentRewardListActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".ui.parent.ParentActivity"/>
+                android:value=".ui.parent.ParentActivity"/>
         </activity>
         <activity android:name=".ui.taskEdit.TaskEditorActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value=".ui.parent.taskList.ParentTaskListActivity"/>
+        </activity>
+        <activity android:name=".ui.parent.rewardEdit.RewardEditorActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.parent.taskList.ParentTaskListActivity"/>
         </activity>
 
         <activity android:name=".ui.login.LoginActivity"
