@@ -20,10 +20,11 @@ public class Constants {
     public static final String GOAL_PROGRESS_TITLE = "Goal Progress";
     public static final String PARENT_TITLE = "Parent Interface";
     public static final String PARENT_TASK_LIST_TITLE = "Manage Tasks";
-    public static final String PARENT_GOAL_LIST_TITLE = "Manage Goals";
+    public static final String PARENT_REWARD_LIST_TITLE = "Manage Rewards";
     public static final String PARENT_TASK_EDIT_TITLE = "Edit Task";
     public static final String PARENT_TASK_NEW_TITLE = "New Task";
-    public static final String PARENT_GOAL_EDIT_TITLE = "Edit Goal";
+    public static final String PARENT_REWARD_EDIT_TITLE = "Edit Reward";
+    public static final String PARENT_REWARD_NEW_TITLE = "New Reward";
 
     public static final String DEFAULT_CHORE_ICON = "chore_broom";
 
