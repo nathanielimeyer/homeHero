@@ -32,7 +32,7 @@ public class Constants {
     public static final String PARENT_REWARD_NEW_TITLE = "New Reward";
 
     public static final String DEFAULT_CHORE_ICON = "chore_broom";
-
+    public static final String DEFAULT_REWARD_ICON = "goal_dice";
     // Temporary until auth is set up
     // used in base activity and main activity
     public static final String CHILDID = "-KqZYJOtnw-96-kxmWZC";
