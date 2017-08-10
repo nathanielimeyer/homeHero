@@ -49,11 +49,11 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
                 .subscribeWith(new DisposableObserver<Child>() {
                     @Override public void onNext(Child childResult ) {
                         child = childResult;
+                        mvpView.parentTaskListIntent(child.getId());
                     }
                     @Override public void onError(Throwable e) { processError(e); }
                     @Override public void onComplete() {}
                 }));
-        mvpView.parentTaskListIntent(child.getId());
     }
 
     @Override

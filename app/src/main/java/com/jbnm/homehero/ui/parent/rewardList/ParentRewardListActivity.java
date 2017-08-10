@@ -13,6 +13,8 @@ import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.ui.base.BaseActivity;
+import com.jbnm.homehero.ui.parent.ParentActivity;
+import com.jbnm.homehero.util.SharedPrefManager;
 //import com.jbnm.homehero.ui.rewardEdit.RewardEditorActivity;
 
 import java.util.List;
@@ -46,9 +48,9 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
         setContentView(R.layout.activity_parent_reward_list);
         ButterKnife.bind(this);
 
-        childId = getIntent().getStringExtra("childId");
+        childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
 
-        presenter = new ParentRewardListPresenter(this);
+        presenter = new ParentRewardListPresenter(this, SharedPrefManager.getInstance(this));
         presenter.loadRewards(childId);
 
         addRewardButton.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +66,17 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        presenter.handleBackButtonPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detach();
     }
 
     @Override
@@ -86,6 +99,12 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
     @Override
     public void onEditReward(String rewardId) {
 //        startActivity(RewardEditorActivity.createIntent(this, childId, rewardId));
+    }
+
+    @Override
+    public void parentIntent(String childId) {
+        startActivity(ParentActivity.createIntent(this, childId));
+        finish();
     }
 
     @Override
