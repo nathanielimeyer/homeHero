@@ -50,4 +50,15 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true" />
 
+    <TextView
+        android:id="@+id/noTaskAvailableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:text="@string/goal_progress_no_tasks_available"/>
+
 </RelativeLayout>

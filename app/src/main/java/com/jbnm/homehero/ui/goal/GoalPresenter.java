@@ -122,8 +122,10 @@ public class GoalPresenter implements GoalContract.Presenter {
     public void determineTaskButtonStatus() {
         if (child.allTasksCompleted()) {
             mvpView.hideTaskButton();
+            mvpView.showNoTasksAvailable();
         } else {
             mvpView.showTaskButton();
+            mvpView.hideNoTasksAvailable();
         }
 
         if (child.currentTask() == null) {
