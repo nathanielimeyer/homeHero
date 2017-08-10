@@ -168,4 +168,9 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
         startActivity(ParentRewardListActivity.createIntent(this, childId));
         finish();
     }
+
+    @Override
+    public void showDescriptionError() {
+        descriptionEditText.setError(getString(R.string.reward_edit_description_error));
+    }
 }

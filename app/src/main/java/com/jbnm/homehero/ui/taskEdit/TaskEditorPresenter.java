@@ -41,19 +41,33 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
     @Override
 //    public void saveChildData(String description, String icon, List<String> instructions) {
     public void saveChildData(String description) {
-        taskToEdit.setDescription(description);
-//        taskToEdit.setIcon(icon);
-//        taskToEdit.setInstructions(instructions);
-        disposable.add(dataManager.updateChild(child)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<Child>() {
-                    @Override public void onNext(Child childResult ) {
-                        child = childResult;
-                        mvpView.parentTaskListIntent(child.getId());
-                    }
-                    @Override public void onError(Throwable e) { processError(e); }
-                    @Override public void onComplete() {}
-                }));
+        boolean validDescription = validateDescription(description);
+
+        if (validDescription) {
+            taskToEdit.setDescription(description);
+            if (taskToEdit.getIcon().isEmpty()) {
+                taskToEdit.setIcon(Constants.DEFAULT_CHORE_ICON);
+            }
+            taskToEdit.getInstructions().remove("");
+            disposable.add(dataManager.updateChild(child)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableObserver<Child>() {
+                        @Override
+                        public void onNext(Child childResult) {
+                            child = childResult;
+                            mvpView.parentTaskListIntent(child.getId());
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            processError(e);
+                        }
+
+                        @Override
+                        public void onComplete() {
+                        }
+                    }));
+        }
     }
 
     @Override
@@ -131,5 +145,14 @@ public class TaskEditorPresenter implements TaskEditorContract.Presenter {
         mvpView.setInstructions(instructions);
 
         mvpView.hideLoading();
+    }
+
+    private boolean validateDescription(String description) {
+        if (description.isEmpty()) {
+            mvpView.showDescriptionError();
+            return false;
+        } else {
+            return true;
+        }
     }
 }

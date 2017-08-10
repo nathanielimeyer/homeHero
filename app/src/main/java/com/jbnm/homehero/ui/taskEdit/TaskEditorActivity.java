@@ -34,6 +34,7 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
     @BindView(R.id.task_image_view) ImageView task_image_view;
     @BindView(R.id.taskInstructionsRecyclerView) RecyclerView taskInstructionsRecyclerView;
     @BindView(R.id.addStepsButton) FloatingActionButton addStepsButton;
+    @BindView(R.id.edit_image_label) TextView editImageTextView;
 
     private Context context = this;
     ListAdapter adapter;
@@ -187,5 +188,10 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
     public void parentTaskListIntent(String childId) {
         startActivity(ParentTaskListActivity.createIntent(this, childId));
         finish();
+    }
+
+    @Override
+    public void showDescriptionError() {
+        descriptionEditText.setError(getString(R.string.task_edit_description_error));
     }
 }
