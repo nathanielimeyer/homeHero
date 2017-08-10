@@ -20,6 +20,7 @@ public class ParentTaskListContract {
         }
     interface MvpView extends BaseMvpView {
         void listTasks(List<Task> tasks);
+        void setAddTaskButtonEnabled(boolean enabled);
         void addTaskIntent(String childId);
         void parentIntent(String childId);
     }
