@@ -23,5 +23,6 @@ public class RewardEditorContract {
         void buildIconPickerDialog();
         void parentRewardListIntent(String childId);
         void setValue(int value);
+        void showDescriptionError();
     }
 }
