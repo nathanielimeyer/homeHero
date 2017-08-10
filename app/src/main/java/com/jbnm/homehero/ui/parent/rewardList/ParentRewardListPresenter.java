@@ -26,6 +26,7 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
     private DataManager dataManager = new DataManager();
     private SharedPrefManager sharedPrefManager;
     private Child child;
+    private List<Reward> rewards;
 
     public ParentRewardListPresenter(ParentRewardListContract.MvpView view, SharedPrefManager sharedPrefManager) {
         this.mvpView = view;
@@ -63,8 +64,8 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
 
     private void processResult(Child child) {
         updateSharedPrefs(child);
-        List<Reward> items = new ArrayList<>(child.getRewards().values());
-        mvpView.listRewards(items);
+        rewards = new ArrayList<>(child.getRewards().values());
+        mvpView.listRewards(rewards);
         mvpView.hideLoading();
     }
 
@@ -86,9 +87,7 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
     }
 
     @Override
-    public void addRewardButtonClicked() {
-        mvpView.addRewardIntent(child.getId());
-    }
+    public void addRewardButtonClicked() { mvpView.addRewardIntent(child.getId()); }
 
     public void saveRewards(List<Reward> rewards) {
         Map<String, Reward> rewardMap = new HashMap<>();
