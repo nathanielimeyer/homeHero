@@ -29,6 +29,8 @@
         android:text="@string/goal_progress_label"/>
 
     <com.hookedonplay.decoviewlib.DecoView
+        android:layout_below="@id/goalProgressLabel"
+        android:layout_above="@id/taskButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/dynamicArcView"
@@ -38,10 +40,13 @@
         android:id="@+id/imageView"
         android:layout_width="250dp"
         android:layout_height="250dp"
+        android:layout_alignBottom="@id/dynamicArcView"
+        android:layout_alignTop="@id/dynamicArcView"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:srcCompat="@drawable/camping"
-        android:visibility="visible"/>
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        app:srcCompat="@drawable/camping"/>
 
     <Button
         android:id="@+id/taskButton"
