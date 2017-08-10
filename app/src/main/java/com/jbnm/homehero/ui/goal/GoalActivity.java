@@ -51,6 +51,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @BindView(R.id.taskButton) Button taskButton;
     @BindView(R.id.goalDescriptionTextView) TextView goalDescriptionTextView;
     @BindView(R.id.goalProgressLabel) TextView goalProgressLabel;
+    @BindView(R.id.noTaskAvailableTextView) TextView noTasksAvailableTextView;
     public GoalPresenter presenter;
     private Context context = this;
     ListAdapter adapter;
@@ -213,6 +214,16 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @Override
     public void showTaskButton() {
         taskButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideNoTasksAvailable() {
+        noTasksAvailableTextView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showNoTasksAvailable() {
+        noTasksAvailableTextView.setVisibility(View.VISIBLE);
     }
 
     @Override

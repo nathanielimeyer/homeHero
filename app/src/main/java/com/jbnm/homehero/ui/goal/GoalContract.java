@@ -26,6 +26,8 @@ public class GoalContract {
         void showRewardAnimation();
         void hideTaskButton();
         void showTaskButton();
+        void hideNoTasksAvailable();
+        void showNoTasksAvailable();
         void setTaskButtonText(String buttonText);
         void taskPickerIntent(String childId);
         void taskProgressIntent(String childId);
