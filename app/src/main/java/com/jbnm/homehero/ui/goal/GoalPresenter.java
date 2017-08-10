@@ -96,6 +96,7 @@ public class GoalPresenter implements GoalContract.Presenter {
             mvpView.setGoalDescription(child.currentReward().getDescription());
             mvpView.setGoalImage(child.currentReward().getRewardImage());
             checkProgress();
+            mvpView.setGoalProgressLabel(child.currentReward().getValue() - child.getTotalPoints());
         }
     }
     @Override

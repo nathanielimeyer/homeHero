@@ -19,6 +19,15 @@
         android:textSize="32sp"
         android:textStyle="bold"/>
 
+    <TextView
+        android:id="@+id/goalProgressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goalDescriptionTextView"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:text="@string/goal_progress_label"/>
+
     <com.hookedonplay.decoviewlib.DecoView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
