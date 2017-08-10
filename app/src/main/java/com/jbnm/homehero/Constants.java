@@ -9,6 +9,8 @@ public class Constants {
 
     public static final String TASK_INTENT_KEY = "taskId";
     public static final String TASK_NEW_INTENT_VALUE = "newTask";
+    public static final String REWARD_NEW_INTENT_VALUE = "newReward";
+    public static final String REWARD_INTENT_KEY = "rewardId";
     public static final String CHILD_INTENT_KEY = "childId";
     public static final int MIN_TASK_COUNT = 2;
     public static final int MAX_TASK_COUNT = 10;
@@ -34,5 +36,4 @@ public class Constants {
     // Temporary until auth is set up
     // used in base activity and main activity
     public static final String CHILDID = "-KqZYJOtnw-96-kxmWZC";
-    public static final String TASKID = "-KqZYJOwRbM9qX7I__ns";
 }
