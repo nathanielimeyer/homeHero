@@ -51,6 +51,9 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
         String childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
         String rewardId = getIntent().getStringExtra(Constants.REWARD_INTENT_KEY);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
+        }
 
         presenter = new RewardEditorPresenter(this);
         presenter.loadChildAndReward(childId, rewardId);
@@ -74,9 +77,6 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_reward_edit_save) {
             presenter.saveChildData(descriptionEditText.getText().toString().trim());
-            return true;
-        } else if (item.getItemId() == R.id.menu_reward_edit_cancel) {
-            presenter.cancelButtonClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
