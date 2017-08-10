@@ -14,7 +14,7 @@ public class ParentRewardListContract {
     interface Presenter extends BasePresenter {
         void loadRewards(String childId);
         void saveChild();
-        void addRewardButtonClicked();
+        void addNewReward(String description, int value, String rewardImage);
         void saveRewards(List<Reward> rewards);
         }
     interface MvpView extends BaseMvpView {

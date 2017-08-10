@@ -23,6 +23,7 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
     private CompositeDisposable disposable = new CompositeDisposable();
     private DataManager dataManager = new DataManager();
     private Child child;
+    private List<Reward> rewards;
 
     public ParentRewardListPresenter(ParentRewardListContract.MvpView view) { this.mvpView = view; }
 
@@ -55,8 +56,8 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
     }
 
     private void processResult(Child child) {
-        List<Reward> items = new ArrayList<>(child.getRewards().values());
-        mvpView.listRewards(items);
+        rewards = new ArrayList<>(child.getRewards().values());
+        mvpView.listRewards(rewards);
         mvpView.hideLoading();
     }
 
@@ -73,8 +74,11 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
     }
 
     @Override
-    public void addRewardButtonClicked() {
-        mvpView.addRewardIntent(child.getId());
+    public void addNewReward(String description, int value, String rewardImage) {
+//        Reward reward = Reward.newInstance(description, value, rewardImage);
+//        rewards.add(reward);
+//        mvpView.listRewards(rewards);
+
     }
 
     public void saveRewards(List<Reward> rewards) {

@@ -13,6 +13,7 @@ import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.ui.base.BaseActivity;
+import com.jbnm.homehero.ui.parent.rewardEdit.RewardEditorActivity;
 //import com.jbnm.homehero.ui.rewardEdit.RewardEditorActivity;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
         addRewardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.addRewardButtonClicked();
+                showAddRewardDialog();
             }
         });
 
@@ -64,6 +65,10 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
 
             }
         });
+    }
+
+    private void showAddRewardDialog() {
+
     }
 
     @Override
@@ -80,12 +85,12 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
 
     @Override
     public void addRewardIntent(String childId) {
-//        startActivity(RewardEditorActivity.createIntent(this, childId, "newReward"));
+        startActivity(RewardEditorActivity.createIntent(this, childId, Constants.REWARD_NEW_INTENT_VALUE));
     }
 
     @Override
     public void onEditReward(String rewardId) {
-//        startActivity(RewardEditorActivity.createIntent(this, childId, rewardId));
+        startActivity(RewardEditorActivity.createIntent(this, childId, rewardId));
     }
 
     @Override
