@@ -75,7 +75,14 @@ public class ParentTaskListPresenter implements ParentTaskListContract.Presenter
     }
 
     private void updateSharedPrefs(Child child) {
-        sharedPrefManager.setTasksCreated(child.getTasks().keySet().size() >= Constants.MIN_TASK_COUNT);
+        int taskCount = child.getTasks().keySet().size();
+        mvpView.setAddTaskButtonEnabled(taskCount < Constants.MAX_TASK_COUNT);
+
+        if (taskCount < Constants.MIN_TASK_COUNT) {
+            mvpView.showError(String.format("You need to add at least %d tasks", Constants.MIN_TASK_COUNT));
+        }
+
+        sharedPrefManager.setTasksCreated(taskCount >= Constants.MIN_TASK_COUNT);
         sharedPrefManager.setGoalsCreated(child.getRewards().keySet().size() >= Constants.MIN_REWARD_COUNT);
     }
 

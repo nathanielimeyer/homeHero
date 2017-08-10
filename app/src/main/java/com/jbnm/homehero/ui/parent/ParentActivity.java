@@ -97,8 +97,7 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
 
     @Override
     public void rewardListIntent(String childId) {
-//        startActivity(ParentRewardListActivity.createIntent(this, childId));
-        Log.d("test", "goalList");
+        startActivity(ParentRewardListActivity.createIntent(this, childId));
     }
 
     @Override

@@ -62,7 +62,7 @@ public class ParentTaskListActivity extends BaseActivity implements ParentTaskLi
 
         taskListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-               if (newState == RecyclerView.SCROLL_INDICATOR_TOP) {
+               if (newState == RecyclerView.SCROLL_INDICATOR_TOP && addTaskButton.isEnabled()) {
                     addTaskButton.show();
                 }
                 super.onScrollStateChanged(recyclerView, newState);
@@ -71,7 +71,7 @@ public class ParentTaskListActivity extends BaseActivity implements ParentTaskLi
             @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0 && addTaskButton.isShown()) {
                     addTaskButton.hide();
-                } else if (dy < 0 && !addTaskButton.isShown()) {
+                } else if (dy < 0 && !addTaskButton.isShown() && addTaskButton.isEnabled()) {
                     addTaskButton.show();
                 }
             }
@@ -121,5 +121,15 @@ public class ParentTaskListActivity extends BaseActivity implements ParentTaskLi
     public void onDeleteTask(Task task) {
         tasks.remove(task);
         presenter.saveTasks(tasks);
+    }
+
+    @Override
+    public void setAddTaskButtonEnabled(boolean enabled) {
+        addTaskButton.setEnabled(enabled);
+        if (enabled) {
+            addTaskButton.setVisibility(View.VISIBLE);
+        } else {
+            addTaskButton.setVisibility(View.GONE);
+        }
     }
 }
