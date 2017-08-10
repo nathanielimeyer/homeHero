@@ -19,6 +19,7 @@ import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.goal.GoalActivity;
 import com.jbnm.homehero.ui.login.LoginActivity;
+import com.jbnm.homehero.ui.parent.rewardList.ParentRewardListActivity;
 import com.jbnm.homehero.ui.parent.settings.SettingsFragment;
 import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 import com.jbnm.homehero.ui.parent.taskreview.TaskReviewFragment;
@@ -95,7 +96,8 @@ public class ParentActivity extends BaseActivity implements ParentContract.MvpVi
     }
 
     @Override
-    public void goalListIntent(String childId) {
+    public void rewardListIntent(String childId) {
+//        startActivity(ParentRewardListActivity.createIntent(this, childId));
         Log.d("test", "goalList");
     }
 
