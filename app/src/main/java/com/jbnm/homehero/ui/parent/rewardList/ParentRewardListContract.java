@@ -17,7 +17,8 @@ public class ParentRewardListContract {
         void addRewardButtonClicked();
         void saveRewards(List<Reward> rewards);
         void handleBackButtonPressed();
-        }
+        void checkAndNullCurrentReward(String rewardId);
+    }
     interface MvpView extends BaseMvpView {
         void listRewards(List<Reward> rewards);
         void setAddRewardButtonEnabled(boolean enabled);
