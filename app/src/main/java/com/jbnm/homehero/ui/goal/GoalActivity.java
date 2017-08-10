@@ -115,7 +115,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
 
                 //Put the image on the TextView
 
-                tv.setCompoundDrawablesWithIntrinsicBounds(dialogItems[position].image, 0, 0, 0);
+                tv.setCompoundDrawablesWithIntrinsicBounds(getResources().getIdentifier(dialogItems[position].image, "drawable", getPackageName()), 0, 0, 0);
 
 //               setCompoundDrawablesWithIntrinsicBounds Change dialogItems image type to String in presenter if you use this
 //                tv.setCompoundDrawablesWithIntrinsicBounds((getResources().getIdentifier(dialogItems[position].image, "drawable", getPackageName())), 0, 0, 0);
@@ -202,8 +202,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         presenter.setNewRewardAndDecrementPoints(i);
                     }
-                });
-        builder.create().show();
+                }).setCancelable(false).create().show();
     }
 
     @Override

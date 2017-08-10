@@ -51,28 +51,28 @@
     <RelativeLayout
         android:id="@+id/buttonSection"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/taskButton"
             style="@style/buttonWide"
-            android:text="@string/taskButtonText"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentBottom="true" />
+            android:text="@string/taskButtonText"/>
 
         <TextView
             android:id="@+id/noTaskAvailableTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="32dp"
+            android:text="@string/goal_progress_no_tasks_available"
             android:textAlignment="center"
-            android:textSize="16sp"
-            android:text="@string/goal_progress_no_tasks_available"/>
+            android:textSize="16sp"/>
     </RelativeLayout>
 
 

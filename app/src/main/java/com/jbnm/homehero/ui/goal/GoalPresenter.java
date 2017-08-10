@@ -39,8 +39,8 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     public static class DialogItem{
         public final String text;
-        public final int image;
-        public DialogItem(String text, int image) {
+        public final String image;
+        public DialogItem(String text, String image) {
             this.text = text;
             this.image = image;
         }
@@ -86,13 +86,13 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     @Override
     public void populateAllTheThings() {
-        mvpView.hideLoading();
         rewards = new ArrayList(child.getRewards().values());
         mvpView.buildGoalPickerDialog();
         determineTaskButtonStatus();
         if (child.getCurrentRewardKey() == null) {
             mvpView.showGoalPickerDialog();
         } else {
+            mvpView.hideLoading();
             mvpView.setGoalDescription(child.currentReward().getDescription());
             mvpView.setGoalImage(child.currentReward().getRewardImage());
             checkProgress();
@@ -161,8 +161,8 @@ public class GoalPresenter implements GoalContract.Presenter {
 
         for (Reward reward : rewards) {
             Log.d(TAG, "Description = " + reward.getDescription());
-//            dialogItems.add(new DialogItem(reward.getDescription() + ": " + reward.getValue() + " pts.", reward.getRewardImage()));
-            dialogItems.add(new DialogItem(reward.getDescription() + ": " + reward.getValue() + " pts.", android.R.drawable.ic_menu_add));
+            dialogItems.add(new DialogItem(reward.getDescription() + ": " + reward.getValue() + " pts.", reward.getRewardImage()));
+//            dialogItems.add(new DialogItem(reward.getDescription() + ": " + reward.getValue() + " pts.", android.R.drawable.ic_menu_add));
         }
 
         return dialogItems;
