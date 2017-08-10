@@ -48,6 +48,10 @@
     <string name="task_edit_menu_save">Save</string>
     <string name="task_edit_menu_close">Cancel</string>
 
+    <!--Reward Edit-->
+    <string name="reward_edit_menu_save">Save</string>
+    <string name="reward_edit_menu_close">Cancel</string>
+
     <string name="save_changes">Done</string>
     <string name="cancel_changes">Cancel</string>
     <string name="delete_step">X</string>
@@ -56,11 +60,18 @@
     <string name="add_a_step">Add a step</string>
     <string name="icon_picker_title">Pick a task icon</string>
     <string name="task_description">Task Description</string>
+    <string name="reward_description">Reward Description</string>
     <string name="task_editor_screen_title">Add or Edit a Task</string>
     <string name="edit_task_image_text">Click to change image</string>
+    <string name="edit_reward_image_text">Click to change image</string>
     <string name="manage_tasks_title">Manage Tasks</string>
     <string name="add_task">Add Task</string>
     <string name="back_to_settings_button_text">Back</string>
+    <string name="reward_description_hint">Enter a reward name</string>
+    <string name="reward_value_hint">Enter points for this reward</string>
+    <string name="new_reward_dialog_title">Add a reward</string>
+    <string name="reward_editor_screen_title">Add new reward</string>
+    <string name="reward_icon_picker_title">Pick a reward icon</string>
 
 
 </resources>

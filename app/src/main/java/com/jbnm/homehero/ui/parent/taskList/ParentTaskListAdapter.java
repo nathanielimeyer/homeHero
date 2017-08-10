@@ -67,11 +67,9 @@ class ParentTaskListAdapter extends RecyclerView.Adapter<ParentTaskListAdapter.P
 
         private Task task;
 
-
         public ParentTaskListViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
-
             ButterKnife.bind(this, itemView);
         }
 

@@ -1,39 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rewardListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:paddingBottom="30dp"/>
 
-        <TextView
-            android:id="@+id/manageRewardsTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:text="Manage Rewards" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addRewardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:padding="4dp"
+        app:srcCompat="@drawable/ic_add_white_24dp"/>
 
-        <Button
-            android:id="@+id/addRewardButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Reward"/>
-
-        <Button
-            android:id="@+id/buttonBackToSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/back_to_settings_button_text"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rewardListRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

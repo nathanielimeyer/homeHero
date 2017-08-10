@@ -3,19 +3,19 @@ package com.jbnm.homehero.ui.parent.rewardList;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 
 import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.ui.base.BaseActivity;
+import com.jbnm.homehero.ui.parent.rewardEdit.RewardEditorActivity;
 import com.jbnm.homehero.ui.parent.ParentActivity;
 import com.jbnm.homehero.util.SharedPrefManager;
-//import com.jbnm.homehero.ui.rewardEdit.RewardEditorActivity;
 
 import java.util.List;
 
@@ -28,8 +28,7 @@ import butterknife.ButterKnife;
 
 public class ParentRewardListActivity extends BaseActivity implements ParentRewardListContract.MvpView, ParentRewardClickListener {
     @BindView(R.id.rewardListRecyclerView) RecyclerView rewardListRecyclerView;
-    @BindView(R.id.addRewardButton) Button addRewardButton;
-    @BindView(R.id.buttonBackToSettings) Button backButton;
+    @BindView(R.id.addRewardButton) FloatingActionButton addRewardButton;
 
     List<Reward> rewards;
     String childId;
@@ -60,10 +59,20 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
             }
         });
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        rewardListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_INDICATOR_TOP) {
+                    addRewardButton.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
 
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && addRewardButton.isShown()) {
+                    addRewardButton.hide();
+                } else if (dy < 0 && !addRewardButton.isShown()) {
+                    addRewardButton.show();
+                }
             }
         });
     }
@@ -93,12 +102,12 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
 
     @Override
     public void addRewardIntent(String childId) {
-//        startActivity(RewardEditorActivity.createIntent(this, childId, "newReward"));
+        startActivity(RewardEditorActivity.createIntent(this, childId, Constants.REWARD_NEW_INTENT_VALUE));
     }
 
     @Override
     public void onEditReward(String rewardId) {
-//        startActivity(RewardEditorActivity.createIntent(this, childId, rewardId));
+        startActivity(RewardEditorActivity.createIntent(this, childId, rewardId));
     }
 
     @Override

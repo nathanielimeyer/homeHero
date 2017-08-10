@@ -27,6 +27,7 @@ import butterknife.OnClick;
 class ParentRewardListAdapter extends RecyclerView.Adapter<ParentRewardListAdapter.ParentRewardListViewHolder> {
     private List<Reward> rewards = new ArrayList<>();
     private ParentRewardClickListener parentRewardClickListener;
+    private Context context;
 
     public ParentRewardListAdapter(List<Reward> rewards) {
         this.rewards = rewards;
@@ -41,7 +42,7 @@ class ParentRewardListAdapter extends RecyclerView.Adapter<ParentRewardListAdapt
 
     @Override
     public void onBindViewHolder(ParentRewardListViewHolder holder, int position) {
-        holder.bindReward((Reward) rewards.get(position), position);
+        holder.bindReward(rewards.get(position), position);
     }
 
     @Override
@@ -63,7 +64,6 @@ class ParentRewardListAdapter extends RecyclerView.Adapter<ParentRewardListAdapt
         @BindView(R.id.rewardDeleteButton)
         ImageButton rewardDeleteButton;
 
-        private Context context;
         private Reward reward;
 
         public ParentRewardListViewHolder(View itemView) {
@@ -74,7 +74,9 @@ class ParentRewardListAdapter extends RecyclerView.Adapter<ParentRewardListAdapt
 
         public void bindReward(Reward reward, int position) {
             this.reward = reward;
-            rewardImage.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
+            if (reward.getRewardImage() != null && !reward.getRewardImage().equals("")) {
+                rewardImage.setImageResource(context.getResources().getIdentifier(reward.getRewardImage(), "drawable", context.getPackageName()));
+            }
             rewardDescriptionTextView.setText(reward.getDescription());
             rewardEditButton.setVisibility(View.VISIBLE);
         }
