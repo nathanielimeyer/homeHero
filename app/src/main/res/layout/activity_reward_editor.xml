@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/rewardEditorTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/reward_editor_screen_title"
+            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+            app:layout_constraintTop_toBottomOf="@+id/rewardCompleteButton"/>
+
+        <TextView
+            android:id="@+id/rewardDescriptionLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/reward_description"
+            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
+            app:layout_constraintTop_toBottomOf="@+id/rewardCompleteButton"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_text_description"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_image_label"
+            android:text="@string/edit_reward_image_text"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reward_image_view"
+            app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_changes"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_changes"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true" />
+
+    </LinearLayout>
+</RelativeLayout>
