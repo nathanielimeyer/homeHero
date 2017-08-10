@@ -38,12 +38,10 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
     private Context context = this;
     ListAdapter adapter;
 
-
     private TaskEditorContract.Presenter presenter;
 
     public static Intent createIntent(Context context, String childId, String taskId) {
         Intent intent = new Intent(context, TaskEditorActivity.class);
-
         intent.putExtra(Constants.CHILD_INTENT_KEY, childId);
         intent.putExtra(Constants.TASK_INTENT_KEY, taskId);
         return intent;

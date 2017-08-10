@@ -11,14 +11,11 @@ import java.util.List;
 
 public class TaskEditorContract {
     interface Presenter extends BasePresenter {
-//        void saveChildData(String description, String icon, List<String> instructions);
         void saveChildData(String description);
         void loadChildAndTask(String childId, String taskId);
         void addStepsButtonClicked();
         void setTaskIcon(int i);
-
         List<String> getIconList();
-
         void cancelButtonClicked();
     }
     interface MvpView extends BaseMvpView {
@@ -27,6 +24,5 @@ public class TaskEditorContract {
         void setInstructions(List<String> instructions);
         void buildIconPickerDialog();
         void parentTaskListIntent(String childId);
-
-        }
+    }
 }

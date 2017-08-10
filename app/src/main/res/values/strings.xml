@@ -48,6 +48,10 @@
     <string name="task_edit_menu_save">Save</string>
     <string name="task_edit_menu_close">Cancel</string>
 
+    <!--Reward Edit-->
+    <string name="reward_edit_menu_save">Save</string>
+    <string name="reward_edit_menu_close">Cancel</string>
+
     <string name="save_changes">Done</string>
     <string name="cancel_changes">Cancel</string>
     <string name="delete_step">X</string>
@@ -67,6 +71,7 @@
     <string name="reward_value_hint">Enter points for this reward</string>
     <string name="new_reward_dialog_title">Add a reward</string>
     <string name="reward_editor_screen_title">Add new reward</string>
+    <string name="reward_icon_picker_title">Pick a reward icon</string>
 
 
 </resources>
