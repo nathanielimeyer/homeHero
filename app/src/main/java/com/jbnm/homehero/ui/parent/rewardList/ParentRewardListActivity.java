@@ -28,7 +28,6 @@ import butterknife.ButterKnife;
 public class ParentRewardListActivity extends BaseActivity implements ParentRewardListContract.MvpView, ParentRewardClickListener {
     @BindView(R.id.rewardListRecyclerView) RecyclerView rewardListRecyclerView;
     @BindView(R.id.addRewardButton) Button addRewardButton;
-    @BindView(R.id.buttonBackToSettings) Button backButton;
 
     List<Reward> rewards;
     String childId;
@@ -55,20 +54,9 @@ public class ParentRewardListActivity extends BaseActivity implements ParentRewa
         addRewardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAddRewardDialog();
+                addRewardIntent(childId);
             }
         });
-
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-    }
-
-    private void showAddRewardDialog() {
-
     }
 
     @Override
