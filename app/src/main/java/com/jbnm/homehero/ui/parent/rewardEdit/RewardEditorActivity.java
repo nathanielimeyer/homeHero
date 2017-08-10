@@ -52,7 +52,7 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
 
         String childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
         String rewardId = getIntent().getStringExtra(Constants.REWARD_INTENT_KEY);
-        
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
         }
