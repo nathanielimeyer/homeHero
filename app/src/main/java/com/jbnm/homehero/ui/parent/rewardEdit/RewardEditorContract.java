@@ -11,7 +11,7 @@ import java.util.List;
 
 public class RewardEditorContract {
     interface Presenter extends BasePresenter {
-        void saveChildData(String description);
+        void saveChildData(String description, int value);
         void loadChildAndReward(String childId, String rewardId);
         void setRewardIcon(int i);
         List<String> getIconList();
@@ -22,5 +22,6 @@ public class RewardEditorContract {
         void loadIcon(String icon);
         void buildIconPickerDialog();
         void parentRewardListIntent(String childId);
+        void setValue(int value);
     }
 }
