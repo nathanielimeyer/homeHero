@@ -74,7 +74,9 @@ class ParentRewardListAdapter extends RecyclerView.Adapter<ParentRewardListAdapt
 
         public void bindReward(Reward reward, int position) {
             this.reward = reward;
-            rewardImage.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
+            if (reward.getRewardImage() != null && !reward.getRewardImage().equals("")) {
+                rewardImage.setImageResource(context.getResources().getIdentifier(reward.getRewardImage(), "drawable", context.getPackageName()));
+            }
             rewardDescriptionTextView.setText(reward.getDescription());
             rewardEditButton.setVisibility(View.VISIBLE);
         }
