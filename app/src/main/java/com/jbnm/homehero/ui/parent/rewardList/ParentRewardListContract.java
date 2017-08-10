@@ -16,9 +16,11 @@ public class ParentRewardListContract {
         void saveChild();
         void addRewardButtonClicked();
         void saveRewards(List<Reward> rewards);
+        void handleBackButtonPressed();
         }
     interface MvpView extends BaseMvpView {
         void listRewards(List<Reward> rewards);
         void addRewardIntent(String childId);
+        void parentIntent(String childId);
     }
 }

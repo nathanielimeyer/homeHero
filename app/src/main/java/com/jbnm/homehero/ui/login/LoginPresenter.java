@@ -142,8 +142,8 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     private void determineUserStatus(Child child) {
         mvpView.hideLoading();
-        sharedPrefManager.setTasksCreated(child.getTasks().keySet().size() > Constants.MIN_TASK_COUNT);
-        sharedPrefManager.setGoalsCreated(child.getRewards().keySet().size() > Constants.MIN_REWARD_COUNT);
+        sharedPrefManager.setTasksCreated(child.getTasks().keySet().size() >= Constants.MIN_TASK_COUNT);
+        sharedPrefManager.setGoalsCreated(child.getRewards().keySet().size() >= Constants.MIN_REWARD_COUNT);
         if (sharedPrefManager.getTasksCreated() && sharedPrefManager.getGoalsCreated()) {
             mvpView.goalProgressIntent(child.getId());
         } else {

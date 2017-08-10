@@ -1,93 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/taskEditorTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/task_editor_screen_title"
-            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
-            app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
-
-        <TextView
-            android:id="@+id/taskDescriptionLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/task_description"
-            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
-            app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="@string/task_description">
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/edit_text_description"
-            android:inputType="text" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_image_label"
-            android:text="@string/edit_task_image_text"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:id="@+id/edit_image_label"
+        android:text="@string/edit_task_image_text"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/task_image_view"
-            app:srcCompat="@drawable/ic_add_a_photo_black_24dp" />
+    <ImageView
+        android:id="@+id/task_image_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/ic_add_a_photo_black_24dp"/>
 
-        <TextView
-            android:id="@+id/taskInstructionsLabelTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/task_instructions_label"
-            app:layout_constraintStart_toStartOf="@+id/contentLeftMarginKeyLIne"
-            app:layout_constraintTop_toBottomOf="@+id/taskCompleteButton"/>
+    <TextView
+        android:id="@+id/taskInstructionsLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/task_instructions_label"/>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/taskInstructionsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:paddingBottom="30dp"/>
 
-        <Button
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/addStepsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_a_step"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true" />
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:padding="4dp"
+            app:layout_anchor="@id/taskInstructionsRecyclerView"
+            app:layout_anchorGravity="bottom|right|end"
+            app:srcCompat="@drawable/ic_add_white_24dp"/>
 
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save_changes"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true" />
-
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel_changes"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true" />
-
-    </LinearLayout>
-</RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
