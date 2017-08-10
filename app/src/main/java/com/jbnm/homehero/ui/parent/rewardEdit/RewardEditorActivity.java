@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.jbnm.homehero.Constants;
@@ -29,9 +30,10 @@ import butterknife.ButterKnife;
 public class RewardEditorActivity extends BaseActivity implements RewardEditorContract.MvpView {
     @BindView(R.id.edit_text_description) EditText descriptionEditText;
     @BindView(R.id.reward_image_view) ImageView reward_image_view;
+    @BindView(R.id.reward_value_spinner) Spinner valueSpinner;
 
     private Context context = this;
-    ListAdapter adapter;
+    ListAdapter iconAdapter;
 
     private RewardEditorContract.Presenter presenter;
 
@@ -50,10 +52,11 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
 
         String childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
         String rewardId = getIntent().getStringExtra(Constants.REWARD_INTENT_KEY);
-
+        
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
         }
+        setSpinner();
 
         presenter = new RewardEditorPresenter(this);
         presenter.loadChildAndReward(childId, rewardId);
@@ -76,7 +79,7 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_reward_edit_save) {
-            presenter.saveChildData(descriptionEditText.getText().toString().trim());
+            presenter.saveChildData(descriptionEditText.getText().toString().trim(), (Integer)valueSpinner.getSelectedItem());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -89,10 +92,9 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
     }
 
     public void showIconPickerDialog() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.reward_icon_picker_title)
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
+                .setAdapter(iconAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         presenter.setRewardIcon(i);
@@ -107,7 +109,7 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
         final String[] dialogItems = new String[dialogItemList.size()];
         dialogItemList.toArray(dialogItems);
 
-        adapter = new ArrayAdapter<String>(
+        iconAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.select_dialog_item,
                 android.R.id.text1,
@@ -130,17 +132,29 @@ public class RewardEditorActivity extends BaseActivity implements RewardEditorCo
         };
     }
 
-    public void updateRewardData() {
-        String description = descriptionEditText.getText().toString().trim();
-        presenter.saveChildData(description);
-    }
-
     @Override
     public void setDescription(String description) {
         if (description != null && !description.isEmpty()) {
             descriptionEditText.setText(description);
+        }
+    }
+
+    private void setSpinner() {
+        Integer[] spinnerValues = new Integer[100];
+        for(int i = 0; i < spinnerValues.length; i++) {
+            spinnerValues[i] = i + 1;
+        }
+        ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item, spinnerValues);
+        valueSpinner.setAdapter(spinnerAdapter);
+    }
+
+    @Override
+    public void setValue(int value) {
+        if (value != 0) {
+            valueSpinner.setSelection(value-1);
         } else {
-            descriptionEditText.setHint("Tap to edit");
+            valueSpinner.setSelection(0);
         }
     }
 

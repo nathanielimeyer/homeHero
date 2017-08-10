@@ -34,9 +34,9 @@ public class RewardEditorPresenter implements RewardEditorContract.Presenter {
     }
 
     @Override
-//    public void saveChildData(String description, String icon, List<String> instructions) {
-    public void saveChildData(String description) {
+    public void saveChildData(String description, int value) {
         rewardToEdit.setDescription(description);
+        rewardToEdit.setValue(value);
 //        rewardToEdit.setIcon(icon);
 //        rewardToEdit.setInstructions(instructions);
         disposable.add(dataManager.updateChild(child)
@@ -111,6 +111,7 @@ public class RewardEditorPresenter implements RewardEditorContract.Presenter {
             child.addReward(rewardToEdit);
         }
         mvpView.setDescription(rewardToEdit.getDescription());
+        mvpView.setValue(rewardToEdit.getValue());
         if (rewardToEdit.getRewardImage() != null & !rewardToEdit.getRewardImage().equals("")) {
             mvpView.loadIcon(rewardToEdit.getRewardImage());
         } else {
