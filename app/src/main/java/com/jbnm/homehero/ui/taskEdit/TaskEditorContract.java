@@ -24,5 +24,6 @@ public class TaskEditorContract {
         void setInstructions(List<String> instructions);
         void buildIconPickerDialog();
         void parentTaskListIntent(String childId);
+        void showDescriptionError();
     }
 }

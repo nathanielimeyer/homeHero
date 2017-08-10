@@ -49,6 +49,8 @@
     <!--Task Edit-->
     <string name="task_edit_menu_save">Save</string>
     <string name="task_edit_menu_close">Cancel</string>
+    <string name="task_edit_description_error">Please enter a description</string>
+    <string name="task_edit_icon_error">Please select an icon</string>
 
     <!--Reward Edit-->
     <string name="reward_edit_menu_save">Save</string>
