@@ -5,13 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -30,10 +32,8 @@ import butterknife.ButterKnife;
 public class TaskEditorActivity extends BaseActivity implements TaskEditorContract.MvpView {
     @BindView(R.id.edit_text_description) EditText descriptionEditText;
     @BindView(R.id.task_image_view) ImageView task_image_view;
-    @BindView(R.id.saveButton) Button saveButton;
     @BindView(R.id.taskInstructionsRecyclerView) RecyclerView taskInstructionsRecyclerView;
-    @BindView(R.id.addStepsButton) Button addStepsButton;
-    @BindView(R.id.cancelButton) Button cancelButton;
+    @BindView(R.id.addStepsButton) FloatingActionButton addStepsButton;
 
     private Context context = this;
     ListAdapter adapter;
@@ -62,22 +62,10 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
         presenter = new TaskEditorPresenter(this);
         presenter.loadChildAndTask(childId, taskId);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateTaskData();
-            }
-        });
         task_image_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showIconPickerDialog();
-            }
-        });
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.cancelButtonClicked();
             }
         });
 
@@ -87,6 +75,40 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
                 presenter.addStepsButtonClicked();
             }
         });
+
+        taskInstructionsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_INDICATOR_TOP) {
+                    addStepsButton.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && addStepsButton.isShown()) {
+                    addStepsButton.hide();
+                } else if (dy < 0 && !addStepsButton.isShown()) {
+                    addStepsButton.show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.task_edit, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_task_edit_save) {
+            presenter.saveChildData(descriptionEditText.getText().toString().trim());
+            return true;
+        } else if (item.getItemId() == R.id.menu_task_edit_cancel) {
+            presenter.cancelButtonClicked();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -146,8 +168,6 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
     public void setDescription(String description) {
         if (description != null && !description.isEmpty()) {
             descriptionEditText.setText(description);
-        } else {
-            descriptionEditText.setHint("Tap to edit");
         }
     }
 

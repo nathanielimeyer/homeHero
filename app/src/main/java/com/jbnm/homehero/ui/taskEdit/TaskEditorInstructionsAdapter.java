@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.jbnm.homehero.R;
 import butterknife.BindView;
@@ -47,7 +48,7 @@ public class TaskEditorInstructionsAdapter extends RecyclerView.Adapter<TaskEdit
     public class TaskEditorInstructionsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.stepNumberTextView) TextView stepNumberTextView;
         @BindView(R.id.stepDescriptionEditText) EditText stepDescriptionEditText;
-        @BindView(R.id.stepDeleteButton) Button stepDeleteButton;
+        @BindView(R.id.stepDeleteButton) ImageView stepDeleteButton;
         public MyCustomEditTextListener myCustomEditTextListener;
         public DeleteButtonOnClickListener deleteButtonOnClickListener;
 
@@ -56,11 +57,9 @@ public class TaskEditorInstructionsAdapter extends RecyclerView.Adapter<TaskEdit
                                                 DeleteButtonOnClickListener deleteButtonOnClickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            this.stepDescriptionEditText = (EditText) itemView.findViewById(R.id.stepDescriptionEditText);
             this.myCustomEditTextListener = myCustomEditTextListener;
             this.stepDescriptionEditText.addTextChangedListener(myCustomEditTextListener);
 
-            this.stepDeleteButton = (Button) itemView.findViewById(R.id.stepDeleteButton);
             this.deleteButtonOnClickListener = deleteButtonOnClickListener;
             this.stepDeleteButton.setOnClickListener(deleteButtonOnClickListener);
 
@@ -71,8 +70,6 @@ public class TaskEditorInstructionsAdapter extends RecyclerView.Adapter<TaskEdit
             myCustomEditTextListener.updatePosition(position);
             if (step != null && !step.isEmpty() && !step.equals("")) {
                 stepDescriptionEditText.setText(step);
-            } else {
-                stepDescriptionEditText.setHint("Tap to edit");
             }
             deleteButtonOnClickListener.updatePosition(position);
         }

@@ -74,8 +74,8 @@ public class ParentTaskListPresenter implements ParentTaskListContract.Presenter
     }
 
     private void updateSharedPrefs(Child child) {
-        sharedPrefManager.setTasksCreated(child.getTasks().keySet().size() > Constants.MIN_TASK_COUNT);
-        sharedPrefManager.setGoalsCreated(child.getRewards().keySet().size() > Constants.MIN_REWARD_COUNT);
+        sharedPrefManager.setTasksCreated(child.getTasks().keySet().size() >= Constants.MIN_TASK_COUNT);
+        sharedPrefManager.setGoalsCreated(child.getRewards().keySet().size() >= Constants.MIN_REWARD_COUNT);
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.jbnm.homehero.ui.parent.rewardList;
 
+import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.data.remote.DataManager;
+import com.jbnm.homehero.util.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,10 +24,14 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
     private ParentRewardListContract.MvpView mvpView;
     private CompositeDisposable disposable = new CompositeDisposable();
     private DataManager dataManager = new DataManager();
+    private SharedPrefManager sharedPrefManager;
     private Child child;
     private List<Reward> rewards;
 
-    public ParentRewardListPresenter(ParentRewardListContract.MvpView view) { this.mvpView = view; }
+    public ParentRewardListPresenter(ParentRewardListContract.MvpView view, SharedPrefManager sharedPrefManager) {
+        this.mvpView = view;
+        this.sharedPrefManager = sharedPrefManager;
+    }
 
     @Override
     public void detach() {
@@ -34,6 +40,7 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
 
     @Override
     public void loadRewards(String childId) {
+        mvpView.setToolbarTitle(Constants.PARENT_REWARD_LIST_TITLE);
         mvpView.showLoading();
         disposable.add(dataManager.getChild(childId)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -56,9 +63,15 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
     }
 
     private void processResult(Child child) {
+        updateSharedPrefs(child);
         rewards = new ArrayList<>(child.getRewards().values());
         mvpView.listRewards(rewards);
         mvpView.hideLoading();
+    }
+
+    private void updateSharedPrefs(Child child) {
+        sharedPrefManager.setTasksCreated(child.getTasks().keySet().size() >= Constants.MIN_TASK_COUNT);
+        sharedPrefManager.setGoalsCreated(child.getRewards().keySet().size() >= Constants.MIN_REWARD_COUNT);
     }
 
     @Override
@@ -87,5 +100,10 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
         child.setRewards(rewardMap);
         saveChild();
 
+    }
+
+    @Override
+    public void handleBackButtonPressed() {
+        mvpView.parentIntent(child.getId());
     }
 }
