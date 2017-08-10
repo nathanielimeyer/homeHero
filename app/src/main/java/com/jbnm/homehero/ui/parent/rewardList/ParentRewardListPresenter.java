@@ -70,8 +70,15 @@ public class ParentRewardListPresenter implements ParentRewardListContract.Prese
     }
 
     private void updateSharedPrefs(Child child) {
+        int rewardCount = child.getRewards().keySet().size();
+        mvpView.setAddRewardButtonEnabled(rewardCount < Constants.MAX_REWARD_COUNT);
+
+        if (rewardCount < Constants.MIN_REWARD_COUNT) {
+            mvpView.showError(String.format("You need to add at least %d rewards", Constants.MIN_REWARD_COUNT));
+        }
+
+        sharedPrefManager.setGoalsCreated(rewardCount >= Constants.MIN_REWARD_COUNT);
         sharedPrefManager.setTasksCreated(child.getTasks().keySet().size() >= Constants.MIN_TASK_COUNT);
-        sharedPrefManager.setGoalsCreated(child.getRewards().keySet().size() >= Constants.MIN_REWARD_COUNT);
     }
 
     @Override

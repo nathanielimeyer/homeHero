@@ -20,6 +20,7 @@ public class ParentRewardListContract {
         }
     interface MvpView extends BaseMvpView {
         void listRewards(List<Reward> rewards);
+        void setAddRewardButtonEnabled(boolean enabled);
         void addRewardIntent(String childId);
         void parentIntent(String childId);
     }

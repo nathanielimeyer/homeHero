@@ -54,8 +54,11 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
         ButterKnife.bind(this);
 
         String childId = getIntent().getStringExtra(Constants.CHILD_INTENT_KEY);
-
         String taskId = getIntent().getStringExtra(Constants.TASK_INTENT_KEY);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
+        }
 
         presenter = new TaskEditorPresenter(this);
         presenter.loadChildAndTask(childId, taskId);
@@ -101,9 +104,6 @@ public class TaskEditorActivity extends BaseActivity implements TaskEditorContra
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_task_edit_save) {
             presenter.saveChildData(descriptionEditText.getText().toString().trim());
-            return true;
-        } else if (item.getItemId() == R.id.menu_task_edit_cancel) {
-            presenter.cancelButtonClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);

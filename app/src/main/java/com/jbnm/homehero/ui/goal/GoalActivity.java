@@ -50,6 +50,8 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @BindView(R.id.imageView) ImageView rewardImageView;
     @BindView(R.id.taskButton) Button taskButton;
     @BindView(R.id.goalDescriptionTextView) TextView goalDescriptionTextView;
+    @BindView(R.id.goalProgressLabel) TextView goalProgressLabel;
+    @BindView(R.id.noTaskAvailableTextView) TextView noTasksAvailableTextView;
     public GoalPresenter presenter;
     private Context context = this;
     ListAdapter adapter;
@@ -215,6 +217,21 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     }
 
     @Override
+    public void hideNoTasksAvailable() {
+        noTasksAvailableTextView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showNoTasksAvailable() {
+        noTasksAvailableTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setTaskButtonText(String buttonText) {
+        taskButton.setText(buttonText);
+    }
+
+    @Override
     public void taskPickerIntent(String childId) {
         startActivity(TaskPickerActivity.createIntent(this, childId));
         finish();
@@ -240,5 +257,10 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @Override
     public void setGoalImage(String rewardImage) {
         rewardImageView.setImageResource(getResources().getIdentifier(rewardImage, "drawable", getPackageName()));
+    }
+
+    @Override
+    public void setGoalProgressLabel(int points) {
+        goalProgressLabel.setText(String.format(getString(R.string.goal_progress_label), points));
     }
 }
