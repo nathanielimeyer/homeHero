@@ -17,7 +17,8 @@ public class ParentTaskListContract {
         void addTaskButtonClicked();
         void saveTasks(List<Task> tasks);
         void handleBackButtonPressed();
-        }
+        void checkAndNullCurrentTask(String taskId);
+    }
     interface MvpView extends BaseMvpView {
         void listTasks(List<Task> tasks);
         void setAddTaskButtonEnabled(boolean enabled);
