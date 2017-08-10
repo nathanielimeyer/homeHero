@@ -50,6 +50,7 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @BindView(R.id.imageView) ImageView rewardImageView;
     @BindView(R.id.taskButton) Button taskButton;
     @BindView(R.id.goalDescriptionTextView) TextView goalDescriptionTextView;
+    @BindView(R.id.goalProgressLabel) TextView goalProgressLabel;
     public GoalPresenter presenter;
     private Context context = this;
     ListAdapter adapter;
@@ -245,5 +246,10 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
     @Override
     public void setGoalImage(String rewardImage) {
         rewardImageView.setImageResource(getResources().getIdentifier(rewardImage, "drawable", getPackageName()));
+    }
+
+    @Override
+    public void setGoalProgressLabel(int points) {
+        goalProgressLabel.setText(String.format(getString(R.string.goal_progress_label), points));
     }
 }

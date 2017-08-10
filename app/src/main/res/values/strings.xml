@@ -6,6 +6,7 @@
     <string name="taskButtonText">Get more points</string>
     <string name="goalDescriptionText">Goal Description</string>
     <string name="goal_picker_title">New Goal Picker</string>
+    <string name="goal_progress_label">You need %d more points</string>
 
     <!--Task Progress-->
     <string name="task_progress_complete_button_label">Complete Task</string>

@@ -32,6 +32,7 @@ public class GoalContract {
         void parentIntent(String childId);
         void setGoalDescription(String description);
         void setGoalImage(String rewardImage);
+        void setGoalProgressLabel(int points);
         void showGoalPickerDialog();
         void buildGoalPickerDialog();
     }
