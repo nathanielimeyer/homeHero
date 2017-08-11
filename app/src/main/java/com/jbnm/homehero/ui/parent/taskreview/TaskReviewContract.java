@@ -1,6 +1,5 @@
 package com.jbnm.homehero.ui.parent.taskreview;
 
-import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.ui.base.BaseMvpView;
 import com.jbnm.homehero.ui.base.BasePresenter;
 

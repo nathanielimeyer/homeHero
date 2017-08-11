@@ -7,7 +7,6 @@ import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.jbnm.homehero.Constants
 import com.jbnm.homehero.R
