@@ -31,6 +31,7 @@ import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.parent.ParentActivity;
+import com.jbnm.homehero.ui.reauth.ReAuthDialogFragment;
 import com.jbnm.homehero.ui.taskpicker.TaskPickerActivity;
 import com.jbnm.homehero.ui.taskprogress.TaskProgressActivity;
 
@@ -244,8 +245,8 @@ public class GoalActivity extends BaseActivity implements GoalContract.MvpView {
 
     @Override
     public void parentIntent(String childId) {
-        startActivity(ParentActivity.createIntent(this, childId));
-        finish();
+        ReAuthDialogFragment fragment = ReAuthDialogFragment.newInstance(childId);
+        fragment.show(getFragmentManager(), "REAUTH");
     }
 
     @Override

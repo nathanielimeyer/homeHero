@@ -77,6 +77,10 @@
     <string name="reward_editor_screen_title">Add new reward</string>
     <string name="reward_icon_picker_title">Pick a reward icon</string>
     <string name="edit_reward_value_text">Assign a value</string>
+    <string name="reauth_ok_button_text">Ok</string>
+    <string name="reauth_cancel_button_text">Cancel</string>
+    <string name="reauth_password_hint">Password</string>
+    <string name="reauth_dialog_title">Please Enter Your Password</string>
 
 
 </resources>

@@ -96,7 +96,11 @@ public class GoalPresenter implements GoalContract.Presenter {
             mvpView.setGoalDescription(child.currentReward().getDescription());
             mvpView.setGoalImage(child.currentReward().getRewardImage());
             checkProgress();
-            mvpView.setGoalProgressLabel(child.currentReward().getValue() - child.getTotalPoints());
+            int remainingPoints = child.currentReward().getValue() - child.getTotalPoints();
+            if (remainingPoints < 0) {
+                remainingPoints = 0;
+            }
+            mvpView.setGoalProgressLabel(remainingPoints);
         }
     }
     @Override
@@ -176,6 +180,8 @@ public class GoalPresenter implements GoalContract.Presenter {
 
     @Override
     public void handleParentNavButtonClick() {
-        mvpView.parentIntent(child.getId());
+        if (child != null) {
+            mvpView.parentIntent(child.getId());
+        }
     }
 }
