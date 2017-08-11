@@ -3,7 +3,6 @@ package com.jbnm.homehero.ui.parent.taskList;
 import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Task;
-import com.jbnm.homehero.data.model.TaskStatus;
 import com.jbnm.homehero.data.remote.DataManager;
 import com.jbnm.homehero.util.SharedPrefManager;
 
@@ -11,14 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 
 /**
