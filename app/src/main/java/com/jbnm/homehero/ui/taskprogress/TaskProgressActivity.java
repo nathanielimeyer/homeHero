@@ -7,10 +7,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jbnm.homehero.Constants;
@@ -18,7 +16,6 @@ import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.goal.GoalActivity;
-import com.jbnm.homehero.ui.taskpicker.TaskPickerActivity;
 
 import java.util.List;
 

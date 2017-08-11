@@ -12,7 +12,6 @@ import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.goal.GoalActivity;
 import com.jbnm.homehero.ui.parent.ParentActivity;
-import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
 import com.jbnm.homehero.ui.signup.SignUpActivity;
 import com.jbnm.homehero.util.SharedPrefManager;
 

@@ -2,8 +2,6 @@ package com.jbnm.homehero.data.remote;
 
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Parent;
-import com.jbnm.homehero.data.model.Reward;
-import com.jbnm.homehero.data.model.Task;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
