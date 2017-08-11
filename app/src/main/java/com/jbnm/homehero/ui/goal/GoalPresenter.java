@@ -1,30 +1,19 @@
 package com.jbnm.homehero.ui.goal;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
 import com.jbnm.homehero.Constants;
-import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Child;
 import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.data.model.Task;
 import com.jbnm.homehero.data.remote.DataManager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
-
-import static android.content.ContentValues.TAG;
 
 public class GoalPresenter implements GoalContract.Presenter {
     private static final String TAG = "GoalPresenter";
@@ -162,11 +151,8 @@ public class GoalPresenter implements GoalContract.Presenter {
     @Override
     public List buildRewardDialogList() {
         List<DialogItem> dialogItems = new ArrayList<>();
-
         for (Reward reward : rewards) {
-            Log.d(TAG, "Description = " + reward.getDescription());
             dialogItems.add(new DialogItem(reward.getDescription() + ": " + reward.getValue() + " pts.", reward.getRewardImage()));
-//            dialogItems.add(new DialogItem(reward.getDescription() + ": " + reward.getValue() + " pts.", android.R.drawable.ic_menu_add));
         }
 
         return dialogItems;

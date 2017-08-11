@@ -1,8 +1,6 @@
 package com.jbnm.homehero.ui.parent.taskList;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.content.Context;
 import android.view.View;
