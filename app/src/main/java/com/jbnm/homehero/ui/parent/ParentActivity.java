@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,7 +17,6 @@ import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.ui.base.BaseActivity;
 import com.jbnm.homehero.ui.goal.GoalActivity;
-import com.jbnm.homehero.ui.login.LoginActivity;
 import com.jbnm.homehero.ui.parent.rewardList.ParentRewardListActivity;
 import com.jbnm.homehero.ui.parent.settings.SettingsFragment;
 import com.jbnm.homehero.ui.parent.taskList.ParentTaskListActivity;
