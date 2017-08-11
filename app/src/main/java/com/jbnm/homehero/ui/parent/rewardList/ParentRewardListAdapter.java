@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.jbnm.homehero.R;
 import com.jbnm.homehero.data.model.Reward;
-import com.jbnm.homehero.data.model.Reward;
 
 import java.util.ArrayList;
 import java.util.List;

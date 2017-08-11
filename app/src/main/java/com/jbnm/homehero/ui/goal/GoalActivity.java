@@ -1,14 +1,11 @@
 package com.jbnm.homehero.ui.goal;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,13 +21,10 @@ import android.widget.TextView;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
-import com.hookedonplay.decoviewlib.charts.SeriesLabel;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 import com.jbnm.homehero.Constants;
 import com.jbnm.homehero.R;
-import com.jbnm.homehero.data.model.Reward;
 import com.jbnm.homehero.ui.base.BaseActivity;
-import com.jbnm.homehero.ui.parent.ParentActivity;
 import com.jbnm.homehero.ui.reauth.ReAuthDialogFragment;
 import com.jbnm.homehero.ui.taskpicker.TaskPickerActivity;
 import com.jbnm.homehero.ui.taskprogress.TaskProgressActivity;
