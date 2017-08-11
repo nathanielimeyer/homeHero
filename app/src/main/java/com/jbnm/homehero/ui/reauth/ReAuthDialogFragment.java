@@ -55,7 +55,7 @@ public class ReAuthDialogFragment extends DialogFragment implements ReAuthContra
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment_reauth, container, false);
-        getDialog().setCanceledOnTouchOutside(true);
+        getDialog().setCanceledOnTouchOutside(false);
 
         unbinder = ButterKnife.bind(this, view);
         String childId = getArguments().getString(Constants.CHILD_INTENT_KEY);
