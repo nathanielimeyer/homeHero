@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TaskSelector">
+        <attr name="taskTextSize" format="dimension"/>
+        <attr name="taskTextColor" format="color"/>
+    </declare-styleable>
+</resources>

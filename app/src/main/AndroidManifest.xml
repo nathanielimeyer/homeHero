@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jbnm.homehero" >
+          package="com.jbnm.homehero">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -8,14 +10,66 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.base.BaseActivity"
+            android:screenOrientation="portrait" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        <activity android:name=".ui.goal.GoalActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.taskpicker.TaskPickerActivity"
+            android:screenOrientation="portrait">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".ui.goal.GoalActivity"/>
+        </activity>
+
+        <activity android:name=".ui.taskprogress.TaskProgressActivity"
+            android:screenOrientation="portrait">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".ui.goal.GoalActivity"/>
+        </activity>
+
+        <activity android:name=".ui.parent.ParentActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_parent"
+                  android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity android:name=".ui.parent.taskList.ParentTaskListActivity"
+            android:screenOrientation="portrait">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".ui.parent.ParentActivity"/>
+        </activity>
+        <activity android:name=".ui.parent.rewardList.ParentRewardListActivity"
+            android:screenOrientation="portrait">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.parent.ParentActivity"/>
+        </activity>
+        <activity android:name=".ui.taskEdit.TaskEditorActivity"
+            android:screenOrientation="portrait">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".ui.parent.taskList.ParentTaskListActivity"/>
+        </activity>
+        <activity android:name=".ui.parent.rewardEdit.RewardEditorActivity"
+            android:screenOrientation="portrait">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.parent.taskList.ParentTaskListActivity"/>
+        </activity>
+
+        <activity android:name=".ui.login.LoginActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ui.signup.SignUpActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

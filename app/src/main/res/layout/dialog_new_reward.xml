@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_new_reward"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" >
+
+    <TextView
+        android:text="@string/new_reward_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    
+    <EditText
+        android:id="@+id/reward_description"
+        android:inputType="text|textAutoCorrect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/reward_description_hint" />
+
+    <EditText
+        android:id="@+id/reward_value"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/reward_value_hint" />
+
+</LinearLayout>

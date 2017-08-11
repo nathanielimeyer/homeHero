@@ -3,4 +3,18 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorDisabledTask">#bfbfbf</color>
+    <array name="colorTaskWheel">
+        <item>#75EFEB</item>
+        <item>#F9E727</item>
+        <item>#E12584</item>
+        <item>#7FD1C8</item>
+        <item>#CFF7F7</item>
+        <item>#EF3867</item>
+        <item>#EF6B38</item>
+        <item>#A0EF38</item>
+        <item>#E84D88</item>
+        <item>#C232C7</item>
+    </array>
 </resources>

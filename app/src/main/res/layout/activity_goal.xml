@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.jbnm.homehero.ui.goal.GoalActivity">
+
+    <TextView
+        android:id="@+id/goalDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/goalDescriptionText"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/goalProgressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goalDescriptionTextView"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:text="@string/goal_progress_label"/>
+
+    <com.hookedonplay.decoviewlib.DecoView
+        android:layout_below="@id/goalProgressLabel"
+        android:layout_above="@id/buttonSection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dynamicArcView"
+        android:layout_margin="8dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignBottom="@id/dynamicArcView"
+        android:layout_alignTop="@id/dynamicArcView"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        app:srcCompat="@drawable/camping"/>
+
+    <RelativeLayout
+        android:id="@+id/buttonSection"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/taskButton"
+            style="@style/buttonWide"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/taskButtonText"/>
+
+        <TextView
+            android:id="@+id/noTaskAvailableTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="32dp"
+            android:text="@string/goal_progress_no_tasks_available"
+            android:textAlignment="center"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:tools="http://schemas.android.com/tools"
+             tools:context="com.jbnm.homehero.ui.taskpicker.TaskPickerActivity">
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tasksCompletedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/tasks_completed"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <com.jbnm.homehero.ui.taskselector.TaskSelector
+            android:id="@+id/taskSelector"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_margin="16dp"
+            app:taskTextColor="@color/label_text_dark"
+            app:taskTextSize="18sp">
+
+            <ImageView
+                android:id="@+id/tutorialImageView"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                app:srcCompat="@drawable/rotate_arrow"/>
+
+        </com.jbnm.homehero.ui.taskselector.TaskSelector>
+
+        <Button
+            android:id="@+id/goalProgressButton"
+            style="@style/buttonWide"
+            android:text="@string/task_picker_button_goal"/>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/result"
+        layout="@layout/task_picker_result"/>
+
+</FrameLayout>

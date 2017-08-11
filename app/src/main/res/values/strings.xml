@@ -1,3 +1,86 @@
 <resources>
     <string name="app_name">HomeHero</string>
+
+    <!--Goal Progress-->
+    <string name="goalImageDescription">goal image</string>
+    <string name="taskButtonText">Get more points</string>
+    <string name="goalDescriptionText">Goal Description</string>
+    <string name="goal_picker_title">Pick a New Goal</string>
+    <string name="goal_progress_label">You need %d more points</string>
+    <string name="goal_progress_no_tasks_available">You completed all of today\'s tasks!</string>
+
+    <!--Task Progress-->
+    <string name="task_progress_complete_button_label">Complete Task</string>
+    <string name="task_progress_goal_button_label">View Goal</string>
+    <string name="task_instructions_label">Task Instructions</string>
+
+    <!--Task Picker-->
+    <string name="tasks_completed">Tasks Completed: %d</string>
+    <string name="task_get_started">Get Started</string>
+    <string name="task_select_result">Your Task: %s</string>
+    <string name="task_picker_button_goal">See Goal Progress</string>
+
+    <!--Parent-->
+    <string name="title_activity_parent">ParentActivity</string>
+    <string name="tab_text_1">Task Review</string>
+    <string name="tab_text_2">Settings</string>
+    <string name="task_last_completed">Last Completed: %s</string>
+    <string name="task_last_completed_days">%d days ago</string>
+    <string name="parent_settings_manage_tasks_button">Manage Tasks</string>
+    <string name="parent_settings_manage_rewards_button">Manage Rewards</string>
+
+    <!--Menu-->
+    <string name="parent_menu_child_item">Child</string>
+    <string name="child_menu_parent_item">Parent</string>
+    <string name="parent_menu_logout_item">Logout</string>
+
+    <!--Login/Sign up-->
+    <string name="valid_email_error">Please enter a valid email</string>
+    <string name="valid_password_error">Password must be at least 6 characters</string>
+    <string name="valid_confirm_error">Passwords do not match</string>
+    <string name="hint_email_input">Email Address</string>
+    <string name="hint_password_input">Password</string>
+    <string name="hint_password_confirm_input">Confirm Password</string>
+    <string name="button_login">Login</string>
+    <string name="button_sign_up">Sign Up</string>
+    <string name="link_login_to_sign_up">Don\'t have an account?</string>
+    <string name="link_sign_up_to_login">Already a member?</string>
+
+    <!--Task Edit-->
+    <string name="task_edit_menu_save">Save</string>
+    <string name="task_edit_menu_close">Cancel</string>
+    <string name="task_edit_description_error">Please enter a description</string>
+
+    <!--Reward Edit-->
+    <string name="reward_edit_menu_save">Save</string>
+    <string name="reward_edit_menu_close">Cancel</string>
+    <string name="reward_edit_description_error">Please enter a description</string>
+
+    <string name="save_changes">Done</string>
+    <string name="cancel_changes">Cancel</string>
+    <string name="delete_step">X</string>
+    <string name="add_step_text">Add a step</string>
+    <string name="add_step">+</string>
+    <string name="add_a_step">Add a step</string>
+    <string name="icon_picker_title">Pick a task icon</string>
+    <string name="task_description">Task Description</string>
+    <string name="reward_description">Reward Description</string>
+    <string name="task_editor_screen_title">Add or Edit a Task</string>
+    <string name="edit_task_image_text">Click to change image</string>
+    <string name="edit_reward_image_text">Click to change image</string>
+    <string name="manage_tasks_title">Manage Tasks</string>
+    <string name="add_task">Add Task</string>
+    <string name="back_to_settings_button_text">Back</string>
+    <string name="reward_description_hint">Enter a reward name</string>
+    <string name="reward_value_hint">Enter points for this reward</string>
+    <string name="new_reward_dialog_title">Add a reward</string>
+    <string name="reward_editor_screen_title">Add new reward</string>
+    <string name="reward_icon_picker_title">Pick a reward icon</string>
+    <string name="edit_reward_value_text">Assign a value</string>
+    <string name="reauth_ok_button_text">Ok</string>
+    <string name="reauth_cancel_button_text">Cancel</string>
+    <string name="reauth_password_hint">Password</string>
+    <string name="reauth_dialog_title">Please Enter Your Password</string>
+
+
 </resources>
