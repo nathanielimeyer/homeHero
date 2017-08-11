@@ -129,7 +129,9 @@ public class ReAuthDialogFragment extends DialogFragment implements ReAuthContra
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        loading.setVisibility(View.INVISIBLE);
+                        if (loading != null) {
+                            loading.setVisibility(View.INVISIBLE);
+                        }
                     }
                 });
 
