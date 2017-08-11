@@ -41,9 +41,9 @@ public class ReAuthPresenter implements ReAuthContract.Presenter {
 
     @Override
     public void handleOkButtonClick(String password) {
-        mvpView.showLoading();
         String email = user.getEmail();
-        if (email != null && password != null) {
+        if (email != null && password != null && !password.isEmpty()) {
+            mvpView.showLoading();
             AuthCredential credential = EmailAuthProvider.getCredential(email, password);
             user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -57,6 +57,8 @@ public class ReAuthPresenter implements ReAuthContract.Presenter {
                     mvpView.hideLoading();
                 }
             });
+        } else {
+            mvpView.showPasswordError();
         }
     }
 }
